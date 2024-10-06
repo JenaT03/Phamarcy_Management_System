@@ -1,0 +1,68 @@
+@extends('admin.layouts.app-page')
+@section('title', 'khách hàng')
+@section('content')
+<div class=" container">
+        <h3 class="text-center my-5"> Chỉnh sửa thông tin khách hàng</h3>
+        <form action="{{route('customers.update', $customer->id)}}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Số điện thoại khách hàng</label>
+                <input type="text" class="form-control" name="phone" value="{{old('phone')?? $customer->phone}}">
+                
+                @error('phone')
+                <span class="text-danger">{{$message}}</span>
+                @enderror
+            </div>
+
+            
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Tên khách hàng</label>
+                <input type="text" class="form-control" name="name" value="{{old('name')?? $customer->name}}" >
+
+                @error('name')
+                <span class="text-danger">{{$message}}</span>
+                @enderror
+            </div>
+
+            
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Năm sinh</label>
+                <input type="text" class="form-control" name="birth" value="{{old('birth')?? $customer->birth}}">
+                @error('birth')
+                <span class="text-danger">{{$message}}</span>
+                @enderror
+            </div>
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <p class="">Giới tính</p>
+                <div class="d-flex">
+
+                    <input type="radio" class="me-2 form-check-input" value="Nam" name="gender" {{$customer->gender == 'Nam' ? 'checked' : '' }}>
+                    <label class="form-label me-4">Nam</label>
+                    <input type="radio" class="me-2 form-check-input" value="Nữ" name="gender" {{$customer->gender == 'Nữ' ? 'checked' : '' }}>
+                    <label class="form-label me-4">Nữ</label>
+
+                </div>
+                @error('gender')
+                    <span class="text-danger">{{$message}}</span>
+                @enderror
+            
+            </div>
+
+            <div class="my-3 mt-5 d-flex justify-content-between">
+                
+                <a href="{{route('customers.index')}}" class="btn btn-primary text-white text-center"
+                style="padding: 15px 30px; font-size: 1.25rem;">Quay lại</a>
+
+                <button type="submit" name="submit" class="btn btn-primary text-white text-center"
+                style="padding: 15px 45px; font-size: 1.25rem;">Tiếp</button>
+
+            </div>
+
+        </form>
+    </div>
+@endsection
