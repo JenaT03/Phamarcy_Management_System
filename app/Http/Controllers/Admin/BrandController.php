@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Brands\CreateBrandRequest;
 use App\Http\Requests\Brands\UpdateBrandRequest;
 use App\Models\Brand;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
@@ -29,7 +31,8 @@ class BrandController extends Controller
         }
 
         $brands = $query->paginate(10);
-        return view('admin.brands.index', compact('brands'))->with('search', $request->search);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.brands.index', compact('brands', 'staff'))->with('search', $request->search);
     }
 
     /**
@@ -39,7 +42,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.create');
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.brands.create', compact('staff'));
     }
 
     /**
@@ -75,7 +79,8 @@ class BrandController extends Controller
     public function edit($id)
     {
         $brand = $this->brand->findOrFail($id);
-        return view('admin.brands.edit', compact('brand'));
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.brands.edit', compact('brand', 'staff'));
     }
 
     /**

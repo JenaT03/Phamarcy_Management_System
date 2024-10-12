@@ -19,8 +19,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Release::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->string('product_code');
             $table->smallInteger('quantity');
-            $table->decimal('price');
+            $table->bigInteger('price');
             $table->text('note');
             $table->timestamps();
         });

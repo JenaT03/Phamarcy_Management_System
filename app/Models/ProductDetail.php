@@ -11,9 +11,10 @@ class ProductDetail extends Model
 
     protected $fillable = [
         'product_id',
+        'receipt_detail_id',
         'price',
-        'quanity',
-        'unit',
+        'quantity',
+        'expiry',
     ];
 
     public function products()

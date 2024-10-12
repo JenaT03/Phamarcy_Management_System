@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -33,8 +34,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = $this->user->latest('id')->paginate(10);
-        return view('admin.user.index', compact('users'));
+        return view('admin.users.index');
     }
 
     /**
@@ -45,18 +45,24 @@ class UserController extends Controller
     public function create()
     {
         $roles = $this->role->all()->groupBy('group');
+        $user_type = request('user_type');
         $groupName = '';
-        if (request('user_type') == 'customer') {
+        if ($user_type == 'customer') {
             $roles = $roles['user'];
             $groupName = 'User';
         } else {
-            if (request('user_type') == 'staff') {
+            if ($user_type == 'staff') {
                 $roles = $roles['system'];
                 $groupName = 'System';
             }
         }
 
-        return view('admin.users.create', compact('roles', 'groupName'));
+        $role = request('role');
+        if ($role == 'customer') return view('admin.users.create', compact('roles', 'groupName', 'user_type', 'role'));
+        else {
+            $staff = Staff::find(Auth::user()->userable_id);
+            return view('admin.users.create', compact('roles', 'user_type', 'groupName', 'staff'));
+        }
     }
 
     /**
@@ -69,7 +75,7 @@ class UserController extends Controller
     {
         $dataCreate = $request->all();
         // Mã hóa mật khẩu
-        // $dataCreate['password'] = Hash::make($request->password);
+        $dataCreate['password'] = Hash::make($request->password);
         $user = new User();
         $user->phone = $dataCreate['phone'];
         $user->password = $dataCreate['password'];
@@ -82,8 +88,13 @@ class UserController extends Controller
             }
             $user->userable_id = $customer->id;
             $user->userable_type = Customer::class;
-            $redirectRoute = 'customers.index';
-            $message = 'Thêm khách hàng thành công';
+            if ($request->role == 'customer') {
+                $redirectRoute = 'login.index';
+                $message = 'Tạo tài khoản thành công, hãy đăng nhập.';
+            } else {
+                $redirectRoute = 'customers.index';
+                $message = 'Thêm khách hàng thành công';
+            }
         } else {
             if ($request->user_type == 'staff') {
                 $staff = Staff::where('phone', $request->phone)->first();
@@ -109,8 +120,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $staffShow = Staff::where('id', $id)->firstOrFail();
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.users.show', compact('staff', 'staffShow'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -136,7 +150,9 @@ class UserController extends Controller
             }
         }
 
-        return view('admin.users.edit', compact('user', 'roles', 'phone', 'user_type', 'groupName'));
+        $role = request('role');
+        if ($role == 'customer') return view('admin.users.edit', compact('user', 'roles', 'phone', 'user_type', 'groupName', 'role'));
+        else return view('admin.users.edit', compact('user', 'roles', 'phone', 'user_type', 'groupName'));
     }
 
     /**
@@ -162,9 +178,15 @@ class UserController extends Controller
             $customer = Customer::where('phone', $request->phone)->first();
 
             if ($customer) {
+
                 $user = $this->findOrCreateUser($customer->id, Customer::class, $dataCreate);
-                $redirectRoute = 'customers.index';
-                $message = 'Chỉnh sửa thông tin khách hàng thành công';
+                if ($request->role) {
+                    $message = 'Chỉnh sửa thông tin cá nhân thành công';
+                    return to_route('profile.show', $customer->id)->with(['message' => $message]);
+                } else {
+                    $redirectRoute = 'customers.index';
+                    $message = 'Chỉnh sửa thông tin khách hàng thành công';
+                }
             } else {
                 return back()->withErrors(['message' => 'Không tìm thấy khách hàng với số điện thoại này']);
             }
@@ -205,6 +227,7 @@ class UserController extends Controller
             if (isset($dataCreate['password'])) {
                 $user->password = $dataCreate['password'];
             }
+            $user->phone = $dataCreate['phone'];
             $user->save();
         }
 

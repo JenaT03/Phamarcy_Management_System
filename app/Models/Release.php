@@ -13,6 +13,7 @@ class Release extends Model
         'customer_id',
         'staff_id',
         'datetime',
+        'total',
         'note'
     ];
 

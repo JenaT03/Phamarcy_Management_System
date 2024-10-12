@@ -7,7 +7,9 @@ use App\Http\Requests\Roles\CreateRoleRequest;
 use App\Http\Requests\Roles\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -25,7 +27,8 @@ class RoleController extends Controller
         }
 
         $roles = $query->paginate(10);
-        return view('admin.roles.index', compact('roles'))->with('search', $request->search);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.roles.index', compact('roles', 'staff'))->with('search', $request->search);
     }
 
     /**
@@ -36,7 +39,8 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all()->groupBy('group');
-        return view('admin.roles.create', compact('permissions'));
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.roles.create', compact('permissions', 'staff'));
     }
 
     /**
@@ -73,9 +77,11 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+
         $role = Role::with('permissions')->findOrFail($id); //Tìm role theo id rồi Role::with('permissions') lấy thông tin của role và các permission liên quan
         $permissions = Permission::all()->groupBy('group'); // lấy toàn bộ permission và nhóm theo group
-        return view('admin.roles.edit', compact('role', 'permissions')); // compact 2 mảng
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.roles.edit', compact('role', 'permissions', 'staff')); // compact 2 mảng
     }
 
     /**

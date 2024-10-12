@@ -8,7 +8,9 @@ use App\Http\Requests\Products\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -39,7 +41,8 @@ class ProductController extends Controller
         }
 
         $products = $query->paginate(10);
-        return view('admin.products.index', compact('products'))->with('search', $request->search);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.products.index', compact('products', 'staff'))->with('search', $request->search);
     }
 
     /**
@@ -47,11 +50,24 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function generateStaffNumber()
+    {
+        do {
+            // Random số từ 0 đến 9999 và chuyển thành chuỗi 4 chữ số
+            $productCode = str_pad(mt_rand(0, 9999999), 7, '0', STR_PAD_LEFT);
+
+            // Kiểm tra xem mã số này đã tồn tại hay chưa
+        } while ($this->product->where('code', $productCode)->exists());
+
+        return $productCode;
+    }
     public function create()
     {
+        $productCode = $this->generateStaffNumber();
         $categories = $this->category->get(['id', 'name']);
         $brands = $this->brand->get(['id', 'name']);
-        return view('admin.products.create', compact('categories', 'brands'));
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.products.create', compact('categories', 'brands', 'productCode', 'staff'));
     }
 
     /**
@@ -62,10 +78,10 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $dataUpdate = $request->all();
-        $dataUpdate['img'] = $this->product->saveImage($request);
-        $product = $this->product->create($dataUpdate);
-        $product->assignCategory($dataUpdate['category_ids']);
+        $dataCreate = $request->all();
+        $dataCreate['img'] = $this->product->saveImage($request);
+        $product = $this->product->create($dataCreate);
+        $product->assignCategory($dataCreate['category_ids']);
         return to_route('products.index')->with(['message' => 'Thêm sản phẩm mới thành công']);
     }
 
@@ -80,7 +96,8 @@ class ProductController extends Controller
         $categories = $this->category->get(['id', 'name']);
         $brands = $this->brand->get(['id', 'name']);
         $product = $this->product->with(['categories'])->findOrFail($id);
-        return view('admin.products.show', compact('product', 'categories', 'brands'));
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.products.show', compact('product', 'categories', 'brands', 'staff'));
     }
 
     /**
@@ -94,7 +111,8 @@ class ProductController extends Controller
         $categories = $this->category->get(['id', 'name']);
         $brands = $this->brand->get(['id', 'name']);
         $product = $this->product->with(['categories'])->findOrFail($id);
-        return view('admin.products.edit', compact('product', 'categories', 'brands'));
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.products.edit', compact('product', 'categories', 'brands', 'staff'));
     }
 
     /**

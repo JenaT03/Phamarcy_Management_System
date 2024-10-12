@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Customer;
+use App\Models\Staff;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +41,38 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $credencials = $request->validate([
+            'phone' => 'required',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($credencials)) {
+            $user = Auth::user();
+            if ($user->userable_type ===  Customer::class) {
+                return to_route('home');
+            } elseif ($user->userable_type === Staff::class) {
+                return to_route('dashboard');
+            } else {
+                Auth::logout();
+                return back()->withErrors(['error' => 'Không có loại người dùng này']);
+            }
+        }
+
+        return back()->withErrors(['fail' => 'Số điện thoại hoặc mật khẩu không đúng.']);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

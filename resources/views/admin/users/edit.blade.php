@@ -1,13 +1,21 @@
-@extends('admin.layouts.app-page')
+@extends('admin.layouts.app-handle-user')
 @section('title', 'Tài khoản')
 @section('content')
 <div class=" container">
         <h3 class="text-center my-5">Chỉnh sửa tài khoản</h3>
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3 text-center ">
+                <h6 class="animate__animated animate__fadeInLeft text-warning ">Mật khẩu mặc định là số điện thoại, hãy thay đổi nếu cần thiết.</h6>
+            </div>
+        </div>
         <form action="{{route('users.update', $user->id)}}" method="POST">
             @csrf
             @method('PUT')
             <input type="hidden" name="user_type" value="{{ request('user_type') }}">
-            
+            @if (request('role'))
+                 <input type="hidden" name="role" value="{{ request('role') }}">
+            @endif
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Số điện thoại</label>
                 <input type="text" name="phone" class="form-control" value="{{request('phone') ?? $user->phone}}" readonly>

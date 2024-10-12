@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
             $table->foreignId('staff_id')->constrained('staffs')->cascadeOnDelete();
             $table->dateTime('datetime');
+            $table->bigInteger('total')->default(0);
             $table->text('note');
             $table->timestamps();
         });

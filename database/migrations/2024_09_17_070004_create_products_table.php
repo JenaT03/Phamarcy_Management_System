@@ -17,11 +17,13 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->string('name');
             $table->text('description');
             $table->text('ingredient');
-            $table->text('intruction');
+            $table->text('intruction')->nullable();
             $table->string('img');
+            $table->string('unit')->nullable();
             $table->foreignIdFor(Brand::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\Role;
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StaffController extends Controller
 {
@@ -31,11 +32,12 @@ class StaffController extends Controller
         $query = $this->staff->latest('id');
 
         if ($request->has('search') && !empty($request->search)) {
-            $query->where('staff_number', 'like', '%' . $request->search . '%');
+            $query->where('id', 'like', '%' . $request->search . '%');
         }
 
         $staffs = $query->paginate(10);
-        return view('admin.staffs.index', compact('staffs'))->with('search', $request->search);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.staffs.index', compact('staffs', 'staff'))->with('search', $request->search);
     }
 
     /**
@@ -48,17 +50,18 @@ class StaffController extends Controller
     {
         do {
             // Random số từ 0 đến 9999 và chuyển thành chuỗi 4 chữ số
-            $staffNumber = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+            $staffCode = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
 
             // Kiểm tra xem mã số này đã tồn tại hay chưa
-        } while (Staff::where('staff_number', $staffNumber)->exists());
+        } while (Staff::where('code', $staffCode)->exists());
 
-        return $staffNumber;
+        return $staffCode;
     }
     public function create()
     {
-        $staffNumber = $this->generateStaffNumber();
-        return view('admin.staffs.create', compact('staffNumber'));
+        $staffCode = $this->generateStaffNumber();
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.staffs.create', compact('staffCode', 'staff'));
     }
 
     /**
@@ -93,8 +96,9 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        $staff = $this->staff->findOrFail($id);
-        return view('admin.staffs.edit', compact('staff'));
+        $staffEdited = $this->staff->findOrFail($id);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.staffs.edit', compact('staffEdited', 'staff'));
     }
 
     /**

@@ -52,6 +52,11 @@
         dots: true,
         loop: true,
         margin: 25,
+        nav : true,
+        navText : [
+            '<i class="fa-solid fa-arrow-right"></i>',
+            '<i class="fa-solid fa-arrow-left"></i>'
+        ],
         
         responsiveClass: true,
         responsive: {

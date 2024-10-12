@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserDatabaseSeeder extends Seeder
 {
@@ -16,18 +18,13 @@ class UserDatabaseSeeder extends Seeder
     public function run()
     {
         $items = [
-            ['phone' => '0934567897', 'password' => '12345678'],
-            ['phone' => '0334509797', 'password' => '12345678'],
-            ['phone' => '0333987897', 'password' => '12345678'],
-            ['phone' => '03678567897', 'password' => '12345678'],
-            ['phone' => '0934567897', 'password' => '12345678'],
-            ['phone' => '0934667897', 'password' => '12345678'],
-            ['phone' => '0339967897', 'password' => '12345678'],
-            ['phone' => '0939967896', 'password' => '12345678'],
+            ['phone' => '0934567897', 'password' => '0934567897', 'userable_id' => '1', 'userable_type' => Staff::class],
         ];
 
-        foreach ($items as $item) {
-            User::updateOrCreate($item);
+        foreach ($items as &$item) {
+            $item['password'] = Hash::make($item['password']);
+            $user = User::updateOrCreate($item);
+            $user->roles()->attach('1');
         }
     }
 }

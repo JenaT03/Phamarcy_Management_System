@@ -2,90 +2,115 @@
 @section('title', 'Sản phẩm')
 @section('content')
 
-<div class=" container">
+    <div class=" container">
         <h3 class="text-center my-5"> Thêm sản phẩm mới</h3>
-        <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            
+
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Hình ảnh </label>
-                <input type="file" accept="image/*" id="image-input" class="form-control bg-white"   name = "img" >
+                <input type="file" accept="image/*" id="image-input" class="form-control bg-white" name = "img">
                 <div class="mt-2">
-                    <img src="" id="show-image"  width="300px">
+                    <img src="" id="show-image" width="300px">
                 </div>
                 @error('img')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Mã số</label>
+                <input type="text" class="form-control" name = "code" value="{{ $productCode }}" readonly>
+            </div>
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Tên sản phẩm </label>
-                <input type="text" class="form-control"  name = "name" value="{{old('name')}}">
+                <input type="text" class="form-control" name = "name" value="{{ old('name') }}">
                 @error('name')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Mô tả </label>
-                <textarea name="description" class="form-control editor"  cols="30" rows="10" spellcheck="false">{{ old('description') }}</textarea>
+                <textarea name="description" class="form-control editor" cols="30" rows="10" spellcheck="false">{{ old('description') }}</textarea>
                 @error('description')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Thành phần </label>
-                <textarea name="ingredient" class="form-control editor"  cols="30" rows="10" spellcheck="false">{{ old('ingredient') }}</textarea>
+                <textarea name="ingredient" class="form-control editor" cols="30" rows="10" spellcheck="false">{{ old('ingredient') }}</textarea>
                 @error('ingredient')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Hướng dẫn sử dụng </label>
-                <textarea name="intruction" class="form-control editor"  cols="30" rows="10" spellcheck="false">{{ old('intruction') }}</textarea>
-                
+                <textarea name="intruction" class="form-control editor" cols="30" rows="10" spellcheck="false">{{ old('intruction') }}</textarea>
+
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Phân loại </label>
                 @foreach ($categories as $item)
                     <div class="form-check text-start">
-                        <input type="checkbox" id="{{$item->id}}" class="form-check-input border-1" name="category_ids[]"
-                        value="{{$item->id}}" {{ is_array(old('category_ids')) && in_array($item->id, old('category_ids')) ? 'checked' : '' }}>
+                        <input type="checkbox" id="{{ $item->id }}" class="form-check-input border-1"
+                            name="category_ids[]" value="{{ $item->id }}"
+                            {{ is_array(old('category_ids')) && in_array($item->id, old('category_ids')) ? 'checked' : '' }}>
 
-                        <label class="form-check-label" for="{{$item->id}}" >{{$item->name}}</label>
+                        <label class="form-check-label" for="{{ $item->id }}">{{ $item->name }}</label>
                     </div>
                 @endforeach
 
                 @error('category_ids')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Đơn vị sản phẩm </label>
+                <select name="unit" class="form-control bg-white">
+                    <option value="">Chọn</option>
+                    <option value="Hộp">Hộp</option>
+                    <option value="Chai">Chai</option>
+                    <option value="Túi">Túi</option>
+                    <option value="Tuýt">Tuýt</option>
+                    <option value="Que">Que</option>
+                    <option value="Miếng">Miếng</option>
+                    <option value="Thỏi">Thỏi</option>
+                    <option value="Lọ">Lọ</option>
+                    <option value="Thỏi">Lon</option>
+
+                </select>
+            </div>
+
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Nhãn hàng </label>
-                <select name="brand_id" class="form-control bg-white" >
+                <select name="brand_id" class="form-control bg-white">
                     <option value="">Chọn</option>
                     @foreach ($brands as $item)
-                        <option value="{{$item->id}}" {{ old('brand_id') == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                        <option value="{{ $item->id }}" {{ old('brand_id') == $item->id ? 'selected' : '' }}>
+                            {{ $item->name }}</option>
                     @endforeach
                 </select>
                 @error('brand_id')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
 
 
             <div class="my-3 mt-5 d-flex justify-content-between">
-                
-                <a href="{{route('products.index')}}" class="btn btn-primary text-white text-center"
-                style="padding: 15px 30px; font-size: 1.25rem;">Quay lại</a>
+
+                <a href="{{ route('products.index') }}" class="btn btn-primary text-white text-center"
+                    style="padding: 15px 30px; font-size: 1.25rem;">Quay lại</a>
 
                 <button type="submit" name="submit" class="btn btn-primary text-white text-center"
-                style="padding: 15px 45px; font-size: 1.25rem;">Thêm</button>
+                    style="padding: 15px 45px; font-size: 1.25rem;">Thêm</button>
 
             </div>
 
@@ -164,6 +189,6 @@
         };
     </script>
 
-        
+
 
 @endsection

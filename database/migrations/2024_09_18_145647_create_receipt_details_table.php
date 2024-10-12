@@ -19,9 +19,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Receipt::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->string('product_code');
             $table->smallInteger('quantity');
-            $table->decimal('original_price');
-            $table->decimal('selling_price');
+            $table->bigInteger('original_price');
+            $table->bigInteger('selling_price');
             $table->date('expiry');
             $table->timestamps();
         });

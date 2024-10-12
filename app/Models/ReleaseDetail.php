@@ -12,6 +12,7 @@ class ReleaseDetail extends Model
     protected $fillable = [
         'release_id',
         'product_id',
+        'product_code',
         'quantity',
         'price',
         'note'

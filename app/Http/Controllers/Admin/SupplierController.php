@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Suppliers\CreateSupplierRequest;
 use App\Http\Requests\Suppliers\UpdateSupplierRequest;
+use App\Models\Staff;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
@@ -28,7 +30,8 @@ class SupplierController extends Controller
         }
 
         $suppliers = $query->paginate(10);
-        return view('admin.suppliers.index', compact('suppliers'))->with('search', $request->search);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.suppliers.index', compact('suppliers', 'staff'))->with('search', $request->search);
     }
 
     /**
@@ -38,7 +41,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('admin.suppliers.create');
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.suppliers.create', compact('staff'));
     }
 
     /**
@@ -74,7 +78,8 @@ class SupplierController extends Controller
     public function edit($id)
     {
         $supplier = $this->supplier->findOrFail($id);
-        return view('admin.suppliers.edit', compact('supplier'));
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.suppliers.edit', compact('supplier', 'staff'));
     }
 
     /**

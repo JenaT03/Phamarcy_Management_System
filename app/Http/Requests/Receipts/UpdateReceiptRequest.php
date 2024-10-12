@@ -13,7 +13,7 @@ class UpdateReceiptRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class UpdateReceiptRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'supplier_id' => 'required|exists:suppliers,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'supplier_id.required' => 'Vui lòng chọn nhà cung cấp',
+            'supplier_id.exsit' => 'Vui lòng chọn nhà cung cấp',
         ];
     }
 }

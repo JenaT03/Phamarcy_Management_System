@@ -3,28 +3,51 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReceiptDetails\CreateReceiptDetailRequest;
+use App\Http\Requests\ReceiptDetails\UpdateReceiptDetailRequest;
+use App\Http\Requests\Receipts\UpdateReceiptRequest;
+use App\Models\Product;
+use App\Models\ProductDetail;
+use App\Models\Receipt;
+use App\Models\ReceiptDetail;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReceiptDetailController extends Controller
 {
+    protected $receiptDetail;
+    protected $receipt;
+    protected $productDetail;
+    protected $product;
+
+    public function __construct(ReceiptDetail $receiptDetail, Receipt $receipt, ProductDetail $productDetail, Product $product)
+    {
+        $this->receiptDetail = $receiptDetail;
+        $this->receipt = $receipt;
+        $this->productDetail = $productDetail;
+        $this->product = $product;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    public function index(Request $request) {}
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $receipt = $this->receipt->find($id);
+        $receiptId = $receipt->id;
+        $supplierName = $receipt->supplier->name;
+        $receiptDetails = $receipt->receipt_details()->with('product')->get();
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.receiptdetails.create', compact('receiptId', 'receiptDetails', 'supplierName', 'staff'));
     }
 
     /**
@@ -33,9 +56,34 @@ class ReceiptDetailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateReceiptDetailRequest $request)
     {
-        //
+
+        $dataCreate = $request->all();
+        $product = $this->product->where('code', $dataCreate['product_code'])->first();
+
+        $existingDetail = $this->receiptDetail
+            ->where('product_id', $product->id)
+            ->where('receipt_id', $dataCreate['receipt_id'])
+            ->first();
+
+        if ($existingDetail) {
+            $existingDetail->delete();
+        }
+
+        $receiptDetail = $this->receiptDetail->create(array_merge($dataCreate, ['product_id' => $product->id]));
+        $receiptId = $receiptDetail->receipt_id;
+
+        $this->productDetail->create(
+            [
+                'product_id' => $product->id,
+                'receipt_detail_id' => $receiptDetail->id,
+                'price' => $dataCreate['selling_price'],
+                'quantity' => $dataCreate['quantity'],
+                'expiry' => $dataCreate['expiry']
+            ]
+        );
+        return to_route('receiptdetails.create', ['id' => $receiptId]);
     }
 
     /**
@@ -55,9 +103,15 @@ class ReceiptDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $receiptId)
     {
-        //
+        $receipt = $this->receipt->find($receiptId);
+        $receiptDetail = $this->receiptDetail->findOrFail($id);
+
+        $supplierName = $receipt->supplier->name;
+        $receiptDetails = $receipt->receipt_details()->with('product')->get();
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.receiptdetails.edit', compact('receiptId', 'receiptDetails', 'supplierName', 'receiptDetail', 'staff'));
     }
 
     /**
@@ -67,9 +121,36 @@ class ReceiptDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateReceiptDetailRequest $request, $id)
     {
-        //
+        $dataUpdate = $request->all();
+        $receiptDetail = $this->receiptDetail->findOrFail($id);
+        $receiptId = $dataUpdate['receipt_id'];
+        $product = $this->product->where('code', $dataUpdate['product_code'])->first();
+
+        $existingDetail = $this->receiptDetail
+            ->where('product_id', $product->id)
+            ->where('receipt_id', $dataUpdate['receipt_id'])
+            ->where('id', '!=', $id)
+            ->first();
+
+        if ($existingDetail) {
+            $existingDetail->delete();
+        }
+
+        $receiptDetail->update(array_merge($dataUpdate, ['product_id' => $product->id]));
+        $productDetail = $this->productDetail->where('receipt_detail_id', $receiptDetail->id)->first();
+
+        if ($productDetail) {
+            $productDetail->update([
+                'product_id' => $product->id,
+                'receipt_detail_id' => $receiptDetail->id,
+                'price' => $dataUpdate['selling_price'],
+                'quantity' => $dataUpdate['quantity'],
+                'expiry' => $dataUpdate['expiry']
+            ]);
+        }
+        return to_route('receiptdetails.create', ['id' => $receiptId]);
     }
 
     /**
@@ -78,8 +159,10 @@ class ReceiptDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $receiptId)
     {
-        //
+        $receiptDetail = $this->receiptDetail->findOrFail($id);
+        $receiptDetail->delete();
+        return to_route('receiptdetails.create', ['id' => $receiptId]);
     }
 }

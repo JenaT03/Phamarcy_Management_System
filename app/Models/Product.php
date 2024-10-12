@@ -12,12 +12,14 @@ class Product extends Model
     use HasFactory;
     use TraitHandleImageTrait;
     protected $fillable = [
+        'code',
         'name',
         'description',
         'ingredient',
         'intruction',
         'img',
-        'brand_id'
+        'brand_id',
+        'unit',
     ];
 
     public function receipts()
@@ -48,5 +50,10 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    public function getBy($data, $categoryId)
+    {
+        return $this->whereHas('categories', fn($q) => $q->where('category_id', $categoryId))->paginate(12);
     }
 }

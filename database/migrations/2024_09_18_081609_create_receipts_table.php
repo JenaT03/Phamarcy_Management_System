@@ -14,9 +14,10 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->dateTime('datetime');
             $table->foreignId('staff_id')->constrained('staffs')->cascadeOnDelete();
             $table->foreignId('supplier_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('total')->default(0);
             $table->timestamps();
         });
     }

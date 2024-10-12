@@ -12,13 +12,14 @@ class ReceiptDetail extends Model
     protected $fillable = [
         'receipt_id',
         'product_id',
+        'product_code',
         'quantity',
         'original_price',
         'selling_price',
         'expiry'
     ];
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
@@ -26,5 +27,10 @@ class ReceiptDetail extends Model
     public function receipts()
     {
         return $this->belongsTo(Release::class);
+    }
+
+    public function productdetails()
+    {
+        return $this->hasOne(ProductDetail::class);
     }
 }

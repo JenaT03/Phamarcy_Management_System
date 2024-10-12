@@ -2,89 +2,116 @@
 @section('title', 'Sản phẩm')
 @section('content')
 
-<div class=" container">
+    <div class=" container">
         <h3 class="text-center my-5"> Chỉnh sửa thông tin sản phẩm</h3>
-        <form action="{{route('products.update', $product->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Hình ảnh </label>
-                <input type="file" accept="image/*" id="image-input" class="form-control bg-white"   name = "img" >
+                <input type="file" accept="image/*" id="image-input" class="form-control bg-white" name = "img">
                 <div class="mt-2">
-                    <img src="{{$product->img ? asset('upload/products/' . $product->img) : 'upload/products/default.png'}}" id="show-image"  width="300px">
+                    <img src="{{ $product->img ? asset('upload/products/' . $product->img) : 'upload/products/default.png' }}"
+                        id="show-image" width="300px">
                 </div>
                 @error('img')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Mã số</label>
+                <input type="text" class="form-control" name = "code" value="{{ $product->code }}" readonly>
+            </div>
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Tên sản phẩm </label>
-                <input type="text" class="form-control"  name = "name" value="{{old('name') ?? $product->name}}">
+                <input type="text" class="form-control" name = "name" value="{{ old('name') ?? $product->name }}">
                 @error('name')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Mô tả </label>
-                <textarea name="description" class="form-control editor"  cols="30" rows="10" spellcheck="false">{{ old('description') ?? $product->description }}</textarea>
+                <textarea name="description" class="form-control editor" cols="30" rows="10" spellcheck="false">{{ old('description') ?? $product->description }}</textarea>
                 @error('description')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Thành phần </label>
-                <textarea name="ingredient" class="form-control editor"  cols="30" rows="10" spellcheck="false">{{ old('ingredient') ?? $product->ingredient }}</textarea>
+                <textarea name="ingredient" class="form-control editor" cols="30" rows="10" spellcheck="false">{{ old('ingredient') ?? $product->ingredient }}</textarea>
                 @error('ingredient')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Hướng dẫn sử dụng </label>
-                <textarea name="intruction" class="form-control editor"  cols="30" rows="10" spellcheck="false">{{ old('intruction') ?? $product->intruction }}</textarea>
-                
+                <textarea name="intruction" class="form-control editor" cols="30" rows="10" spellcheck="false">{{ old('intruction') ?? $product->intruction }}</textarea>
+
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Phân loại </label>
                 @foreach ($categories as $item)
                     <div class="form-check text-start">
-                        <input type="checkbox" id="{{$item->id}}" class="form-check-input border-1" name="category_ids[]"
-                        value="{{$item->id}}" {{$product->categories->contains('id', $item->id) ? 'checked' : ''}}>
-                        <label class="form-check-label" for="{{$item->id}}" >{{$item->name}}</label>
+                        <input type="checkbox" id="{{ $item->id }}" class="form-check-input border-1"
+                            name="category_ids[]" value="{{ $item->id }}"
+                            {{ $product->categories->contains('id', $item->id) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="{{ $item->id }}">{{ $item->name }}</label>
                     </div>
                 @endforeach
 
                 @error('category_ids')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Đơn vị sản phẩm </label>
+                <select name="unit" class="form-control bg-white">
+                    <option value="" {{ $product->unit == '' ? 'selected' : '' }}>Chọn</option>
+                    <option value="Hộp" {{ $product->unit == 'Hộp' ? 'selected' : '' }}>Hộp</option>
+                    <option value="Chai" {{ $product->unit == 'Chai' ? 'selected' : '' }}>Chai</option>
+                    <option value="Túi" {{ $product->unit == 'Túi' ? 'selected' : '' }}>Túi</option>
+                    <option value="Tuýt" {{ $product->unit == 'Tuýt' ? 'selected' : '' }}>Tuýt</option>
+                    <option value="Que" {{ $product->unit == 'Que' ? 'selected' : '' }}>Que</option>
+                    <option value="Miếng" {{ $product->unit == 'Miếng' ? 'selected' : '' }}>Miếng</option>
+                    <option value="Thỏi" {{ $product->unit == 'Thỏi' ? 'selected' : '' }}>Thỏi</option>
+                    <option value="Lọ" {{ $product->unit == 'Lọ' ? 'selected' : '' }}>Lọ</option>
+                    <option value="Lon" {{ $product->unit == 'Lon' ? 'selected' : '' }}>Lon</option>
+
+
+                </select>
+
+            </div>
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Nhãn hàng </label>
-                <select name="brand_id" class="form-control bg-white" >
+                <select name="brand_id" class="form-control bg-white">
                     <option value="">Chọn</option>
                     @foreach ($brands as $item)
-                        <option value="{{$item->id}}" {{ $product->brand_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                        <option value="{{ $item->id }}" {{ $product->brand_id == $item->id ? 'selected' : '' }}>
+                            {{ $item->name }}</option>
                     @endforeach
                 </select>
                 @error('brand_id')
-                <span class="text-danger">{{$message}}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
 
 
             <div class="my-3 mt-5 d-flex justify-content-between">
-                
-                <a href="{{route('products.index')}}" class="btn btn-primary text-white text-center"
-                style="padding: 15px 30px; font-size: 1.25rem;">Quay lại</a>
+
+                <a href="{{ route('products.index') }}" class="btn btn-primary text-white text-center"
+                    style="padding: 15px 30px; font-size: 1.25rem;">Quay lại</a>
 
                 <button type="submit" name="submit" class="btn btn-primary text-white text-center"
-                style="padding: 15px 45px; font-size: 1.25rem;">Cập nhật</button>
+                    style="padding: 15px 45px; font-size: 1.25rem;">Cập nhật</button>
 
             </div>
 
@@ -157,11 +184,10 @@
     <!-- A friendly reminder to run on a server, remove this during the integration. -->
     <script>
         window.onload = function() {
-            if (window.location.protocol === 'file:') {
-            }
+            if (window.location.protocol === 'file:') {}
         };
     </script>
 
-        
+
 
 @endsection

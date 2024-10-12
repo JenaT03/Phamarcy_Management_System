@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('staffs', function (Blueprint $table) {
             $table->id();
-            $table->string('staff_number');
+            $table->string('code');
             $table->string('name');
             $table->string('phone')->unique();
             $table->year('birth');

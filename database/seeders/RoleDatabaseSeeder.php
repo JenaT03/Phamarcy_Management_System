@@ -16,16 +16,7 @@ class RoleDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
-            ['name' => 'super-admin', 'display_name' => 'Quản trị viên', 'group' => 'system'],
-            ['name' => 'manager', 'display_name' => 'Quản lý', 'group' => 'system'],
-            ['name' => 'staff', 'display_name' => 'Nhân viên', 'group' => 'system'],
-            ['name' => 'user', 'display_name' => 'Người dùng', 'group' => 'user'],
-        ];
 
-        foreach ($roles as $role) {
-            Role::updateOrCreate($role);
-        }
 
         $permissions = [
             ['name' => 'create-receipt', 'display_name' => 'Thêm phiếu nhập/Chi tiết phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
@@ -83,5 +74,26 @@ class RoleDatabaseSeeder extends Seeder
         foreach ($permissions as $item) {
             Permission::updateOrCreate($item);
         }
+
+
+        $roles = [
+            ['name' => 'super-admin', 'display_name' => 'Quản trị viên', 'group' => 'system'],
+            ['name' => 'manager', 'display_name' => 'Quản lý', 'group' => 'system'],
+            ['name' => 'staff', 'display_name' => 'Nhân viên', 'group' => 'system'],
+            ['name' => 'user', 'display_name' => 'Người dùng', 'group' => 'user'],
+        ];
+
+        foreach ($roles as $role) {
+            Role::updateOrCreate($role);
+        }
+
+        // Lấy vai trò super_admin
+        $superAdminRole = Role::where('name', 'super-admin')->first();
+
+        // Lấy tất cả permissions
+        $allPermissions = Permission::all();
+
+        // Gán tất cả các quyền cho vai trò super_admin
+        $superAdminRole->permissions()->sync($allPermissions->pluck('id')->toArray());
     }
 }

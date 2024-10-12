@@ -7,8 +7,10 @@ use App\Http\Requests\Customers\CreateCustomerRequest;
 use App\Http\Requests\Customers\UpdateCustomerRequest;
 use App\Models\Customer;
 use App\Models\Role;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -34,7 +36,8 @@ class CustomerController extends Controller
         }
 
         $customers = $query->paginate(10);
-        return view('admin.customers.index', compact('customers'))->with('search', $request->search);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.customers.index', compact('customers', 'staff'))->with('search', $request->search);
     }
 
 
@@ -45,7 +48,10 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('admin.customers.create');
+        if (Auth::check()) {
+            $staff = Staff::find(Auth::user()->userable_id);
+            return view('admin.customers.create', compact('staff'));
+        } else return view('admin.customers.create');;
     }
 
     /**
@@ -56,9 +62,15 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
-        $dataCreate = $request->all();
-        $customer = $this->customer->create($dataCreate);
-        return to_route('users.create', ['phone' => $customer->phone, 'user_type' => 'customer']);
+        if (Auth::check() && Auth::user()->userable_type === Staff::class) {
+            $dataCreate = $request->all();
+            $customer = $this->customer->create($dataCreate);
+            return to_route('users.create', ['phone' => $customer->phone, 'user_type' => 'customer']);
+        } else {
+            $dataCreate = $request->all();
+            $customer = $this->customer->create($dataCreate);
+            return to_route('users.create', ['phone' => $customer->phone, 'user_type' => 'customer', 'role' => 'customer']);
+        }
     }
 
     /**
@@ -77,8 +89,14 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = $this->customer->findOrFail($id);
-        return view('admin.customers.edit', compact('customer'));
+        if (Auth::check()) {
+            $staff = Staff::find(Auth::user()->userable_id);
+            $customer = $this->customer->findOrFail($id);
+            return view('admin.customers.edit', compact('customer', 'staff'));
+        } else {
+            $customer = $this->customer->findOrFail($id);
+            return view('admin.customers.edit', compact('customer'));
+        }
     }
 
     /**
@@ -92,16 +110,31 @@ class CustomerController extends Controller
     {
         $dataUpdate = $request->all();
         $customer = $this->customer->findOrFail($id);
-        if (!$customer->update($dataUpdate)) {
-            return back()->withErrors(['error' => 'Cập nhật thông tin khách hàng thất bại.']);
-        }
 
-        $customer = $this->customer->findOrFail($id);
-        $user = $customer->users;
-        if ($user) {
-            return to_route('users.edit', ['user' => $user->id, 'phone' => $customer->phone, 'user_type' => 'customer']);
+        if (Auth::check()) {
+            if (Auth::user()->userable_type === Customer::class) {
+
+                if (!$customer->update($dataUpdate)) {
+                    return back()->withErrors(['error' => 'Cập nhật thông tin cá nhân thất bại.']);
+                }
+
+                $user = Auth::user();
+                if ($user) {
+                    return to_route('users.edit', ['user' => $user->id, 'phone' => $customer->phone, 'user_type' => 'customer', 'role' => 'customer']);
+                }
+                return back()->withErrors(['error' => 'Không tìm thấy tài khoản của bạn.']);
+            } else if (Auth::user()->userable_type === Staff::class) {
+                if (!$customer->update($dataUpdate)) {
+                    return back()->withErrors(['error' => 'Cập nhật thông tin khách hàng thất bại.']);
+                }
+
+                $user = $customer->users;
+                if ($user) {
+                    return to_route('users.edit', ['user' => $user->id, 'phone' => $customer->phone, 'user_type' => 'customer']);
+                }
+                return back()->withErrors(['error' => 'Không tìm thấy tài khoản liên quan tới khách hàng này.']);
+            }
         }
-        return back()->withErrors(['error' => 'Không tìm thấy người dùng liên quan tới khách hàng này.']);
     }
 
     /**

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Categories\CreateCategoryRequest;
 use App\Http\Requests\Categories\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -29,7 +31,8 @@ class CategoryController extends Controller
         }
 
         $categories = $query->paginate(10);
-        return view('admin.categories.index', compact('categories'))->with('search', $request->search);
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.categories.index', compact('categories', 'staff'))->with('search', $request->search);
     }
 
     /**
@@ -39,7 +42,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.categories.create', compact('staff'));
     }
 
     /**
@@ -75,7 +79,8 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->category->findOrFail($id);
-        return view('admin.categories.edit', compact('category'));
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.categories.edit', compact('category', 'staff'));
     }
 
     /**

@@ -326,6 +326,9 @@
 }
 
 .fruite .fruite-item .fruite-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
     overflow: hidden;
     transition: 0.5s;
     border-radius: 10px 10px 0 0;
@@ -353,6 +356,9 @@
 }
 
 .vesitable .vesitable-item .vesitable-img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
     overflow: hidden;
     transition: 0.5s;
     border-radius: 10px 10px 0 0;
@@ -550,7 +556,7 @@
 
 .description-text {
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

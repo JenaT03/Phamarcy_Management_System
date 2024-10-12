@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('phone')->unique();
             $table->string('password');
-            $table->unsignedBigInteger('userable_id');
+            $table->string('userable_id');
             $table->string('userable_type');
             $table->rememberToken();
             $table->timestamps();
