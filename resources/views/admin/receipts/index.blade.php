@@ -6,7 +6,7 @@
             <div class="d-flex justify-content-around mb-5">
                 <form method="GET" class="d-flex ms-5 search-form" name="search" action="{{ route('receipts.index') }}">
                     <input class="form-control me-2 rounded-pill" type="search" name="search"
-                        placeholder="Nhập mã số nhân viên để tìm" aria-label="Search">
+                        placeholder="Nhập mã phiếu nhập để tìm" aria-label="Search">
                     <button type="submit" class="btn btn-primary border-0 border-secondary rounded-pill text-white"><i
                             class="icon_search fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -14,11 +14,12 @@
             </div>
             <div>
                 @if ($receipts->isEmpty() && !empty($search))
-                    <p class="text-center">Không tìm thấy phiếu nhập nào của nhân viên "{{ $search }}".</p>
+                    <p class="text-center">Không tìm thấy phiếu nhập nào có mã "{{ $search }}".</p>
                 @endif
                 <table class="table hid-border-style">
                     <thead>
                         <tr class="text-center">
+                            <th scope="col">Mã phiếu nhập</th>
                             <th scope="col">Nhân viên</th>
                             <th scope="col">Nhà cung cấp</th>
                             <th scope="col">Ngày nhập</th>
@@ -30,6 +31,7 @@
                     <tbody class="border-bottom">
                         @foreach ($receipts as $receipt)
                             <tr class="text-center border-top">
+                                <td class="py-5">{{ $receipt->id }}</td>
                                 <td class="py-5">{{ $receipt->staff->code . ' - ' . $receipt->staff->name }}</td>
                                 <td class="py-5">{{ $receipt->supplier->name }}</td>
                                 <td class="py-5">{{ $receipt->datetime }}</td>
@@ -37,8 +39,10 @@
                                 <td class="py-5 d-flex justify-content-around">
                                     <a href="{{ route('receipts.show', $receipt->id) }}" class="btn"><i
                                             class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
-                                    <a href="{{ route('receipts.edit', $receipt->id) }}" class="btn"><i
-                                            class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>
+                                    {{-- <a href="{{ route('receipts.edit', $receipt->id) }}" class="btn"><i
+                                            class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a> --}}
+                                    <a href="{{ route('receipts.generate', $receipt->id) }}" class="btn"><i
+                                            class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
                                     <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

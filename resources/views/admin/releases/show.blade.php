@@ -1,31 +1,33 @@
 @extends('admin.layouts.app-page')
-@section('title', 'Lịch sử nhập hàng')
+@section('title', 'Lịch sử bán hàng')
 @section('content')
-    <div class="container-fluid py-5">
-        <div class="container pb-5">
+    <div class="container-fluid py-5 ">
+        <div class="container pb-5 ">
             <div class="d-flex justify-content-between">
-                <a href="{{ route('receipts.index') }}" class="btn btn-primary py-2 px-3 text-white fs-5">
+                <a href="{{ route('releases.index') }}" class="btn btn-primary py-2 px-3 text-white fs-5">
                     <i class="fa-solid fa-arrow-left"></i>
                     Quay lại
                 </a>
 
                 <div>
-                    <p class="mb-0 text-dark py-2 fs-5 fw-bold">Tổng tiền: {{ $receipt->total }}đ</p>
+                    <p class="mb-0 text-dark py-2 fs-5 fw-bold">Tổng tiền: {{ $release->total }}đ</p>
                 </div>
             </div>
             <div class="d-flex justify-content-around mb-5">
                 <form method="GET" class="d-flex ms-5 search-form" name="search"
-                    action="{{ route('receipts.show', $receipt->id) }}">
+                    action="{{ route('releases.show', $release->id) }}">
                     <input class="form-control me-2 rounded-pill" type="search" name="search"
                         placeholder="Nhập tên sản phẩm để tìm" aria-label="Search">
                     <button type="submit" class="btn btn-primary border-0 border-secondary rounded-pill text-white"><i
                             class="icon_search fa-solid fa-magnifying-glass"></i>
                     </button>
                 </form>
+
             </div>
+
             <div>
-                @if ($receiptDetails->isEmpty() && !empty($search))
-                    <p class="text-center">Không tìm thấy sản phẩm có tên "{{ $search }}".</p>
+                @if ($releaseDetails->isEmpty() && !empty($search))
+                    <p class="text-center">Không tìm thấy sản phẩm có tên"{{ $search }}".</p>
                 @endif
                 <table class="table hid-border-style">
                     <thead>
@@ -33,30 +35,24 @@
                             <th scope="col"></th>
                             <th scope="col">Sản phẩm</th>
                             <th scope="col">Số lượng</th>
-                            <th scope="col">Giá nhập</th>
-                            <th scope="col">Giá bán</th>
-                            <th scope="col">Hạn sử dụng</th>
+                            <th scope="col">Giá</th>
                             <th scope="col">Thành tiền</th>
+                            <th scope="col">Ghi chú</th>
 
                         </tr>
                     </thead>
                     <tbody class="border-bottom">
-                        @foreach ($receiptDetails as $item)
-                            @php $total = 0; @endphp
+                        @foreach ($releaseDetails as $item)
                             <tr class="border-top">
-                                @php
-                                    $itemTotal = $item->quantity * $item->original_price;
-                                    $total += $itemTotal;
-                                @endphp
                                 <td class="py-5"><img
                                         src="{{ $item->product->img ? asset('upload/products/' . $item->product->img) : 'upload/products/default.png' }}"
                                         alt="" width="70px"></td>
                                 <td class="py-5">{{ $item->product->name }}</td>
                                 <td class="py-5">{{ $item->quantity . ' ' . $item->product->unit }}</td>
-                                <td class="py-5">{{ $item->original_price }}đ</td>
-                                <td class="py-5">{{ $item->selling_price }}đ</td>
-                                <td class="py-5">{{ $item->expiry }}</td>
-                                <td class="py-5">{{ $itemTotal }}đ</td>
+                                <td class="py-5">{{ $item->price }}đ</td>
+                                <td class="py-5">{{ $item->price * $item->quantity }}đ</td>
+                                <td class="py-5">{{ $item->note }}</td>
+
                             </tr>
                         @endforeach
 
@@ -67,15 +63,15 @@
             <div class="col-12">
                 <div class="pagination d-flex justify-content-center mt-5">
                     {{-- Previous Page Link --}}
-                    @if ($receiptDetails->onFirstPage())
+                    @if ($releaseDetails->onFirstPage())
                         <a href="#" class="rounded disabled">&laquo;</a>
                     @else
-                        <a href="{{ $receiptDetails->previousPageUrl() }}" class="rounded">&laquo;</a>
+                        <a href="{{ $releaseDetails->previousPageUrl() }}" class="rounded">&laquo;</a>
                     @endif
 
                     {{-- Pagination Links --}}
-                    @foreach ($receiptDetails->getUrlRange(1, $receiptDetails->lastPage()) as $page => $url)
-                        @if ($page == $receiptDetails->currentPage())
+                    @foreach ($releaseDetails->getUrlRange(1, $releaseDetails->lastPage()) as $page => $url)
+                        @if ($page == $releaseDetails->currentPage())
                             <a href="{{ $url }}" class="active rounded">{{ $page }}</a>
                         @else
                             <a href="{{ $url }}" class="rounded">{{ $page }}</a>
@@ -83,8 +79,8 @@
                     @endforeach
 
                     {{-- Next Page Link --}}
-                    @if ($receiptDetails->hasMorePages())
-                        <a href="{{ $receiptDetails->nextPageUrl() }}" class="rounded">&raquo;</a>
+                    @if ($releaseDetails->hasMorePages())
+                        <a href="{{ $releaseDetails->nextPageUrl() }}" class="rounded">&raquo;</a>
                     @else
                         <a href="#" class="rounded disabled">&raquo;</a>
                     @endif

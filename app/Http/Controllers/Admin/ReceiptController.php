@@ -13,6 +13,8 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ReceiptController extends Controller
 {
@@ -37,12 +39,10 @@ class ReceiptController extends Controller
             $staff = $this->staff->find(Auth::user()->userable_id);
             $query = $this->receipt->with('supplier', 'staff')->latest('id');
             $search = $request->search ?? '';
+            $search = $request->search ?? '';
             if (!empty($search)) {
-                $query->whereHas('staff', function ($q) use ($search) {
-                    $q->where('code', 'like', '%' . $search . '%');
-                });
+                $query->where('id', 'like', '%' . $request->search . '%');
             }
-
             $receipts = $query->paginate(10);
             return view('admin.receipts.index', compact('staff', 'receipts', 'search'));
         } else return to_route('home');
@@ -90,12 +90,15 @@ class ReceiptController extends Controller
             $staff = Staff::find(Auth::user()->userable_id);
             $receipt = $this->receipt->find($id);
             $query = ReceiptDetail::with('product')->where('receipt_id', $id)->latest('id');
-            if ($request->has('search') && !empty($request->search)) {
-                $query->where('product_code', 'like', '%' . $request->search . '%');
+            $search = $request->search ?? '';
+            if (!empty($search)) {
+                $query->whereHas('product', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
             }
 
             $receiptDetails = $query->paginate(10);
-            return view('admin.receipts.show', compact('staff', 'receiptDetails', 'id'))->with('search', $request->search);
+            return view('admin.receipts.show', compact('staff', 'receiptDetails', 'receipt', 'search'));
         } else return to_route('home');
     }
 
@@ -148,6 +151,18 @@ class ReceiptController extends Controller
     {
         $receipt = $this->receipt->findOrFail($id);
         $receipt->update(['total' => $data['total']]);
-        return to_route('receipts.index')->with(['message' => 'Hoàn thành phiếu nhập hàng']);
+        $receiptDetails = $receipt->receipt_details()->get();
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.receipts.receipt-finish', compact('receipt', 'receiptDetails', 'staff'));
+    }
+
+    public function generatePrintReceipt($id)
+    {
+        $receipt = $this->receipt->findOrFail($id);
+        $receiptDetails = $receipt->receipt_details()->get();
+        $data = ['receipt' => $receipt, 'receiptDetails' => $receiptDetails];
+        $pdf = Pdf::loadView('admin.receipts.receipt-print', $data);
+        $todayDate = Carbon::now()->format('d-m-Y');
+        return $pdf->download('bien_lai-' . $receipt->id . '-' . $todayDate . '.pdf');
     }
 }

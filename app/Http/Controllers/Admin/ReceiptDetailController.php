@@ -11,6 +11,7 @@ use App\Models\ProductDetail;
 use App\Models\Receipt;
 use App\Models\ReceiptDetail;
 use App\Models\Staff;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,14 +63,7 @@ class ReceiptDetailController extends Controller
         $dataCreate = $request->all();
         $product = $this->product->where('code', $dataCreate['product_code'])->first();
 
-        $existingDetail = $this->receiptDetail
-            ->where('product_id', $product->id)
-            ->where('receipt_id', $dataCreate['receipt_id'])
-            ->first();
 
-        if ($existingDetail) {
-            $existingDetail->delete();
-        }
 
         $receiptDetail = $this->receiptDetail->create(array_merge($dataCreate, ['product_id' => $product->id]));
         $receiptId = $receiptDetail->receipt_id;
@@ -128,15 +122,7 @@ class ReceiptDetailController extends Controller
         $receiptId = $dataUpdate['receipt_id'];
         $product = $this->product->where('code', $dataUpdate['product_code'])->first();
 
-        $existingDetail = $this->receiptDetail
-            ->where('product_id', $product->id)
-            ->where('receipt_id', $dataUpdate['receipt_id'])
-            ->where('id', '!=', $id)
-            ->first();
 
-        if ($existingDetail) {
-            $existingDetail->delete();
-        }
 
         $receiptDetail->update(array_merge($dataUpdate, ['product_id' => $product->id]));
         $productDetail = $this->productDetail->where('receipt_detail_id', $receiptDetail->id)->first();
@@ -159,6 +145,8 @@ class ReceiptDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy($id, $receiptId)
     {
         $receiptDetail = $this->receiptDetail->findOrFail($id);

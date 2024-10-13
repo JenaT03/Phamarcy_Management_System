@@ -3,7 +3,7 @@
     <div class="container-fluid featurs mt-4">
         <div class="container py-2">
             <div class="row d-flex justify-content-around mb-4">
-                <a href="#" class="btn btn-primary col-5 py-3">
+                <a href="{{ route('releases.search') }}" class="btn btn-primary col-5 py-3">
                     <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
                     <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Bán hàng</p>
                 </a>

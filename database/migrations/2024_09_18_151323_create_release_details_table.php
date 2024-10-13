@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('product_code');
             $table->smallInteger('quantity');
             $table->bigInteger('price');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

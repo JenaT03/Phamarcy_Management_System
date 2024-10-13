@@ -40,7 +40,8 @@
                                 </td>
                                 <td class="py-5">{{ $product->code }}</td>
                                 <td class="py-5">{{ $product->name }}</td>
-                                <td class="py-5">{{ $product->productdetails->first()->price ?? '0' }}đ</td>
+                                <td class="py-5">{{ $product->productdetails()->latest('id')->first()->price ?? '0' }}đ
+                                </td>
                                 <td class="py-5">
                                     {{ $product->productdetails->first()->quantity ?? '0' }}{{ $product->unit ? '/' . $product->unit : '' }}
                                 </td>

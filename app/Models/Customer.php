@@ -20,4 +20,9 @@ class Customer extends Model
     {
         return $this->morphOne(User::class, 'userable');
     }
+
+    public function releases()
+    {
+        return $this->hasMany(Release::class);
+    }
 }

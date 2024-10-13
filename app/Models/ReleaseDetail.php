@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +19,7 @@ class ReleaseDetail extends Model
         'note'
     ];
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
@@ -26,5 +27,20 @@ class ReleaseDetail extends Model
     public function releases()
     {
         return $this->belongsTo(Release::class);
+    }
+
+    public function checkQuantity($product, $quantity)
+    {
+        $sixMonthsLater = Carbon::now()->addMonths(6);
+        $productDetails = $product->productdetails()
+            ->where('expiry', '>', $sixMonthsLater)
+            ->orderBy('expiry', 'asc')
+            ->get();
+
+        $totalAvailableQuantity = $productDetails->sum('quantity');
+        if ($totalAvailableQuantity < $quantity) {
+            return false;
+        }
+        return true;
     }
 }

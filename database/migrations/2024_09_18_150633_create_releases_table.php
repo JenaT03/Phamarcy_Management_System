@@ -17,11 +17,11 @@ return new class extends Migration
     {
         Schema::create('releases', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Customer::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('staff_id')->constrained('staffs')->cascadeOnDelete();
             $table->dateTime('datetime');
             $table->bigInteger('total')->default(0);
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }
