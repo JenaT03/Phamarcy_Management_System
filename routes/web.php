@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ReleaseController;
 use App\Http\Controllers\Admin\ReleaseDetailController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
@@ -103,7 +104,12 @@ Route::middleware('auth')->group(
         Route::delete('releasedetails/destroy/{id}/{releaseId}', [ReleaseDetailController::class, 'destroy'])->name('releasedetails.destroy');
         Route::get('releasedetails/index', [ReleaseDetailController::class, 'index'])->name('releasedetails.index');
 
-
-        //Route::resource('receiptdetails', ReceiptDetailController::class);
+        Route::get('statistics/products', [StatisticController::class, 'productList'])->name('statistics.productlist');
+        Route::get('statistics/receipts', [StatisticController::class, 'showStatisticReceipt'])->name('statistics.showreceiptlist');
+        Route::post('statistics/receipts', [StatisticController::class, 'statisticReceipt'])->name('statistics.receiptlist');
+        Route::get('statistics/releases', [StatisticController::class, 'showStatisticRelease'])->name('statistics.showreleaselist');
+        Route::post('statistics/releases', [StatisticController::class, 'statisticRelease'])->name('statistics.releaselist');
+        Route::post('statistics/receipts/print', [StatisticController::class, 'printReceiptsList'])->name('statistics.printReceiptsList');
+        Route::post('statistics/releases/print', [StatisticController::class, 'printReleasesList'])->name('statistics.printReleasesList');
     }
 );

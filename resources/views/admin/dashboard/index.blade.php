@@ -51,7 +51,7 @@
             </div>
 
             <div class="row d-flex justify-content-around mb-4">
-                <a href="#" class="btn btn-primary col-5 py-3">
+                <a href="{{ route('statistics.showreleaselist') }}" class="btn btn-primary col-5 py-3">
                     <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
                     <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Thống kê</p>
                 </a>

@@ -19,6 +19,11 @@ class ProductDetail extends Model
 
     public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function receiptdetail()
+    {
+        return $this->belongsTo(ReceiptDetail::class, 'receipt_detail_id');
     }
 }

@@ -21,13 +21,14 @@ class ReceiptDetail extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
-    public function receipts()
+    public function receipt()
     {
-        return $this->belongsTo(Release::class);
+        return $this->belongsTo(Receipt::class, 'receipt_id');
     }
+
 
     public function productdetails()
     {

@@ -22,13 +22,6 @@ return new class extends Migration
             $table->string('phone');
             $table->timestamps();
         });
-
-        Schema::create('supplier_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
-            $table->timestamps();
-        });
     }
 
     /**
@@ -38,7 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supplier_product');
         Schema::dropIfExists('suppliers');
     }
 };

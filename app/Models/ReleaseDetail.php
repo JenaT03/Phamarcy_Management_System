@@ -21,12 +21,12 @@ class ReleaseDetail extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     public function releases()
     {
-        return $this->belongsTo(Release::class);
+        return $this->belongsTo(Release::class, 'release_id');
     }
 
     public function checkQuantity($product, $quantity)
