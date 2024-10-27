@@ -4,7 +4,7 @@
         <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(255, 255, 255, 0.5)">
             <div class="row g-4">
                 <div class="col-lg-3">
-                    <a href="{{route('home')}}">
+                    <a href="{{ route('home') }}">
                         <h1 class="text-primary mb-0">Hoa Đà</h1>
                     </a>
                 </div>
@@ -31,7 +31,7 @@
                         môn dày dặn kinh nghiệm, đảm bảo 100% thuốc chính hãng và dịch
                         vụ chăm sóc khách hàng tận tình
                     </p>
-                    <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Đọc thêm về chúng
+                    <a href="{{route('introduce')}}" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Đọc thêm về chúng
                         tôi</a>
                 </div>
             </div>
@@ -52,7 +52,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
-                    <h4 class="text-light mb-3">Liên hệ</h4>
+                    <a href="{{route('contact')}}" class="btn border-secondary py-2 px-4 rounded-pill mb-2 "><h5 class="text-primary mb-0">Thông tin liên hệ</h5></a>
                     <p>
                         Địa chỉ: Đường 3/2, P. Xuân Khách, Q. Ninh Kiều, TP. Cần Thơ
                     </p>

@@ -17,6 +17,12 @@
                 </div>
             @endif
             <div class="text-center"><img src="{{ asset('img/avatar.png') }}" style="width: 25%;"></div>
+            <div class="container py-3 mt-3" style="width: 50%;">
+                <a href="{{ route('customers.show', $customer->id) }}" class="btn d-flex btn-primary justify-content-center">
+                    <i class="fa-solid fa-scroll text-white" style="padding-top: 3px;"></i>
+                    <p class="text-white ms-3 mb-0">Đơn mua của tôi</p>
+                </a>
+            </div>
 
             <table class="table">
                 <tbody>

@@ -23,11 +23,14 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'edit-receipt', 'display_name' => 'Sửa phiếu nhập/Chi tiết phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
             ['name' => 'delete-receipt', 'display_name' => 'Xóa phiếu nhập/Chi tiết phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
             ['name' => 'show-receipt', 'display_name' => 'Xem danh sách phiếu nhập/Chi tiết phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
+            ['name' => 'print-receipt', 'display_name' => 'In phiếu xuất', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
 
-            ['name' => 'create-release', 'display_name' => 'Thêm phiếu xuất/Chi tiết phiếu xuất', 'group' => 'Phiếu xuất/Chi tiết phiếu xuất'],
-            ['name' => 'edit-release', 'display_name' => 'Sửa phiếu xuất/Chi tiết phiếu xuất', 'group' => 'Phiếu xuất/Chi tiết phiếu xuất'],
-            ['name' => 'delete-release', 'display_name' => 'Xóa phiếu xuất/Chi tiết phiếu xuất', 'group' => 'Phiếu xuất/Chi tiết phiếu xuất'],
-            ['name' => 'show-release', 'display_name' => 'Xem danh sách phiếu xuất/Chi tiết phiếu xuất', 'group' => 'Phiếu xuất/Chi tiết phiếu xuất'],
+            ['name' => 'create-release', 'display_name' => 'Thêm hóa đơn/Chi tiết hóa đơn', 'group' => 'Hóa đơn/Chi tiết hóa đơn'],
+            ['name' => 'edit-release', 'display_name' => 'Sửa hóa đơn/Chi tiết hóa đơn', 'group' => 'Hóa đơn/Chi tiết hóa đơn'],
+            ['name' => 'delete-release', 'display_name' => 'Xóa hóa đơn/Chi tiết hóa đơn', 'group' => 'Hóa đơn/Chi tiết hóa đơn'],
+            ['name' => 'show-release', 'display_name' => 'Xem danh sách hóa đơn/Chi tiết hóa đơn', 'group' => 'Hóa đơn/Chi tiết hóa đơn'],
+            ['name' => 'print-release', 'display_name' => 'In hóa đơn', 'group' => 'Hóa đơn/Chi tiết hóa đơn'],
+
 
             ['name' => 'create-customer', 'display_name' => 'Thêm khách hàng', 'group' => 'Khách hàng'],
             ['name' => 'edit-customer', 'display_name' => 'Sửa khách hàng', 'group' => 'Khách hàng'],
@@ -38,6 +41,9 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'edit-staff', 'display_name' => 'Sửa nhân viên', 'group' => 'Nhân viên'],
             ['name' => 'delete-staff', 'display_name' => 'Xóa nhân viên', 'group' => 'Nhân viên'],
             ['name' => 'show-staff', 'display_name' => 'Xem danh sách nhân viên', 'group' => 'Nhân viên'],
+            ['name' => 'show-detail-staff', 'display_name' => 'Xem chi tiết thông tin nhân viên', 'group' => 'Nhân viên'],
+            ['name' => 'show-detail-all-staff', 'display_name' => 'Xem chi tiết thông tin của tất cả nhân viên', 'group' => 'Nhân viên'],
+
 
             ['name' => 'create-brand', 'display_name' => 'Thêm nhãn hàng', 'group' => 'Nhãn hàng'],
             ['name' => 'edit-brand', 'display_name' => 'Sửa nhãn hàng', 'group' => 'Nhãn hàng'],
@@ -69,7 +75,10 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'delete-user', 'display_name' => 'Xóa tài khoản', 'group' => 'Tài khoản'],
             ['name' => 'show-user', 'display_name' => 'Xem danh sách tài khoản', 'group' => 'Tài khoản'],
 
-            ['name' => 'statistic', 'display_name' => 'Thống kê', 'group' => 'Thống kê'],
+            ['name' => 'products-statistic', 'display_name' => 'Thống kê sản phẩm', 'group' => 'Thống kê'],
+            ['name' => 'receipts-statistic', 'display_name' => 'Thống kê phiếu nhập', 'group' => 'Thống kê'],
+            ['name' => 'releases-statistic', 'display_name' => 'Thống kê hóa đơn', 'group' => 'Thống kê'],
+
         ];
         foreach ($permissions as $item) {
             Permission::updateOrCreate($item);

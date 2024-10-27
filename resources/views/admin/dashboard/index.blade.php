@@ -20,10 +20,12 @@
                     <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Khách hàng</p>
                 </a>
 
-                <a href="{{ route('staffs.index') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhân viên</p>
-                </a>
+                @can('show-staff')
+                    <a href="{{ route('staffs.index') }}" class="btn btn-primary col-5 py-3">
+                        <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
+                        <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhân viên</p>
+                    </a>
+                @endcan
             </div>
 
             <div class="row d-flex justify-content-around mb-4">
@@ -56,10 +58,12 @@
                     <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Thống kê</p>
                 </a>
 
-                <a href="{{ route('roles.index') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Quản lý vai trò</p>
-                </a>
+                @hasrole('super-admin')
+                    <a href="{{ route('roles.index') }}" class="btn btn-primary col-5 py-3">
+                        <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
+                        <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Quản lý vai trò</p>
+                    </a>
+                @endhasrole
             </div>
         </div>
     </div>

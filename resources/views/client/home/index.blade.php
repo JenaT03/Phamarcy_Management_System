@@ -64,11 +64,11 @@
         @if (Auth::check())
             <div class="container-fluid featurs">
                 <div class="container py-5">
-                    <a href="#"
+                    <a href="{{ route('customers.show', Auth::user()->userable_id) }}"
                         class="btn d-flex btn-primary col-12 col-lg-6 offset-lg-3 py-4 justify-content-center">
                         <i class="fa-solid fa-scroll text-white" style="font-size: 2rem"></i>
                         <p class="text-white ms-4 mb-0" style="font-size: 1.5rem">
-                            ĐƠN MUA CỦA BẠN
+                            ĐƠN MUA CỦA TÔI
                         </p>
                     </a>
                 </div>

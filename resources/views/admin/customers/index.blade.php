@@ -37,7 +37,7 @@
                                 <td class="py-5">{{ $customer->birth }}</td>
                                 <td class="py-5">{{ $customer->gender }}</td>
                                 <td class="py-5 d-flex justify-content-around">
-                                    <a href="{{ route('customers.detail') }}" class="btn"><i
+                                    <a href="{{ route('customers.show', $customer->id) }}" class="btn"><i
                                             class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
                                     <a href="{{ route('customers.edit', $customer->id) }}" class="btn"><i
                                             class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>

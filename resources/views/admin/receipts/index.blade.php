@@ -41,8 +41,11 @@
                                             class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
                                     {{-- <a href="{{ route('receipts.edit', $receipt->id) }}" class="btn"><i
                                             class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a> --}}
-                                    <a href="{{ route('receipts.generate', $receipt->id) }}" class="btn"><i
-                                            class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
+                                    @if (!$receipt->receipt_details->isEmpty())
+                                        <a href="{{ route('receipts.generate', $receipt->id) }}" class="btn"><i
+                                                class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
+                                    @endif
+
                                     <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

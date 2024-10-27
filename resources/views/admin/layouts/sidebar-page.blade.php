@@ -2,7 +2,7 @@
 
     <h1 class="text-center text-white display-5 text-uppercase">@yield('title')</h1>
     <div class="d-flex justify-content-between">
-        <a href="{{ route('dashboard') }}"><i class="fa-solid fa-house text-white rounded-circle ms-5 back-icon"></i></a>
+        <a href="{{ route('home') }}"><i class="fa-solid fa-house text-white rounded-circle ms-5 back-icon"></i></a>
         <div class=" text-end me-5">
             <a class=" text-white dropdown-toggle fs-5 " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-regular fa-user" style="margin-right: 10px;"></i>{{ $staff->name }}</a>

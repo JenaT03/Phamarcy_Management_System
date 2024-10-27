@@ -57,14 +57,9 @@ class LoginController extends Controller
 
         if (Auth::attempt($credencials)) {
             $user = Auth::user();
-            if ($user->userable_type ===  Customer::class) {
-                return to_route('home');
-            } elseif ($user->userable_type === Staff::class) {
-                return to_route('dashboard');
-            } else {
-                Auth::logout();
-                return back()->withErrors(['error' => 'Không có loại người dùng này']);
-            }
+            return to_route('home');
+        } else {
+            Auth::logout();
         }
 
         return back()->withErrors(['fail' => 'Số điện thoại hoặc mật khẩu không đúng.']);

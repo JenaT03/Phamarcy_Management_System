@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customers\CreateCustomerRequest;
 use App\Http\Requests\Customers\UpdateCustomerRequest;
+use App\Http\Requests\Statistics\StatisticRequest;
 use App\Models\Customer;
+use App\Models\Release;
+use App\Models\ReleaseDetail;
 use App\Models\Role;
 use App\Models\Staff;
 use App\Models\User;
@@ -79,7 +82,60 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {}
+    public function show($id)
+    {
+        if (Auth::check()) {
+            $customer = $this->customer->findOrFail($id);
+            $releases = $customer->releases()->with('staff')->get();
+            if (Auth::user()->userable_type === Customer::class) {
+                return view('client.profile.show-own-release', compact('customer', 'releases'));
+            }
+            if (Auth::user()->userable_type === Staff::class) {
+                $staff = Staff::find(Auth::user()->userable_id);
+                return view('admin.customers.show', compact('customer', 'releases', 'staff'));
+            }
+        }
+    }
+
+    public function showDetailRelease(Request $request, $customerId, $reId)
+    {
+        if (Auth::check()) {
+            $customer = $this->customer->find($customerId);
+            $release = Release::find($reId);
+            $query = ReleaseDetail::with('product')->where('release_id', $reId)->latest('id');
+            $search = $request->search ?? '';
+            if (!empty($search)) {
+                $query->whereHas('product', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            }
+
+            $releaseDetails = $query->paginate(10);
+            if (Auth::user()->userable_type === Customer::class) {
+                return view('client.profile.show-own-release-detail', compact('releaseDetails', 'release', 'search', 'customer'));
+            }
+            if (Auth::user()->userable_type === Staff::class) {
+                $staff = Staff::find(Auth::user()->userable_id);
+                return view('admin.customers.show-detail', compact('staff', 'releaseDetails', 'release', 'search', 'customerId'));
+            }
+        } else return to_route('home');
+    }
+
+    public function releaseList(StatisticRequest $request)
+    {
+        $data = $request->all();
+        $staff = Staff::find(Auth::user()->userable_id);
+        $customer = $this->customer->findOrFail($data['customerId']);
+        $releases = $customer->releases()
+            ->whereBetween('datetime', [$data['date-start'], $data['date-end']])
+            ->with('staff')
+            ->get();
+        $dateStart =  $data['date-start'];
+        $dateEnd =  $data['date-end'];
+
+        return view('admin.customers.show', compact('customer', 'releases', 'dateStart', 'dateEnd', 'staff'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

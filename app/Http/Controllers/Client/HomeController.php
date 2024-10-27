@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,10 +35,14 @@ class HomeController extends Controller
         foreach ($categories as $category) {
             $category->products = $category->products()->latest()->take(6)->get();
         }
-
         if (Auth::check()) {
-            $customer = Customer::find(Auth::user()->userable_id);
-            return view('client.home.index', compact('categories', 'customer', 'products'))->with('search', $request->search);
+            if (Auth::user()->userable_type === Customer::class) {
+                $customer = Customer::find(Auth::user()->userable_id);
+                return view('client.home.index', compact('categories', 'customer', 'products'))->with('search', $request->search);
+            } else if (Auth::user()->userable_type === Staff::class) {
+                $staff = Staff::find(Auth::user()->userable_id);
+                return view('admin.dashboard.index', compact('staff'));
+            }
         } else
             return view('client.home.index', compact('categories', 'products'))->with('search', $request->search);
     }

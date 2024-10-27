@@ -42,8 +42,11 @@
                                     {{-- <a href="{{ route('releases.edit', [$release->id, $release->customer->id]) }}"
                                         class="btn"><i class="fa-solid fa-pen text-primary"
                                             style="font-size: 1.25rem;"></i></a> --}}
-                                    <a href="{{ route('releases.generate', $release->id) }}" class="btn"><i
-                                            class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
+                                    @if (!$release->release_details->isEmpty())
+                                        <a href="{{ route('releases.generate', $release->id) }}" class="btn"><i
+                                                class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
+                                    @endif
+
                                     <form action="{{ route('releases.destroy', $release->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

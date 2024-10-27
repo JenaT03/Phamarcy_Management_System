@@ -55,11 +55,22 @@
 
                 </div>
                 @if (Auth::check())
-                    <a class="my-auto d-flex justify-content-between" href="{{ route('profile.show', $customer->id) }}"
-                        style="font-size: 1.25rem">
+                    <a class="my-auto d-flex justify-content-between" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false" style="font-size: 1.25rem">
                         <i class="fa-regular fa-user" style="margin-right: 10px; padding-top: 5px"></i>
                         <p class="m-0">{{ $customer->name }}</p>
                     </a>
+                    <ul class="dropdown-menu text-center">
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Đăng xuất</button>
+                            </form>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('profile.show', $customer->id) }}">Trang cá
+                                nhân</a></li>
+
+                    </ul>
                 @else
                     <div class="d-flex m-3 me-0">
                         <a href="{{ route('login.index') }}" class="my-auto">Đăng nhập</a>

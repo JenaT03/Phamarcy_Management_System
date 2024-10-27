@@ -43,7 +43,7 @@
                                 <td class="py-5 d-flex justify-content-around">
                                     <a href="{{ route('staffs.edit', $staff->id) }}" class="btn"><i
                                             class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>
-                                    <a href="{{ route('staffs.detail') }}" class="btn"><i
+                                    <a href="{{ route('staffs.show', $staff->id) }}" class="btn"><i
                                             class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
                                     <form action="{{ route('staffs.destroy', $staff->id) }}" method="POST">
                                         @csrf

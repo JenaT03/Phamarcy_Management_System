@@ -51,7 +51,7 @@ class ProfileController extends Controller
     public function show($id)
     {
         $customer = $this->customer->findOrFail($id);
-        return view('client.profile.index', compact('customer'));
+        return view('client.profile.show', compact('customer'));
     }
 
     /**

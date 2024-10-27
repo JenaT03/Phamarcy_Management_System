@@ -37,7 +37,7 @@ class ReleaseController extends Controller
     {
         if (Auth::check()) {
             $staff = $this->staff->find(Auth::user()->userable_id);
-            $query = $this->release->with('customer', 'staff')->latest('id');
+            $query = $this->release->with('customer', 'staff', 'release_details')->latest('id');
             $search = $request->search ?? '';
             if (!empty($search)) {
                 $query->where('id', 'like', '%' . $request->search . '%');
@@ -165,7 +165,7 @@ class ReleaseController extends Controller
 
     public function finish(Request $data, $id)
     {
-        $release = $this->release->findOrFail($id);
+        $release = $this->release->with(['release_details'])->findOrFail($id);
         $release->update(['total' => $data['total']]);
         $releaseDetails = $release->release_details()->get();
         foreach ($releaseDetails as $releaseDetail) {

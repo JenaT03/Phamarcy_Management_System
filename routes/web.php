@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReceiptController;
 use App\Http\Controllers\Admin\ReceiptDetailController;
@@ -39,77 +38,217 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 |
 */
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.index');
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.index');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-
+//Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/introduce', function () {
+    return view('client.home.introduce');
+})->name('introduce');
+
+Route::get('/contact', function () {
+    return view('client.home.contact');
+})->name('contact');
+
 Route::get('product/{category_id}', [ClientProductController::class, 'index'])->name('client.products.index');
 Route::get('product-detail/{id}', [ClientProductController::class, 'show'])->name('client.products.show');
 
-Route::middleware('auth')->group(
-    function () {
-        Route::resource('profile', ProfileController::class);
-        Route::post('/logout', function () {
-            Auth::logout();
-            return redirect('/');
-        })->name('logout');
-    }
-);
+//Register
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.index');
+Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+
+//Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.index');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
-Route::resource('users', UserController::class);
-Route::resource('customers', CustomerController::class);
 
 // Auth::routes();
 Route::middleware('auth')->group(
     function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        // Route User
+        Route::prefix('users')->controller(UserController::class)->name('users.')->group(
+            function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{user}', 'show')->name('show');
+                Route::get('/{user}/edit',  'edit')->name('edit');
+                Route::put('/{user}', 'update')->name('update');
+                Route::delete('/{user}', 'destroy')->name('destroy');
+            }
+        );
 
-        Route::resource('roles', RoleController::class);
-        Route::get('customers/detail', [CustomerController::class, 'detail'])->name('customers.detail');
-        Route::resource('staffs', StaffController::class);
-        Route::get('staffs/detail', [StaffController::class, 'detail'])->name('staffs.detail');
-        Route::resource('brands', BrandController::class);
-        Route::resource('suppliers', SupplierController::class);
-        Route::resource('categories', CategoryController::class);
-        Route::resource('products', ProductController::class);
-        Route::resource('receipts', ReceiptController::class);
-        Route::post('receipts/finish_receipt/{id}', [ReceiptController::class, 'saveTotal'])->name('receipts.finish');
-        Route::get('receipts/print_receipt/{id}', [ReceiptController::class, 'generatePrintReceipt'])->name('receipts.generate');
+        // Route Customer
+        Route::prefix('customers')->controller(CustomerController::class)->name('customers.')->group(
+            function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::get('/{customer}/edit', 'edit')->name('edit');
+                Route::put('/{customer}', 'update')->name('update');
+                Route::delete('/{customer}', 'destroy')->name('destroy');
+                Route::get('/{customer}', 'show')->name('show');
+                Route::post('/{customer}', 'releaseList')->name('release-list');
+                Route::get('/{customer}/{release}/release', 'showDetailRelease')->name('show-detail');
+            }
+        );
 
-        Route::get('receiptdetails/create/{id}', [ReceiptDetailController::class, 'create'])->name('receiptdetails.create');
-        Route::post('receiptdetails/store', [ReceiptDetailController::class, 'store'])->name('receiptdetails.store');
-        Route::get('receiptdetails/edit/{id}/{receiptId}', [ReceiptDetailController::class, 'edit'])->name('receiptdetails.edit');
-        Route::put('receiptdetails/update/{id}', [ReceiptDetailController::class, 'update'])->name('receiptdetails.update');
-        Route::delete('receiptdetails/destroy/{id}/{receiptId}', [ReceiptDetailController::class, 'destroy'])->name('receiptdetails.destroy');
-        Route::get('receiptdetails/index', [ReceiptDetailController::class, 'index'])->name('receiptdetails.index');
+        //Route Profile
+        Route::prefix('profile')->controller(ProfileController::class)->name('profile.')->group(
+            function () {
+                Route::get('/{id}/edit',  'edit')->name('edit');
+                Route::get('/{id}', 'show')->name('show');
+            }
+        );
 
-        Route::get('releases/search', [ReleaseController::class, 'search'])->name('releases.search');
-        Route::get('releases/create/{id}', [ReleaseController::class, 'create'])->name('releases.create');
-        Route::post('releases/store', [ReleaseController::class, 'store'])->name('releases.store');
-        Route::get('releases/edit/{id}/{customerId}', [ReleaseController::class, 'edit'])->name('releases.edit');
-        Route::put('releases/update/{id}', [ReleaseController::class, 'update'])->name('releases.update');
-        Route::delete('releases/destroy/{id}', [ReleaseController::class, 'destroy'])->name('releases.destroy');
-        Route::post('releases/finish/{id}', [ReleaseController::class, 'finish'])->name('releases.finish');
-        Route::get('releases/generate/{id}', [ReleaseController::class, 'generateInvoice'])->name('releases.generate');
-        Route::get('releases/index', [ReleaseController::class, 'index'])->name('releases.index');
-        Route::get('releases/show/{id}', [ReleaseController::class, 'show'])->name('releases.show');
+        //Route Logout
+        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-        Route::get('releasedetails/create/{id}', [ReleaseDetailController::class, 'create'])->name('releasedetails.create');
-        Route::post('releasedetails/store', [ReleaseDetailController::class, 'store'])->name('releasedetails.store');
-        Route::get('releasedetails/edit/{id}/{releaseId}', [ReleaseDetailController::class, 'edit'])->name('releasedetails.edit');
-        Route::put('releasedetails/update/{id}', [ReleaseDetailController::class, 'update'])->name('releasedetails.update');
-        Route::delete('releasedetails/destroy/{id}/{releaseId}', [ReleaseDetailController::class, 'destroy'])->name('releasedetails.destroy');
-        Route::get('releasedetails/index', [ReleaseDetailController::class, 'index'])->name('releasedetails.index');
+        // Route Role
+        Route::prefix('roles')->controller(RoleController::class)->name('roles.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('role:super-admin');
+                Route::get('/create', 'create')->name('create')->middleware('role:super-admin');
+                Route::post('/', 'store')->name('store')->middleware('role:super-admin');
+                Route::get('/{role}', 'show')->name('show')->middleware('role:super-admin');
+                Route::get('/{role}/edit',  'edit')->name('edit')->middleware('role:super-admin');
+                Route::put('/{role}', 'update')->name('update')->middleware('role:super-admin');
+                Route::delete('/{role}', 'destroy')->name('destroy')->middleware('role:super-admin');
+            }
+        );
+        //Route Staff
+        Route::prefix('staffs')->controller(StaffController::class)->name('staffs.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('permission:show-staff');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-staff');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-staff');
+                Route::get('/{staff}', 'show')->name('show')->middleware('permission:show-detail-staff');
+                //Route::get('/detail/{staff}', 'showAll')->name('show')->middleware('permission:show-detail-all-staff');
+                Route::get('/{staff}/edit',  'edit')->name('edit')->middleware('permission:edit-staff');
+                Route::put('/{staff}', 'update')->name('update')->middleware('permission:edit-staff');
+                Route::delete('/{staff}', 'destroy')->name('destroy')->middleware('permission:delete-staff');
+            }
+        );
 
-        Route::get('statistics/products', [StatisticController::class, 'productList'])->name('statistics.productlist');
-        Route::get('statistics/receipts', [StatisticController::class, 'showStatisticReceipt'])->name('statistics.showreceiptlist');
-        Route::post('statistics/receipts', [StatisticController::class, 'statisticReceipt'])->name('statistics.receiptlist');
-        Route::get('statistics/releases', [StatisticController::class, 'showStatisticRelease'])->name('statistics.showreleaselist');
-        Route::post('statistics/releases', [StatisticController::class, 'statisticRelease'])->name('statistics.releaselist');
-        Route::post('statistics/receipts/print', [StatisticController::class, 'printReceiptsList'])->name('statistics.printReceiptsList');
-        Route::post('statistics/releases/print', [StatisticController::class, 'printReleasesList'])->name('statistics.printReleasesList');
+        //Route Brand
+        Route::prefix('brands')->controller(BrandController::class)->name('brands.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('permission:show-brand');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-brand');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-brand');
+                Route::get('/{brand}/edit',  'edit')->name('edit')->middleware('permission:edit-brand');
+                Route::put('/{brand}', 'update')->name('update')->middleware('permission:edit-brand');
+                Route::delete('/{brand}', 'destroy')->name('destroy')->middleware('permission:delete-brand');
+            }
+        );
+
+        //Route Supplier
+        Route::prefix('suppliers')->controller(SupplierController::class)->name('suppliers.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('permission:show-supplier');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-supplier');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-supplier');
+                Route::get('/{supplier}/edit',  'edit')->name('edit')->middleware('permission:edit-supplier');
+                Route::put('/{supplier}', 'update')->name('update')->middleware('permission:edit-supplier');
+                Route::delete('/{supplier}', 'destroy')->name('destroy')->middleware('permission:delete-supplier');
+            }
+        );
+
+        //Route Category
+        Route::prefix('categories')->controller(CategoryController::class)->name('categories.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('permission:show-category');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-category');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-category');
+                Route::get('/{category}/edit',  'edit')->name('edit')->middleware('permission:edit-category');
+                Route::put('/{category}', 'update')->name('update')->middleware('permission:edit-category');
+                Route::delete('/{category}', 'destroy')->name('destroy')->middleware('permission:delete-category');
+            }
+        );
+
+        //Route Product
+        Route::prefix('products')->controller(ProductController::class)->name('products.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('permission:show-product');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-product');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-product');
+                Route::get('/{product}', 'show')->name('show')->middleware('permission:show-product');
+                Route::get('/{product}/edit',  'edit')->name('edit')->middleware('permission:edit-product');
+                Route::put('/{product}', 'update')->name('update')->middleware('permission:edit-product');
+                Route::delete('/{product}', 'destroy')->name('destroy')->middleware('permission:delete-product');
+            }
+        );
+
+        //Route Receipt
+        Route::prefix('receipts')->controller(ReceiptController::class)->name('receipts.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('permission:show-receipt');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-receipt');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-receipt');
+                Route::get('/{id}', 'show')->name('show')->middleware('permission:show-receipt');
+                Route::get('/{id}/edit',  'edit')->name('edit')->middleware('permission:edit-receipt');
+                Route::put('/{id}', 'update')->name('update')->middleware('permission:edit-receipt');
+                Route::delete('/{id}', 'destroy')->name('destroy')->middleware('permission:delete-receipt');
+                Route::post('/finish_receipt/{id}', 'saveTotal')->name('finish')->middleware('permission:create-receipt');
+                Route::get('/print_receipt/{id}', 'generatePrintReceipt')->name('generate')->middleware('permission:print-receipt');
+            }
+        );
+
+
+
+        //Route ReceiptDetail
+        Route::prefix('receiptdetails')->controller(ReceiptDetailController::class)->name('receiptdetails.')->group(
+            function () {
+                Route::get('/', 'index')->name('index')->middleware('permission:show-receipt');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-receipt');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-receipt');
+                Route::get('/{id}', 'show')->name('show')->middleware('permission:show-receipt');
+                Route::get('/edit/{id}/{receiptId}',  'edit')->name('edit')->middleware('permission:edit-receipt');
+                Route::put('/{id}', 'update')->name('update')->middleware('permission:edit-receipt');
+                Route::delete('/{id}/{receiptId}', 'destroy')->name('destroy')->middleware('permission:delete-receipt');
+            }
+        );
+
+        //Route Release
+        Route::prefix('releases')->controller(ReleaseController::class)->name('releases.')->group(
+            function () {
+                Route::get('/search', 'search')->name('search')->middleware('permission:show-release');
+                Route::get('/create/{id}', 'create')->name('create')->middleware('permission:create-release');
+                Route::post('/', 'store')->name('store')->middleware('permission:create-release');
+                Route::get('/{id}', 'show')->name('show')->middleware('permission:show-release');
+                Route::get('/edit/{id}/{customerId}',  'edit')->name('edit')->middleware('permission:edit-release');
+                Route::put('/{id}', 'update')->name('update')->middleware('permission:edit-release');
+                Route::delete('/{id}', 'destroy')->name('destroy')->middleware('permission:delete-release');
+                Route::post('/finish/{id}', 'finish')->name('finish')->middleware('permission:create-release');
+                Route::get('/generate/{id}', 'generateInvoice')->name('generate')->middleware('permission:print-release');
+                Route::get('/index', 'index')->name('index')->middleware('permission:show-release');
+            }
+        );
+
+
+        //Route ReleaseDetail
+        Route::prefix('releasedetails')->controller(ReleaseDetailController::class)->name('releasedetails.')->group(
+            function () {
+                Route::get('/create/{id}', 'create')->name('create')->middleware('permission:create-release');
+                Route::post('/store', 'store')->name('store')->middleware('permission:create-release');
+                Route::get('/edit/{id}/{releaseId}', 'edit')->name('edit')->middleware('permission:edit-release');
+                Route::put('/update/{id}', 'update')->name('update')->middleware('permission:edit-release');
+                Route::delete('/destroy/{id}/{releaseId}', 'destroy')->name('destroy')->middleware('permission:delete-release');
+                Route::get('/index', 'index')->name('index')->middleware('permission:show-release');
+            }
+        );
+
+
+        //Route Statistic
+        Route::prefix('statistics')->controller(BrandController::class)->name('statistics.')->group(
+            function () {
+                Route::get('/products', 'productList')->name('productlist')->middleware('permission:products-statistic');
+                Route::get('/receipts', 'showStatisticReceipt')->name('showreceiptlist')->middleware('permission:receipts-statistic');
+                Route::post('/receipts', 'statisticReceipt')->name('receiptlist')->middleware('permission:receipts-statistic');
+                Route::get('/releases', 'showStatisticRelease')->name('showreleaselist')->middleware('permission:releases-statistic');
+                Route::post('/releases', 'statisticRelease')->name('releaselist')->middleware('permission:release-statistic');
+                Route::post('/receipts/print', 'printReceiptsList')->name('printReceiptsList')->middleware('permission:receipts-statistic');
+                Route::post('/releases/print', 'printReleasesList')->name('printReleasesList')->middleware('permission:releases-statistic');
+            }
+        );
     }
 );

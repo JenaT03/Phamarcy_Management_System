@@ -37,7 +37,7 @@ class ReceiptController extends Controller
     {
         if (Auth::check()) {
             $staff = $this->staff->find(Auth::user()->userable_id);
-            $query = $this->receipt->with('supplier', 'staff')->latest('id');
+            $query = $this->receipt->with('supplier', 'staff', 'receipt_details')->latest('id');
             $search = $request->search ?? '';
             $search = $request->search ?? '';
             if (!empty($search)) {
@@ -149,7 +149,7 @@ class ReceiptController extends Controller
 
     public function saveTotal(Request $data, $id)
     {
-        $receipt = $this->receipt->findOrFail($id);
+        $receipt = $this->receipt->with(['receipt_details'])->findOrFail($id);
         $receipt->update(['total' => $data['total']]);
         $receiptDetails = $receipt->receipt_details()->get();
         $staff = Staff::find(Auth::user()->userable_id);
