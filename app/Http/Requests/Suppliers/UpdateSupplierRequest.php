@@ -24,7 +24,7 @@ class UpdateSupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => ['required', 'max:255'],
             'address' => 'required',
             'phone' => ['required', 'unique:suppliers,phone,'  . $this->route('supplier'), 'regex:/^(09|03|07|08|05)+([0-9]{8})$/'],
 
@@ -35,6 +35,7 @@ class UpdateSupplierRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống',
+            'name.max' => 'Tên không được vượt quá 255 ký tự.',
             'address.required' => 'Địa chỉ không được để trống',
             'phone.required' => 'Số điện thoại không được để trống.',
             'phone.unique' => 'Số điện thoại này đã tồn tại.',

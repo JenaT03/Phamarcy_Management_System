@@ -2,10 +2,16 @@
  @section('title', 'thống kê')
  @section('content')
      <div class="row g-0 pt-3 bg-white">
-         <a href="{{ route('statistics.showreleaselist') }}" class="col-4 text-center py-2 ">BÁN HÀNG</a>
-         <a href="{{ route('statistics.showreceiptlist') }}" class="col-4 text-center py-2 border-cus fw-bold">NHẬP HÀNG</a>
-         <a href="{{ route('statistics.productlist') }}" class="col-4 text-center py-2 ">SẢN
-             PHẨM</a>
+         @can('releases-statistic')
+             <a href="{{ route('statistics.showreleaselist') }}" class="col-4 text-center py-2 ">BÁN HÀNG</a>
+         @endcan
+         @can('receipts-statistic')
+             <a href="{{ route('statistics.showreceiptlist') }}" class="col-4 text-center py-2">NHẬP HÀNG</a>
+         @endcan
+         @can('products-statistic')
+             <a href="{{ route('statistics.productlist') }}" class="col-4 text-center py-2 border-cus fw-bold">SẢN
+                 PHẨM</a>
+         @endcan
 
 
      </div>

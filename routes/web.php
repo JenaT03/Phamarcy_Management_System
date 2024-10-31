@@ -63,13 +63,11 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 
-// Auth::routes();
 Route::middleware('auth')->group(
     function () {
         // Route User
         Route::prefix('users')->controller(UserController::class)->name('users.')->group(
             function () {
-                Route::get('/', 'index')->name('index');
                 Route::get('/{user}', 'show')->name('show');
                 Route::get('/{user}/edit',  'edit')->name('edit');
                 Route::put('/{user}', 'update')->name('update');
@@ -80,14 +78,14 @@ Route::middleware('auth')->group(
         // Route Customer
         Route::prefix('customers')->controller(CustomerController::class)->name('customers.')->group(
             function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::get('/{customer}/edit', 'edit')->name('edit');
-                Route::put('/{customer}', 'update')->name('update');
-                Route::delete('/{customer}', 'destroy')->name('destroy');
-                Route::get('/{customer}', 'show')->name('show');
-                Route::post('/{customer}', 'releaseList')->name('release-list');
-                Route::get('/{customer}/{release}/release', 'showDetailRelease')->name('show-detail');
+                Route::get('/', 'index')->name('index')->middleware('permission:show-customer');
+                Route::get('/create', 'create')->name('create')->middleware('permission:create-customer');
+                Route::get('/{customer}/edit', 'edit')->name('edit')->middleware('permission:edit-customer');
+                Route::put('/{customer}', 'update')->name('update')->middleware('permission:edit-customer');
+                Route::delete('/{customer}', 'destroy')->name('destroy')->middleware('permission:delete-customer');
+                Route::get('/{customer}', 'show')->name('show')->middleware('permission:show-customer');
+                Route::post('/{customer}', 'releaseList')->name('release-list')->middleware('permission:show-customer');
+                Route::get('/{customer}/{release}/release', 'showDetailRelease')->name('show-detail')->middleware('permission:show-customer');
             }
         );
 
@@ -239,7 +237,7 @@ Route::middleware('auth')->group(
 
 
         //Route Statistic
-        Route::prefix('statistics')->controller(BrandController::class)->name('statistics.')->group(
+        Route::prefix('statistics')->controller(StatisticController::class)->name('statistics.')->group(
             function () {
                 Route::get('/products', 'productList')->name('productlist')->middleware('permission:products-statistic');
                 Route::get('/receipts', 'showStatisticReceipt')->name('showreceiptlist')->middleware('permission:receipts-statistic');

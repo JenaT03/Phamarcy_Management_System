@@ -37,23 +37,28 @@
                                 <td class="py-5">{{ $release->datetime }}</td>
                                 <td class="py-5">{{ $release->total }}</td>
                                 <td class="py-5 d-flex justify-content-around">
-                                    <a href="{{ route('releases.show', $release->id) }}" class="btn"><i
-                                            class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
+                                    @can('show-release')
+                                        <a href="{{ route('releases.show', $release->id) }}" class="btn"><i
+                                                class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
+                                    @endcan
                                     {{-- <a href="{{ route('releases.edit', [$release->id, $release->customer->id]) }}"
                                         class="btn"><i class="fa-solid fa-pen text-primary"
                                             style="font-size: 1.25rem;"></i></a> --}}
-                                    @if (!$release->release_details->isEmpty())
-                                        <a href="{{ route('releases.generate', $release->id) }}" class="btn"><i
-                                                class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
-                                    @endif
-
-                                    <form action="{{ route('releases.destroy', $release->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
-                                            data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
-                                                style="font-size: 1.25rem;"></i></button>
-                                    </form>
+                                    @can('print-release')
+                                        @if (!$release->release_details->isEmpty())
+                                            <a href="{{ route('releases.generate', $release->id) }}" class="btn"><i
+                                                    class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
+                                        @endif
+                                    @endcan
+                                    @can('delete-release')
+                                        <form action="{{ route('releases.destroy', $release->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
+                                                data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
+                                                    style="font-size: 1.25rem;"></i></button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

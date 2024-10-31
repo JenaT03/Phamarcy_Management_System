@@ -24,7 +24,7 @@ class UpdateCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => ['required', 'max:255'],
             'gender' => 'required',
             'birth' => ['required', 'regex:/^[0-9]{4}$/'],
             'phone' => ['required', 'unique:customers,phone,' . $this->route('customer'), 'regex:/^(09|03|07|08|05)+([0-9]{8})$/'],
@@ -35,6 +35,7 @@ class UpdateCustomerRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống.',
+            'name.max' => 'Tên không được vượt quá 255 ký tự',
             'gender.required' => 'Giới tính không được để trống.',
             'phone.required' => 'Số điện thoại không được để trống.',
             'birth.required' => 'Năm sinh không được để trống',

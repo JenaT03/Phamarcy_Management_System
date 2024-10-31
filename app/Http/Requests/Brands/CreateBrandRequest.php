@@ -24,7 +24,7 @@ class CreateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => ['required', 'max:255'],
             'country' => 'required',
         ];
     }
@@ -33,6 +33,7 @@ class CreateBrandRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống',
+            'name.max' => 'Tên không được vượt quá 255 ký tự',
             'country.required' => 'Tên quốc gia không được để trống',
         ];
     }

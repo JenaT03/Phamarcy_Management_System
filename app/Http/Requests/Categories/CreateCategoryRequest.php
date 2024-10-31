@@ -24,7 +24,7 @@ class CreateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'unique:categories,name']
+            'name' => ['required', 'unique:categories,name', 'max:255']
         ];
     }
 
@@ -32,6 +32,7 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên loại sản phẩm không được bỏ trống.',
+            'name.max' => 'Tên không được vượt quá 255 ký tự.',
             'name.unique' => 'Tên loại sản phẩm đã tồn tại.',
         ];
     }

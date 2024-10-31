@@ -24,9 +24,21 @@ class CreateRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => ['required', 'max:255'],
             'display_name' => 'required',
-            'group' => 'required'
+            'group' => 'required',
+            'permission_ids' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.max' => 'Tên không được vượt quá 255 ký tự',
+            'name.required' => 'Tên không được để trống',
+            'display_name.required' => 'Tên hiển thị không được để trống',
+            'group.required' => 'Vui lòng chọn nhóm',
+            'permission_ids.required' => 'Vui lòng chọn quyền hạn',
         ];
     }
 }

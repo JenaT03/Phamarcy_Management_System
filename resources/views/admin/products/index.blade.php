@@ -5,7 +5,9 @@
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="d-flex justify-content-around mb-5">
-                <a href="{{ route('products.create') }}" class="btn btn-primary text-white py-4 px-3">Thêm sản phẩm mới</a>
+                @can('create-product')
+                    <a href="{{ route('products.create') }}" class="btn btn-primary text-white py-4 px-3">Thêm sản phẩm mới</a>
+                @endcan
                 <form method="GET" class="d-flex ms-5 search-form" name="search" action="{{ route('products.index') }}">
                     <input class="form-control me-2 rounded-pill" type="search" name="search"
                         placeholder="Nhập tên sản phẩm để tìm" aria-label="Search">
@@ -47,17 +49,23 @@
                                 </td>
                                 <td class="py-5">{{ $product->brand ? $product->brand->name : '' }}</td>
                                 <td class="py-5 d-flex justify-content-around">
-                                    <a href="{{ route('products.show', $product->id) }}" class="btn"><i
-                                            class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
-                                    <a href="{{ route('products.edit', $product->id) }}" class="btn"><i
-                                            class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>
-                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
-                                            data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
-                                                style="font-size: 1.25rem;"></i></button>
-                                    </form>
+                                    @can('show-product')
+                                        <a href="{{ route('products.show', $product->id) }}" class="btn"><i
+                                                class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
+                                    @endcan
+                                    @can('edit-product')
+                                        <a href="{{ route('products.edit', $product->id) }}" class="btn"><i
+                                                class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>
+                                    @endcan
+                                    @can('delete-product')
+                                        <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
+                                                data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
+                                                    style="font-size: 1.25rem;"></i></button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

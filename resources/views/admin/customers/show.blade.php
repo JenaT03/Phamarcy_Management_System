@@ -8,9 +8,10 @@
             <p class="fw-bold">Tên: {{ $customer->name }}</p>
             <p class="fw-bold">SĐT: {{ $customer->phone }}</p>
 
-            <form action="{{route('customers.release-list',  $customer->id)}}" class="d-flex justify-content-end mb-5" method="POST">
+            <form action="{{ route('customers.release-list', $customer->id) }}" class="d-flex justify-content-end mb-5"
+                method="POST">
                 @csrf
-                <input type="text" name="customerId" value="{{$customer->id}}" hidden>
+                <input type="text" name="customerId" value="{{ $customer->id }}" hidden>
                 <p class="mb-0 mx-2" style="align-content: center;">TỪ</p>
 
                 <div class="form-item  mx-2">
@@ -58,8 +59,11 @@
                             <td class="py-5">{{ $release->datetime }}</td>
                             <td class="py-5">{{ $release->total }}</td>
                             <td class="py-5 d-flex justify-content-around">
-                                <a href="{{route('customers.show-detail', ['customer' => $customer->id, 'release' => $release->id])}}" class="btn"><i class="fa-solid fa-eye text-secondary "
-                                        style="font-size: 1.25rem;"></i></a>
+                                @can('show-customer')
+                                    <a href="{{ route('customers.show-detail', ['customer' => $customer->id, 'release' => $release->id]) }}"
+                                        class="btn"><i class="fa-solid fa-eye text-secondary "
+                                            style="font-size: 1.25rem;"></i></a>
+                                @endcan
                             </td>
 
                         </tr>

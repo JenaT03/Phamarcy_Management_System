@@ -24,11 +24,11 @@ class UpdateStaffRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => ['required', 'max:255'],
             'gender' => 'required',
             'birth' => ['required', 'regex:/^[0-9]{4}$/'],
             'phone' => ['required', 'unique:staffs,phone,' . $this->route('staff'), 'regex:/^(09|03|07|08|05)+([0-9]{8})$/'],
-            'address' => ['required', 'max:100'],
+            'address' => ['required'],
         ];
     }
 
@@ -36,6 +36,7 @@ class UpdateStaffRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống.',
+            'name.max' => 'Tên không được vượt quá 255 ký tự.',
             'gender.required' => 'Giới tính không được để trống.',
             'phone.required' => 'Số điện thoại không được để trống.',
             'birth.required' => 'Năm sinh không được để trống',
@@ -43,7 +44,6 @@ class UpdateStaffRequest extends FormRequest
             'phone.unique' => 'Số điện thoại này đã tồn tại.',
             'phone.regex' => 'Số điện thoại không hợp lệ.',
             'address.required' => 'Địa chỉ không được để trống',
-            'address.max' => 'Địa chỉ tối đa 100 ký tự',
         ];
     }
 }

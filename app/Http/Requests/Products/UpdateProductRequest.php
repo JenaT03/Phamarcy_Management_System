@@ -24,7 +24,7 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'unique:products,name,' . $this->route('product')],
+            'name' => ['required', 'unique:products,name,' . $this->route('product'), 'max:255'],
             'description' => 'required',
             'ingredient' => 'required',
             'img' => ['image', 'mimes:png,jpg,PNG,jpeg', 'max:2048'],
@@ -37,6 +37,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống',
+            'name.max' => 'Tên không được vượt quá 255 ký tự',
             'name.unique' => 'Tên sản phẩm đã tồn tại',
             'description.required' => 'Mô tả không được để trống',
             'ingredient.required' => 'Thành phần không được để trống',

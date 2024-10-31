@@ -70,10 +70,10 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'delete-role', 'display_name' => 'Xóa vai trò', 'group' => 'Vai trò'],
             ['name' => 'show-role', 'display_name' => 'Xem danh sách vai trò', 'group' => 'Vai trò'],
 
-            ['name' => 'create-user', 'display_name' => 'Thêm tài khoản', 'group' => 'Tài khoản'],
-            ['name' => 'edit-user', 'display_name' => 'Sửa tài khoản', 'group' => 'Tài khoản'],
-            ['name' => 'delete-user', 'display_name' => 'Xóa tài khoản', 'group' => 'Tài khoản'],
-            ['name' => 'show-user', 'display_name' => 'Xem danh sách tài khoản', 'group' => 'Tài khoản'],
+            // ['name' => 'create-user', 'display_name' => 'Thêm tài khoản', 'group' => 'Tài khoản'],
+            // ['name' => 'edit-user', 'display_name' => 'Sửa tài khoản', 'group' => 'Tài khoản'],
+            // ['name' => 'delete-user', 'display_name' => 'Xóa tài khoản', 'group' => 'Tài khoản'],
+            // ['name' => 'show-user', 'display_name' => 'Xem danh sách tài khoản', 'group' => 'Tài khoản'],
 
             ['name' => 'products-statistic', 'display_name' => 'Thống kê sản phẩm', 'group' => 'Thống kê'],
             ['name' => 'receipts-statistic', 'display_name' => 'Thống kê phiếu nhập', 'group' => 'Thống kê'],

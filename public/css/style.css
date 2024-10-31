@@ -193,7 +193,7 @@
 /*** Hero Header ***/
 .hero-header {
     /* linear-gradient(rgba(248, 223, 173, 0.1), rgba(248, 223, 173, 0.1)), */
-    background: url(../img/bg-img.jpg);
+    background: url(../img/bg-img.png);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -656,4 +656,22 @@
     border-top-right-radius: 5px;
     background-color: #F0F5FF;
 
+}
+
+
+.background-grad-right {
+    background: linear-gradient(to right, #FE8EB9 50%, #8FC9FF 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+
+}
+
+.background-grad-right:hover {
+    background-position: left bottom;
+}
+
+
+.pandx-10 {
+    padding: 0px 120px;
 }

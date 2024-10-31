@@ -2,68 +2,109 @@
 @section('content')
     <div class="container-fluid featurs mt-4">
         <div class="container py-2">
-            <div class="row d-flex justify-content-around mb-4">
-                <a href="{{ route('releases.search') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Bán hàng</p>
-                </a>
+            <div class="row g-4">
+                @can('create-release')
+                    <div class="col-md-6 col-xl-4  mb-4 text-center ">
+                        <a href="{{ route('releases.search') }}"
+                            class="  btn btn-primary py-3 pandx-10 background-grad-right border-0">
+                            <i class="fa-solid fa-hand-holding-medical text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Bán hàng</p>
+                        </a>
+                    </div>
+                @endcan
 
-                <a href="{{ route('receipts.create') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhập hàng</p>
-                </a>
-            </div>
-
-            <div class="row d-flex justify-content-around mb-4">
-                <a href="{{ route('customers.index') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Khách hàng</p>
-                </a>
+                @can('create-receipt')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('receipts.create') }}"
+                            class=" btn btn-primary py-3 pandx-10 background-grad-right border-0">
+                            <i class="fa-solid fa-boxes-packing text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhập hàng</p>
+                        </a>
+                    </div>
+                @endcan
+                @can('show-customer')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('customers.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-users text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Khách hàng</p>
+                        </a>
+                    </div>
+                @endcan
 
                 @can('show-staff')
-                    <a href="{{ route('staffs.index') }}" class="btn btn-primary col-5 py-3">
-                        <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                        <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhân viên</p>
-                    </a>
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('staffs.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-id-card-clip  text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhân viên</p>
+                        </a>
+                    </div>
                 @endcan
-            </div>
 
-            <div class="row d-flex justify-content-around mb-4">
-                <a href="{{ route('products.index') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Sản phẩm</p>
-                </a>
+                @can('show-product')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('products.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-pills  text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Sản phẩm</p>
+                        </a>
+                    </div>
+                @endcan
 
-                <a href="{{ route('categories.index') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Loại sản phẩm</p>
-                </a>
-            </div>
+                @can('show-category')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('categories.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-list-check text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Loại sản phẩm</p>
+                        </a>
+                    </div>
+                @endcan
 
-            <div class="row d-flex justify-content-around mb-4">
-                <a href="{{ route('brands.index') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhãn hàng</p>
-                </a>
+                @can('show-brand')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('brands.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-tags text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhãn hàng</p>
+                        </a>
+                    </div>
+                @endcan
 
-                <a href="{{ route('suppliers.index') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhà cung cấp</p>
-                </a>
-            </div>
+                @can('show-supplier')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('suppliers.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-truck text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Nhà cung cấp</p>
+                        </a>
+                    </div>
+                @endcan
 
-            <div class="row d-flex justify-content-around mb-4">
-                <a href="{{ route('statistics.showreleaselist') }}" class="btn btn-primary col-5 py-3">
-                    <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                    <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Thống kê</p>
-                </a>
+                @can('access-statistics')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('statistics.showreleaselist') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-calculator text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Thống kê</p>
+                        </a>
+                    </div>
+                @endcan
 
                 @hasrole('super-admin')
-                    <a href="{{ route('roles.index') }}" class="btn btn-primary col-5 py-3">
-                        <!-- <i class="fa-solid fa-scroll text-white" style="font-size: 2rem;"></i> -->
-                        <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Quản lý vai trò</p>
-                    </a>
-                @endhasrole
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('roles.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-sitemap text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-4 mb-0 text-center" style="font-size: 1.25rem;">Quản lý vai trò</p>
+                        </a>
+                    </div>
+                @endhasrole()
+            </div>
+            <div class="row d-flex justify-content-around mb-4">
+
+
             </div>
         </div>
     </div>

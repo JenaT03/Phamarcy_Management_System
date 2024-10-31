@@ -2,27 +2,27 @@
 @section('title', 'quản lý vai trò')
 @section('content')
 
-<div class=" container">
+    <div class=" container">
         <h3 class="text-center my-5"> Tạo vai trò mới</h3>
-        <form action="{{route('roles.store')}}" method="POST">
+        <form action="{{ route('roles.store') }}" method="POST">
             @csrf
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Tên</label>
-                <input name="name" type="text" value="{{old('name')}}" class="form-control">
+                <input name="name" type="text" value="{{ old('name') }}" class="form-control">
 
                 @error('name')
-                    <span class="text-danger">Tên không được bỏ trống</span>
+                    <span class="text-danger">{{ $messages }}</span>
                 @enderror
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Tên hiển thị</label>
-                <input name="display_name" type="text" value="{{old('display_name')}}" class="form-control">
+                <input name="display_name" type="text" value="{{ old('display_name') }}" class="form-control">
 
-                
+
                 @error('display_name')
-                    <span class="text-danger">Tên hiển thị không được bỏ trống</span>
+                    <span class="text-danger">{{ $messages }}</span>
                 @enderror
             </div>
 
@@ -32,27 +32,31 @@
                     <option value="user">Người dùng</option>
                     <option value="system">Hệ thống</option>
                 </select>
-                
+
                 @error('group')
-                    <span class="text-danger">Nhóm không được bỏ trống</span>
+                    <span class="text-danger">{{ $messages }}</span>
                 @enderror
             </div>
 
             <div class="form-item offset-md-2 pb-3 my-3 ">
                 <label class="form-label">Quyền hạn</label>
+                @error('permission_ids')
+                    <span class="text-danger">{{ $messages }}</span>
+                @enderror
                 <div class="row">
                     @foreach ($permissions as $groupName => $permission)
                         <div class="col-md-6">
-                            <h6 class="mb-0 text-dark py-4">{{$groupName}}</h6>
+                            <h6 class="mb-0 text-dark py-4">{{ $groupName }}</h6>
                             @foreach ($permission as $item)
                                 <div class="form-check text-start">
-                                    <input type="checkbox" id="{{$item->id}}" class="form-check-input border-1" name="permission_ids[]"
-                                        value="{{$item->id}}">
-                                    <label class="form-check-label" for="{{$item->id}}" >{{$item->display_name}}</label>
+                                    <input type="checkbox" id="{{ $item->id }}" class="form-check-input border-1"
+                                        name="permission_ids[]" value="{{ $item->id }}">
+                                    <label class="form-check-label"
+                                        for="{{ $item->id }}">{{ $item->display_name }}</label>
                                 </div>
                             @endforeach
-                            
-                           
+
+
                         </div>
                     @endforeach
 

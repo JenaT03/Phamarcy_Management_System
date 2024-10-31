@@ -2,21 +2,27 @@
 @section('title', 'Bán hàng')
 @section('content')
     <div class="container-fluid pt-3">
-        <div class="container d-flex justify-content-end">
-            <a href="{{ route('releases.index') }}" class="py-4 px-3 fs-5  text-decoration-underline">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                Lịch sử bán hàng
-            </a>
-
+        @can('show-release')
+            <div class="container d-flex justify-content-end">
+                <a href="{{ route('releases.index') }}" class="py-4 px-3 fs-5  text-decoration-underline">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Lịch sử bán hàng
+                </a>
+            @endcan
         </div>
     </div>
     <div class="container-fluid pt-3">
         <div class="container pb-3">
             <div class="d-flex justify-content-around mb-5">
-                <a href="{{ route('releases.create', 'null') }}" class="btn btn-primary text-white mx-2 py-4 px-3">Khách vãng
-                    lai</a>
-                <a href="{{ route('customers.create') }}" class="btn btn-primary text-white mx-2 py-4 px-3">Thêm khách hàng
-                    mới</a>
+                @can('create-release')
+                    <a href="{{ route('releases.create', 'null') }}" class="btn btn-primary text-white mx-2 py-4 px-3">Khách vãng
+                        lai</a>
+                @endcan
+
+                @can('create-customer')
+                    <a href="{{ route('customers.create') }}" class="btn btn-primary text-white mx-2 py-4 px-3">Thêm khách hàng
+                        mới</a>
+                @endcan
                 <form method="GET" class="d-flex ms-5 search-form" name="search" action="{{ route('releases.search') }}">
                     <input class="form-control me-2 rounded-pill" type="search" name="search"
                         placeholder="Nhập số điện thoại khách hàng để tìm" aria-label="Search">
@@ -47,10 +53,12 @@
                                 <td class="py-5">{{ $customer->phone }}</td>
                                 <td class="py-5">{{ $customer->birth }}</td>
                                 <td class="py-5">{{ $customer->gender }}</td>
-                                <td class="py-5">
-                                    <a href="{{ route('releases.create', $customer->id) }}"
-                                        class="btn btn-primary text-white"><i class="fa-solid fa-plus"></i><a>
-                                </td>
+                                @can('create-release')
+                                    <td class="py-5">
+                                        <a href="{{ route('releases.create', $customer->id) }}"
+                                            class="btn btn-primary text-white"><i class="fa-solid fa-plus"></i><a>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

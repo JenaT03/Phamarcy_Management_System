@@ -5,7 +5,9 @@
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="d-flex justify-content-around mb-5">
-                <a href="{{ route('staffs.create') }}" class="btn btn-primary text-white py-4 px-3">Thêm nhân viên mới</a>
+                @can('create-staff')
+                    <a href="{{ route('staffs.create') }}" class="btn btn-primary text-white py-4 px-3">Thêm nhân viên mới</a>
+                @endcan
                 <form method="GET" class="d-flex ms-5 search-form" name="search" action="{{ route('staffs.index') }}">
                     <input class="form-control me-2 rounded-pill" type="search" name="search"
                         placeholder="Nhập mã số nhân viên để tìm" aria-label="Search">
@@ -41,17 +43,23 @@
                                 <td class="py-5">{{ $staff->gender }}</td>
                                 <td class="py-5">{{ $staff->address }}</td>
                                 <td class="py-5 d-flex justify-content-around">
-                                    <a href="{{ route('staffs.edit', $staff->id) }}" class="btn"><i
-                                            class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>
-                                    <a href="{{ route('staffs.show', $staff->id) }}" class="btn"><i
-                                            class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
-                                    <form action="{{ route('staffs.destroy', $staff->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
-                                            data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
-                                                style="font-size: 1.25rem;"></i></button>
-                                    </form>
+                                    @can('edit-staff')
+                                        <a href="{{ route('staffs.edit', $staff->id) }}" class="btn"><i
+                                                class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>
+                                    @endcan
+                                    @can('show-detail-staff')
+                                        <a href="{{ route('staffs.show', $staff->id) }}" class="btn"><i
+                                                class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
+                                    @endcan
+                                    @can('delete-staff')
+                                        <form action="{{ route('staffs.destroy', $staff->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
+                                                data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
+                                                    style="font-size: 1.25rem;"></i></button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

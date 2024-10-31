@@ -37,22 +37,27 @@
                                 <td class="py-5">{{ $receipt->datetime }}</td>
                                 <td class="py-5">{{ $receipt->total }}</td>
                                 <td class="py-5 d-flex justify-content-around">
-                                    <a href="{{ route('receipts.show', $receipt->id) }}" class="btn"><i
-                                            class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
+                                    @can('show-receipt')
+                                        <a href="{{ route('receipts.show', $receipt->id) }}" class="btn"><i
+                                                class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
+                                    @endcan
                                     {{-- <a href="{{ route('receipts.edit', $receipt->id) }}" class="btn"><i
                                             class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a> --}}
-                                    @if (!$receipt->receipt_details->isEmpty())
-                                        <a href="{{ route('receipts.generate', $receipt->id) }}" class="btn"><i
-                                                class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
-                                    @endif
-
-                                    <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
-                                            data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
-                                                style="font-size: 1.25rem;"></i></button>
-                                    </form>
+                                    @can('print-receipt')
+                                        @if (!$receipt->receipt_details->isEmpty())
+                                            <a href="{{ route('receipts.generate', $receipt->id) }}" class="btn"><i
+                                                    class="fa-solid fa-print" style="font-size: 1.25rem;"></i></a>
+                                        @endif
+                                    @endcan
+                                    @can('delete-receipt')
+                                        <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
+                                                data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
+                                                    style="font-size: 1.25rem;"></i></button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

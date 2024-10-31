@@ -25,7 +25,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'phone' => ['required', 'unique:users,phone,' . $this->route('user'), 'regex:/^(09|03|07|08|05)+([0-9]{8})$/'],
-            'password' => ['required', 'min:8', 'confirmed'],
+            'password' => ['required', 'min:8', 'max:32', 'confirmed'],
             'role_ids' => 'required|array|min:1',
         ];
     }
@@ -38,6 +38,7 @@ class UpdateUserRequest extends FormRequest
             'phone.regex' => 'Số điện thoại không hợp lệ.',
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
+            'password.max' => 'Mật khẩu phải có ít nhất 8 ký tự',
             'password.confirmed' => 'Mật khẩu nhập không khớp.',
             'role_ids.required' => 'Bạn phải chọn ít nhất một vai trò.',
             'role_ids.min' => 'Bạn phải chọn ít nhất một vai trò.',

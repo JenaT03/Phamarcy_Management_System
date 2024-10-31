@@ -3,11 +3,12 @@
 @section('content')
     <div class="container-fluid pt-5">
         <div class="container d-flex justify-content-end">
-            <a href="{{ route('receipts.index') }}" class="py-4 px-3 fs-5  text-decoration-underline">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                Lịch sử nhập hàng
-            </a>
-
+            @can('show-receipt')
+                <a href="{{ route('receipts.index') }}" class="py-4 px-3 fs-5  text-decoration-underline">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Lịch sử nhập hàng
+                </a>
+            @endcan
         </div>
     </div>
     <div class=" container">

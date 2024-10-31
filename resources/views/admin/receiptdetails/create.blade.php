@@ -94,20 +94,23 @@
                                     <td class="py-5">{{ $item->expiry }}</td>
                                     <td class="py-5">{{ $itemTotal }}đ</td>
                                     <td class="py-5 d-flex justify-content-around" style="border-bottom: 0;">
-                                        <a href="{{ route('receiptdetails.edit', ['id' => $item->id, 'receiptId' => $receiptId]) }}"
-                                            class="btn">
-                                            <i class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i>
-                                        </a>
-                                        <form
-                                            action="{{ route('receiptdetails.destroy', ['id' => $item->id, 'receiptId' => $receiptId]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
-                                                data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
-                                                    style="font-size: 1.25rem;"></i></button>
-                                        </form>
-
+                                        @can('edit-receipt')
+                                            <a href="{{ route('receiptdetails.edit', ['id' => $item->id, 'receiptId' => $receiptId]) }}"
+                                                class="btn">
+                                                <i class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i>
+                                            </a>
+                                        @endcan
+                                        @can('delete-receipt')
+                                            <form
+                                                action="{{ route('receiptdetails.destroy', ['id' => $item->id, 'receiptId' => $receiptId]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
+                                                    data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
+                                                        style="font-size: 1.25rem;"></i></button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
@@ -133,9 +136,11 @@
                 </div>
             </div>
             <div class="my-3 mt-5 d-flex justify-content-between">
-                <a href="{{ route('receipts.edit', $receiptId) }}" name=""
-                    class="btn btn-primary text-white text-center" style="padding: 15px 45px; font-size: 1.25rem;">Quay
-                    lại</a>
+                @can('edit-receipt')
+                    <a href="{{ route('receipts.edit', $receiptId) }}" name=""
+                        class="btn btn-primary text-white text-center" style="padding: 15px 45px; font-size: 1.25rem;">Quay
+                        lại</a>
+                @endcan
                 <form action="{{ route('receipts.finish', $receiptId) }}" method="POST">
                     @csrf
                     <input type="number" name="total" value="{{ $total }}" hidden>

@@ -25,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('access-statistics', function ($user) {
+            return $user->can('products-statistic') &&
+                $user->can('receipts-statistic') &&
+                $user->can('releases-statistic');
+        });
     }
 }

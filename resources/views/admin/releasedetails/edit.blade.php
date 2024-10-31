@@ -79,20 +79,23 @@
                                     <td class="py-5">{{ $itemTotal }}đ</td>
                                     <td class="py-5">{{ $item->note }}</td>
                                     <td class="py-5 d-flex justify-content-around" style="border-bottom: 0;">
-                                        <a href="{{ route('releasedetails.edit', ['id' => $item->id, 'releaseId' => $releaseId]) }}"
-                                            class="btn">
-                                            <i class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i>
-                                        </a>
-                                        <form
-                                            action="{{ route('releasedetails.destroy', ['id' => $item->id, 'releaseId' => $releaseId]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
-                                                data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
-                                                    style="font-size: 1.25rem;"></i></button>
-                                        </form>
-
+                                        @can('edit-release')
+                                            <a href="{{ route('releasedetails.edit', ['id' => $item->id, 'releaseId' => $releaseId]) }}"
+                                                class="btn">
+                                                <i class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i>
+                                            </a>
+                                        @endcan
+                                        @can('delete-release')
+                                            <form
+                                                action="{{ route('releasedetails.destroy', ['id' => $item->id, 'releaseId' => $releaseId]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn" name="delete" data-bs-toggle="modal"
+                                                    data-bs-target="#delete-confirm"><i class="fa-solid fa-trash text-danger"
+                                                        style="font-size: 1.25rem;"></i></button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
@@ -117,16 +120,18 @@
                 </div>
             </div>
             <div class="my-3 mt-5 d-flex justify-content-between">
-                @if ($customer)
-                    <a href="{{ route('releases.edit', ['id' => $releaseId, 'customerId' => $customer->id]) }}"
-                        name="" class="btn btn-primary text-white text-center"
-                        style="padding: 15px 45px; font-size: 1.25rem;">Quay
-                        lại</a>
-                @else
-                    <a href="{{ route('releases.edit', ['id' => $releaseId, 'customerId' => 'null']) }}" name=""
-                        class="btn btn-primary text-white text-center" style="padding: 15px 45px; font-size: 1.25rem;">Quay
-                        lại</a>
-                @endif
+                @can('edit-release')
+                    @if ($customer)
+                        <a href="{{ route('releases.edit', ['id' => $releaseId, 'customerId' => $customer->id]) }}"
+                            name="" class="btn btn-primary text-white text-center"
+                            style="padding: 15px 45px; font-size: 1.25rem;">Quay
+                            lại</a>
+                    @else
+                        <a href="{{ route('releases.edit', ['id' => $releaseId, 'customerId' => 'null']) }}" name=""
+                            class="btn btn-primary text-white text-center" style="padding: 15px 45px; font-size: 1.25rem;">Quay
+                            lại</a>
+                    @endif
+                @endcan
                 <form action="#" method="POST">
                     @csrf
                     <input type="number" name="total" value="{{ $total }}" hidden>

@@ -83,11 +83,13 @@
 
         <div class="my-3 mt-5 d-flex justify-content-end">
 
-            @if (!$release->release_details->isEmpty())
-                <a href="{{ route('releases.generate', $release->id) }}"
-                    class="btn btn-primary text-white text-center mx-4" style="padding: 15px 45px; font-size: 1.25rem;">Xuất
-                    hóa đơn</a>
-            @endif
+            @can('print-release')
+                @if (!$release->release_details->isEmpty())
+                    <a href="{{ route('releases.generate', $release->id) }}"
+                        class="btn btn-primary text-white text-center mx-4" style="padding: 15px 45px; font-size: 1.25rem;">Xuất
+                        hóa đơn</a>
+                @endif
+            @endcan
             <a href="{{ route('releases.search') }}" name="submit" class="btn btn-primary text-white text-center mx-4"
                 style="padding: 15px 45px; font-size: 1.25rem;">Trở về</a>
         </div>

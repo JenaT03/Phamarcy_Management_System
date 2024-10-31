@@ -66,14 +66,17 @@
 
         <div class="my-3 mt-5 d-flex justify-content-end">
 
-            @if (!$receipt->receipt_details->isEmpty())
-                <a href="{{ route('receipts.generate', $receipt->id) }}"
-                    class="btn btn-primary text-white text-center mx-4" style="padding: 15px 45px; font-size: 1.25rem;">Xuất
-                    biên lai</a>
-            @endif
-
-            <a href="{{ route('receipts.index') }}" name="submit" class="btn btn-primary text-white text-center mx-4"
-                style="padding: 15px 45px; font-size: 1.25rem;">Trở về</a>
+            @can('print-receipt')
+                @if (!$receipt->receipt_details->isEmpty())
+                    <a href="{{ route('receipts.generate', $receipt->id) }}"
+                        class="btn btn-primary text-white text-center mx-4" style="padding: 15px 45px; font-size: 1.25rem;">Xuất
+                        biên lai</a>
+                @endif
+            @endcan
+            @can('show-receipt')
+                <a href="{{ route('receipts.index') }}" name="submit" class="btn btn-primary text-white text-center mx-4"
+                    style="padding: 15px 45px; font-size: 1.25rem;">Trở về</a>
+            @endcan
         </div>
     </div>
 @endsection
