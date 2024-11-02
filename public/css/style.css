@@ -675,3 +675,28 @@
 .pandx-10 {
     padding: 0px 120px;
 }
+
+.news-abstract {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.quote-box {
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.5;
+    position: relative;
+}
+
+.quote-icon {
+    font-size: 24px;
+    color: #b0c4de;
+    margin-right: 8px;
+    vertical-align: top;
+}

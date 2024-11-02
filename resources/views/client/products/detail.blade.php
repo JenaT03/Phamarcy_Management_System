@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 @section('content')
-<!-- Single Product Start -->
+    <!-- Single Product Start -->
     <div class="container-fluid py-5 mt-5">
         <div class="container pb-5 container-padding">
             <div class="row mb-5">
@@ -9,20 +9,22 @@
                         <div class="col-lg-6">
                             <div class="border rounded">
                                 <a href="#">
-                                    <img src="{{$product->img ? asset('upload/products/' .$product->img) : asset('upload/products/default.png') }}" class="img-fluid rounded" alt="Image">
+                                    <img src="{{ $product->img ? asset('uploads/' . $product->img) : '' }}"
+                                        class="img-fluid rounded" alt="Image">
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <h4 class="fw-bold mb-3">{{$product->name}}</h4>
+                            <h4 class="fw-bold mb-3">{{ $product->name }}</h4>
                             @foreach ($product->categories as $category)
-                                <p class="mb-3">{{$category->nane}}</p>    
+                                <p class="mb-3">{{ $category->nane }}</p>
                             @endforeach
-                            
+
                             <p class="text-dark fw-bold mb-0 mb-2 font-size-p">
-                                <span style="color: red">{{$product->productdetails->first()->price ?? '0'}}đ</span> {{$product->unit ? '/' . $product->unit : '' }}
+                                <span style="color: red">{{ $product->productdetails->first()->price ?? '0' }}đ</span>
+                                {{ $product->unit ? '/' . $product->unit : '' }}
                             </p>
-                            <p class="mb-4">{{$product->description}}</p>
+                            <p class="mb-4">{!! $product->description !!}</p>
 
                         </div>
                         <div class="col-lg-12">
@@ -40,19 +42,16 @@
                                 </div>
                             </nav>
                             <div class="tab-content mb-5">
-                                <div class="tab-pane active" id="nav-ingre" role="tabpanel"
-                                    aria-labelledby="nav-ingre-tab">
-                                    <p>{{$product->ingredient}}</p>
+                                <div class="tab-pane active" id="nav-ingre" role="tabpanel" aria-labelledby="nav-ingre-tab">
+                                    <p>{!! $product->ingredient !!}</p>
                                 </div>
-                                <div class="tab-pane" id="nav-instruc" role="tabpanel"
-                                    aria-labelledby="nav-instruc-tab">
-                                    <p>{{$product->intruction}}</p>
+                                <div class="tab-pane" id="nav-instruc" role="tabpanel" aria-labelledby="nav-instruc-tab">
+                                    <p>{!! $product->intruction !!}</p>
                                 </div>
 
-                                <div class="tab-pane" id="nav-produce" role="tabpanel"
-                                    aria-labelledby="nav-produce-tab">
+                                <div class="tab-pane" id="nav-produce" role="tabpanel" aria-labelledby="nav-produce-tab">
                                     <p>Thuộc thương hiệu:</p>
-                                    <p>{{$product->brand->name}}</p>
+                                    <p>{{ $product->brand->name }}</p>
                                 </div>
                             </div>
                         </div>

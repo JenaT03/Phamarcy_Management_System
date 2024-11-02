@@ -15,19 +15,14 @@
                     <div class="col-md-12 col-lg-8">
                         <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                             <div class="carousel-inner" role="listbox">
-                                <div class="carousel-item active rounded">
-                                    <img src="img/banner1.png" class="img-fluid w-100 h-50 bg-secondary rounded"
-                                        alt="First slide" />
-                                    <!-- <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a> -->
-                                </div>
-                                <div class="carousel-item rounded">
-                                    <img src="img/banner2.png" class="img-fluid w-100 h-50 rounded" alt="Second slide" />
-                                    <!-- <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a> -->
-                                </div>
-                                <div class="carousel-item rounded">
-                                    <img src="img/banner3.png" class="img-fluid w-100 h-50 rounded" alt="Third slide" />
-                                    <!-- <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a> -->
-                                </div>
+
+                                @foreach ($banners as $index => $banner)
+                                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }} rounded">
+                                        <img src="{{ $banner->img ? asset('uploads/' . $banner->img) : '' }}"
+                                            class="img-fluid w-100 h-50 bg-secondary rounded" alt="First slide" />
+                                    </div>
+                                @endforeach
+
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselId"
                                 data-bs-slide="prev">
@@ -87,7 +82,7 @@
                         @foreach ($category->products as $product)
                             <div class="border border-primary rounded position-relative vesitable-item">
                                 <div class="vesitable-img">
-                                    <img src="{{ $product->img ? asset('upload/products/' . $product->img) : asset('upload/products/default.png') }}"
+                                    <img src="{{ $product->img ? asset('uploads/' . $product->img) : '' }}"
                                         class="img-fluid w-100 rounded-top" alt="" />
                                 </div>
                                 <!-- <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div> -->
@@ -95,6 +90,9 @@
                                     <h6 class="product-name">
                                         {{ $product->name }}
                                     </h6>
+                                    <p class="description-text">
+                                        {{ $product->description }}
+                                    </p>
                                     <div class="d-flex justify-content-between flex-lg-wrap">
                                         <p class="text-dark fw-bold mb-0 mb-2">
                                             <span
@@ -160,30 +158,14 @@
             <div class="container">
                 <div class="bg-light p-5 rounded">
                     <div class="row g-4 justify-content-center">
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="counter bg-white rounded p-5">
-                                <img src="/img/logo-brand1.png" alt="" />
-                                <h5>Công ty TNHH Liên doanh Stellapharm</h5>
+                        @foreach ($brands as $brand)
+                            <div class="col-md-6 col-lg-6 col-xl-3">
+                                <div class="counter bg-white rounded p-5">
+                                    <img src="{{ $brand->img ? asset('uploads/' . $brand->img) : '' }}" alt="Nhã hàng" />
+                                    <h5>{{ $brand->name }}</h5>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="counter bg-white rounded p-5">
-                                <img src="/img/logo-brand2.png" alt="" />
-                                <h5>Tập đoàn Merck Sharp & Dohme trụ sở tại Mỹ</h5>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="counter bg-white rounded p-5">
-                                <img src="/img/logo-brand3.png" alt="" />
-                                <h5>NUCOS thương hiệu chăm sóc sắc đẹp đến từ Nhật Bản</h5>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="counter bg-white rounded p-5">
-                                <img src="/img/logo-brand4.png" alt="" />
-                                <h5>Tập đoàn y tế toàn cầu ALCON LABORATORIES, INC</h5>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -194,103 +176,45 @@
         <div class="container-fluid testimonial py-5">
             <div class="container py-5">
                 <div class="testimonial-header text-center">
-                    <h4 class="text-primary">Chúng tôi vinh hạnh</h4>
+                    <h4 class="text-primary">Góc sức khỏe</h4>
                     <h1 class="display-5 mb-5 text-dark">
-                        được phục phục vụ quý khách hàng
+                        Tin tức sức khỏe
                     </h1>
                 </div>
                 <div class="owl-carousel testimonial-carousel">
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
-                                style="bottom: 30px; right: 0"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">
-                                    Tôi rất ấn tượng với trình độ chuyên môn của các vị y dược sĩ
-                                    tại Hoa Đà, hiếm có nhà thuốc nào có thể có những nhân tài như
-                                    vậy!
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/person1.jpg" class="img-fluid rounded"
-                                        style="width: 100px; height: 100px" alt="" />
+                    @foreach ($news as $item)
+                        <a href="{{ route('news', $item->id) }}">
+                            <div class="testimonial-item img-border-radius bg-light rounded p-4">
+                                <div class="position-relative">
+                                    <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
+                                        style=" right: -15px;  top: -5px"></i>
+
+                                    <div class="d-flex align-items-center flex-nowrap">
+                                        <div class="bg-secondary rounded">
+                                            <img src="{{ $item->img ? asset('uploads/' . $item->img) : '' }}"
+                                                class="img-fluid rounded" style="width: 100px; height: 100px"
+                                                alt="" />
+                                        </div>
+                                        <div class="ms-4 d-block">
+                                            <h4 class="text-dark">{{ $item->title }}</h4>
+                                            <p class="m-0 pb-3 text-dark">{{ $item->author }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4 pb-4 border-top border-secondary">
+                                        <p class="mb-0 news-abstract text-dark">
+                                            {{ strip_tags($item->abstract) }}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Ông Trần Văn A</h4>
-                                    <p class="m-0 pb-3">GS.TS Ngoại Khoa</p>
-                                </div>
+
+
                             </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
-                                style="bottom: 30px; right: 0"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">
-                                    Là một khách hàng quen thuộc của nhà thuốc, tôi luôn luôn cảm
-                                    thấy vui vẻ sau mỗi lần đến Hoa Đà!
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/person2.jpg" class="img-fluid rounded"
-                                        style="width: 100px; height: 100px" alt="" />
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Ông Lý Văn B</h4>
-                                    <p class="m-0 pb-3">Họa sĩ trang sơn thủy</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
-                                style="bottom: 30px; right: 0"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">
-                                    Hoa Đà là một nhà thuốc đáng tin cậy, là nhà cung cấp thuốc
-                                    cũng là nhà tài trợ cho trường chúng tôi trong những năm qua.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/person3.jpg" class="img-fluid rounded"
-                                        style="width: 100px; height: 100px" alt="" />
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Ông Hồ Văn C</h4>
-                                    <p class="m-0 pb-3">Hiệu trưởng trường THPT AAA</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
-                                style="bottom: 30px; right: 0"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">
-                                    Trong một lần tình cờ đến Hoa Đà, tôi đã bất ngờ với trình độ
-                                    phụ vụ chuyên nghiệp và chuyên môn sâu rộng của đội ngũ dược
-                                    sĩ ở đây!
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/person4.jpg" class="img-fluid rounded"
-                                        style="width: 100px; height: 100px" alt="" />
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Đình Thị D</h4>
-                                    <p class="m-0 pb-3">Diễn viên, ca sĩ</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </a>
+                    @endforeach
                 </div>
+                <p></p>
+                <a href="{{ route('all-news') }}" class="text-primary text-decoration-underline fs-5 fw-bold">Xem tất cả
+                    <i class="fa-solid fa-arrow-right ms-1"></i></a>
             </div>
         </div>
         <!-- Tastimonial End -->

@@ -85,7 +85,7 @@
                                         $total += $itemTotal;
                                     @endphp
                                     <td class="py-5"><img
-                                            src="{{ $item->product->img ? asset('upload/products/' . $item->product->img) : 'upload/products/default.png' }}"
+                                            src="{{ $item->product->img ? asset('uploads' . $item->product->img) : 'uploads/default.png' }}"
                                             alt="" width="70px"></td>
                                     <td class="py-5">{{ $item->product->name }}</td>
                                     <td class="py-5">{{ $item->quantity . ' ' . $item->product->unit }}</td>

@@ -37,7 +37,7 @@
                         @foreach ($products as $product)
                             <tr class="text-center border-top">
                                 <td class="py-5">
-                                    <img src="{{ $product->img ? asset('upload/products/' . $product->img) : asset('upload/products/default.png') }}"
+                                    <img src="{{ $product->img ? asset('uploads/' . $product->img) : '' }}"
                                         style="width: 140px; height: 90px;" alt="Hình ảnh">
                                 </td>
                                 <td class="py-5">{{ $product->code }}</td>

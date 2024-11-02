@@ -26,6 +26,7 @@ class UpdateBrandRequest extends FormRequest
         return [
             'name' => ['required', 'max:255'],
             'country' => 'required',
+            'img' => ['image', 'mimes:png,jpg,PNG,jpeg', 'max:2048'],
         ];
     }
 
@@ -34,6 +35,9 @@ class UpdateBrandRequest extends FormRequest
         return [
             'name.max' => 'Tên không được vượt quá 255 ký tự',
             'country.required' => 'Tên quốc gia không được để trống',
+            'img.image' => 'Hình ảnh không hợp lệ',
+            'img.mimes' => 'Hình ảnh phải thuộc một trong các định dạng png, jpg, PNG hoặc jpeg',
+            'img.max' => 'Hình ảnh phải nhỏ hơn 2MB',
         ];
     }
 }

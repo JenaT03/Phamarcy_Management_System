@@ -92,6 +92,16 @@
                     </div>
                 @endcan
 
+                @can('website')
+                    <div class="col-md-6 col-xl-4 mb-4 text-center ">
+                        <a href="{{ route('website.banners.index') }}"
+                            class="btn btn-primary pandx-10 py-3 background-grad-right border-0">
+                            <i class="fa-solid fa-globe text-white" style="font-size: 2rem;"></i>
+                            <p class="text-white ms-3 mb-0 text-center" style="font-size: 1.25rem;">Quản lý website</p>
+                        </a>
+                    </div>
+                @endcan
+
                 @hasrole('super-admin')
                     <div class="col-md-6 col-xl-4 mb-4 text-center ">
                         <a href="{{ route('roles.index') }}"

@@ -18,7 +18,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-around mb-5">
-                <form method="GET" class="d-flex ms-5 search-form" name="search" action="{{ route('customers.show-detail',['customer' => $customer->id, 'release' => $release->id]) }}">
+                <form method="GET" class="d-flex ms-5 search-form" name="search"
+                    action="{{ route('customers.show-detail', ['customer' => $customer->id, 'release' => $release->id]) }}">
                     <input class="form-control me-2 rounded-pill" type="search" name="search"
                         placeholder="Nhập tên sản phẩm để tìm" aria-label="Search">
                     <button type="submit" class="btn btn-primary border-0 border-secondary rounded-pill text-white"><i
@@ -48,7 +49,7 @@
                         @foreach ($releaseDetails as $item)
                             <tr class="border-top">
                                 <td class="py-5"><img
-                                        src="{{ $item->product->img ? asset('upload/products/' . $item->product->img) : 'upload/products/default.png' }}"
+                                        src="{{ $item->product->img ? asset('uploads' . $item->product->img) : 'uploads/default.png' }}"
                                         alt="" width="70px"></td>
                                 <td class="py-5">{{ $item->product->name }}</td>
                                 <td class="py-5">{{ $item->quantity . ' ' . $item->product->unit }}</td>

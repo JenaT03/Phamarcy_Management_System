@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\News;
 use App\Models\Product;
 use App\Models\Staff;
 use Illuminate\Http\Request;
@@ -26,6 +29,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $banners = Banner::all();
+        $brands = Brand::where('highlight', true)->get();
+        $news = News::where('highlight', true)->get();
+
 
         $query = $this->product->query();
         $products = $query->where('name', 'like', '%' . $request->search . '%')->get();
@@ -38,13 +45,22 @@ class HomeController extends Controller
         if (Auth::check()) {
             if (Auth::user()->userable_type === Customer::class) {
                 $customer = Customer::find(Auth::user()->userable_id);
-                return view('client.home.index', compact('categories', 'customer', 'products'))->with('search', $request->search);
+                return view('client.home.index', compact('categories', 'customer', 'products', 'brands', 'news', 'banners'))->with('search', $request->search);
             } else if (Auth::user()->userable_type === Staff::class) {
                 $staff = Staff::find(Auth::user()->userable_id);
                 return view('admin.dashboard.index', compact('staff'));
             }
         } else
-            return view('client.home.index', compact('categories', 'products'))->with('search', $request->search);
+            return view('client.home.index', compact('categories', 'products', 'brands', 'news', 'banners'))->with('search', $request->search);
+    }
+
+    public function contact()
+    {
+        if (Auth::check() && Auth::user()->userable_type === Customer::class) {
+            $customer = Customer::find(Auth::user()->userable_id);
+            return view('client.home.contact', compact('customer'));
+        }
+        return view('client.home.contact');
     }
 
     /**

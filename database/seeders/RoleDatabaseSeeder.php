@@ -42,7 +42,7 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'delete-staff', 'display_name' => 'Xóa nhân viên', 'group' => 'Nhân viên'],
             ['name' => 'show-staff', 'display_name' => 'Xem danh sách nhân viên', 'group' => 'Nhân viên'],
             ['name' => 'show-detail-staff', 'display_name' => 'Xem chi tiết thông tin nhân viên', 'group' => 'Nhân viên'],
-            ['name' => 'show-detail-all-staff', 'display_name' => 'Xem chi tiết thông tin của tất cả nhân viên', 'group' => 'Nhân viên'],
+            //['name' => 'show-detail-all-staff', 'display_name' => 'Xem chi tiết thông tin của tất cả nhân viên', 'group' => 'Nhân viên'],
 
 
             ['name' => 'create-brand', 'display_name' => 'Thêm nhãn hàng', 'group' => 'Nhãn hàng'],
@@ -79,6 +79,9 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'receipts-statistic', 'display_name' => 'Thống kê phiếu nhập', 'group' => 'Thống kê'],
             ['name' => 'releases-statistic', 'display_name' => 'Thống kê hóa đơn', 'group' => 'Thống kê'],
 
+            ['name' => 'website', 'display_name' => 'Quản lý nội dung website', 'group' => 'Trang chủ'],
+
+
         ];
         foreach ($permissions as $item) {
             Permission::updateOrCreate($item);
@@ -96,13 +99,40 @@ class RoleDatabaseSeeder extends Seeder
             Role::updateOrCreate($role);
         }
 
-        // Lấy vai trò super_admin
         $superAdminRole = Role::where('name', 'super-admin')->first();
-
-        // Lấy tất cả permissions
         $allPermissions = Permission::all();
-
-        // Gán tất cả các quyền cho vai trò super_admin
         $superAdminRole->permissions()->sync($allPermissions->pluck('id')->toArray());
+
+        $managerRole = Role::where('name', 'manager')->first();
+        $managerPermissions = Permission::whereNotIn('name', ['create-role', 'edit-role', 'delete-role', 'show-role'])->get();
+        $managerRole->permissions()->sync($managerPermissions->pluck('id')->toArray());
+
+
+        $staffRole = Role::where('name', 'staff')->first();
+        $staffPermissions = Permission::whereIn('name', [
+            'create-receipt',
+            'edit-receipt',
+            'show-receipt',
+            'print-receipt',
+            'create-release',
+            'edit-release',
+            'show-release',
+            'print-release',
+            'create-customer',
+            'edit-customer',
+            'show-customer',
+            'show-detail-staff',
+            'show-product',
+            'create-product',
+            'edit-product',
+            'products-statistic',
+            'receipts-statistic',
+            'releases-statistic',
+        ])->get();
+        $staffRole->permissions()->sync($staffPermissions->pluck('id')->toArray());
+
+        $userRole = Role::where('name', 'user')->first();
+        $userPermissions = Permission::whereIn('name', ['show-customer', 'show-release', 'create-customer', 'edit-customer', 'show-customer', 'website'])->get();
+        $userRole->permissions()->sync($userPermissions->pluck('id')->toArray());
     }
 }

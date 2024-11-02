@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('country');
+            $table->string('img');
+            $table->boolean('highlight')->default(false);
             $table->timestamps();
         });
     }

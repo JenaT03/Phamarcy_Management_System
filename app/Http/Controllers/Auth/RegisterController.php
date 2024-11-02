@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -72,6 +73,9 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
+        if (Auth::check()) {
+            return to_route('home');
+        }
         return view('auth.register');
     }
 }

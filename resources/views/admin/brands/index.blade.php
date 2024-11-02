@@ -23,8 +23,10 @@
                 <table class="table hid-border-style">
                     <thead>
                         <tr class="text-center">
+                            <th scope="col">Logo</th>
                             <th scope="col">Tên</th>
                             <th scope="col">Quốc gia</th>
+                            <th scope="col">Nổi bật</th>
                             <th></th>
 
                         </tr>
@@ -32,8 +34,13 @@
                     <tbody class="border-bottom">
                         @foreach ($brands as $brand)
                             <tr class="text-center border-top">
+                                <td class="py-5">
+                                    <img src="{{ $brand->img ? asset('uploads/' . $brand->img) : '' }}"
+                                        style="width: 140px; height: 90px;" alt="Hình ảnh">
+                                </td>
                                 <td class="py-5">{{ $brand->name }}</td>
                                 <td class="py-5">{{ $brand->country }}</td>
+                                <td class="py-5">{{ $brand->hightlight == true ? 'Nổi bật' : '' }}</td>
                                 <td class="py-5 d-flex justify-content-around">
                                     @can('edit-brand')
                                         <a href="{{ route('brands.edit', $brand->id) }}" class="btn"><i

@@ -13,9 +13,12 @@ use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WebsiteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Client\IntroduceController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\NewsController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Models\Category;
@@ -40,13 +43,13 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 //Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/introduce', function () {
-    return view('client.home.introduce');
-})->name('introduce');
+Route::get('/introduce', [IntroduceController::class, 'show'])->name('introduce');
 
-Route::get('/contact', function () {
-    return view('client.home.contact');
-})->name('contact');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+
+Route::get('/news/{user}', [NewsController::class, 'show'])->name('news');
+Route::get('/news', [NewsController::class, 'showAll'])->name('all-news');
+
 
 Route::get('product/{category_id}', [ClientProductController::class, 'index'])->name('client.products.index');
 Route::get('product-detail/{id}', [ClientProductController::class, 'show'])->name('client.products.show');
@@ -246,6 +249,27 @@ Route::middleware('auth')->group(
                 Route::post('/releases', 'statisticRelease')->name('releaselist')->middleware('permission:release-statistic');
                 Route::post('/receipts/print', 'printReceiptsList')->name('printReceiptsList')->middleware('permission:receipts-statistic');
                 Route::post('/releases/print', 'printReleasesList')->name('printReleasesList')->middleware('permission:releases-statistic');
+            }
+        );
+
+        Route::prefix('website-management')->controller(WebsiteController::class)->name('website.')->group(
+            function () {
+                Route::get('/banners', 'indexBanner')->name('banners.index')->middleware('permission:website');
+                Route::get('/banners/create', 'createBanner')->name('banners.create')->middleware('permission:website');
+                Route::post('/banners/store', 'storeBanner')->name('banners.store')->middleware('permission:website');
+                Route::delete('/banners/delete/{banner}', 'destroyBanner')->name('banners.destroy')->middleware('permission:website');
+
+                Route::get('/introduce', 'showIntroduce')->name('introduce.index')->middleware('permission:website');
+                Route::get('/introduce/edit', 'editIntroduce')->name('introduce.edit')->middleware('permission:website');
+                Route::put('/introduce/update', 'updateIntroduce')->name('introduce.update')->middleware('permission:website');
+
+                Route::get('/news', 'indexNews')->name('news.index')->middleware('permission:website');
+                Route::get('/news/{news}', 'showNews')->name('news.show')->middleware('permission:website');
+                Route::get('/news/health/create', 'createNews')->name('news.create')->middleware('permission:website');
+                Route::post('/news/store', 'storeNews')->name('news.store')->middleware('permission:website');
+                Route::get('/news/edit/{news}', 'editNews')->name('news.edit')->middleware('permission:website');
+                Route::put('/news/update/{news}', 'updateNews')->name('news.update')->middleware('permission:website');
+                Route::delete('/news/delete/{news}', 'destroyNews')->name('news.destroy')->middleware('permission:website');
             }
         );
     }

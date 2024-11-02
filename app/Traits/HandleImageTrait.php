@@ -6,7 +6,7 @@ use Intervention\Image\Facades\Image;
 
 trait HandleImageTrait
 {
-    protected $path = 'upload/products';
+    protected $path = 'uploads/';
     public function veryfy($request)
     {
         return $request->has('img');
@@ -19,7 +19,7 @@ trait HandleImageTrait
             $image = $request->file('img');
             $originalName = $image->getClientOriginalName();
             $name = time() . '_' . $originalName;
-            $image->move(public_path('upload/products'), $name);
+            $image->move(public_path('uploads/'), $name);
             return $name;
         }
     }

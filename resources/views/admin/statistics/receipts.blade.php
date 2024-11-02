@@ -6,10 +6,10 @@
              <a href="{{ route('statistics.showreleaselist') }}" class="col-4 text-center py-2 ">BÁN HÀNG</a>
          @endcan
          @can('receipts-statistic')
-             <a href="{{ route('statistics.showreceiptlist') }}" class="col-4 text-center py-2">NHẬP HÀNG</a>
+             <a href="{{ route('statistics.showreceiptlist') }}" class="col-4 text-center py-2 border-cus fw-bold">NHẬP HÀNG</a>
          @endcan
          @can('products-statistic')
-             <a href="{{ route('statistics.productlist') }}" class="col-4 text-center py-2 border-cus fw-bold">SẢN
+             <a href="{{ route('statistics.productlist') }}" class="col-4 text-center py-2 ">SẢN
                  PHẨM</a>
          @endcan
 

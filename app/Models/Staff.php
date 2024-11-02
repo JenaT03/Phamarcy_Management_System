@@ -28,4 +28,9 @@ class Staff extends Model
     {
         return $this->hasMany(Release::class);
     }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
 }

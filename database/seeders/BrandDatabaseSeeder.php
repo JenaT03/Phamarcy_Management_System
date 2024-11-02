@@ -16,10 +16,10 @@ class BrandDatabaseSeeder extends Seeder
     public function run()
     {
         $items = [
-            ['name' => 'TNHH Liên doanh Stellapharm', 'country' => 'Việt Nam'],
-            ['name' => ' Merck Sharp & Dohme', 'country' => 'Mỹ'],
-            ['name' => 'NUCOS', 'country' => 'Nhật Bản'],
-            ['name' => 'ALCON LABORATORIES, INC', 'country' => 'Thụy Sĩ'],
+            ['name' => 'TNHH Liên doanh Stellapharm', 'country' => 'Việt Nam', 'img' => 'logo-brand1.png', 'highlight' => true],
+            ['name' => ' Merck Sharp & Dohme', 'country' => 'Mỹ', 'img' => 'logo-brand2.png', 'highlight' => true],
+            ['name' => 'NUCOS', 'country' => 'Nhật Bản', 'img' => 'logo-brand3.png', 'highlight' => true],
+            ['name' => 'ALCON LABORATORIES, INC', 'country' => 'Thụy Sĩ', 'img' => 'logo-brand4.png', 'highlight' => true],
 
         ];
 

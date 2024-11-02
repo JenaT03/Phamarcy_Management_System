@@ -36,7 +36,8 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
-<body class="{{ str_contains(request()->route()->getName(), 'statistics') ? 'bg-light-blue' : '' }}">
+<body
+    class="{{ str_contains(request()->route()->getName(), 'website') || str_contains(request()->route()->getName(), 'statistics') ? 'bg-light-blue' : '' }}">
     @include('admin.layouts.sidebar-page')
     @yield('content')
 

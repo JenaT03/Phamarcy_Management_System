@@ -45,6 +45,9 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return to_route('home');
+        }
         return view('auth.login');
     }
 

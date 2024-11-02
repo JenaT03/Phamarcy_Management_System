@@ -55,6 +55,7 @@ class BrandController extends Controller
     public function store(CreateBrandRequest $request)
     {
         $dataCreate = $request->all();
+        $dataCreate['img'] = $this->brand->saveImage($request);
         $brand = $this->brand->create($dataCreate);
         return to_route('brands.index')->with(['message' => 'Thêm nhãn hàng mới thành công']);
     }
@@ -94,6 +95,8 @@ class BrandController extends Controller
     {
         $dataUpdate = $request->all();
         $brand = $this->brand->findOrFail($id);
+        $currentImange = $brand->img ? $brand->img : '';
+        $dataUpdate['img'] = $this->brand->updateImage($request, $currentImange);
         if (!$brand->update($dataUpdate)) {
             return back()->withErrors(['error' => 'Cập nhật thông tin nhãn hàng thất bại.']);
         }
@@ -109,9 +112,11 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $brand = $this->brand->findOrFail($id);
+        $imageName = $brand->img ? $brand->img : '';
         if (! $brand->delete()) {
             return back()->withErrors(['error' => 'Xóa nhãn hàng thất bại.']);
         }
+        $this->brand->deleteImage($imageName);
 
         return to_route('brands.index')->with(['message' => 'Xóa nhãn hàng thành công']);
     }
