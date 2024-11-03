@@ -159,7 +159,7 @@
                 <div class="bg-light p-5 rounded">
                     <div class="row g-4 justify-content-center">
                         @foreach ($brands as $brand)
-                            <div class="col-md-6 col-lg-6 col-xl-3">
+                            <div class="col-md-4 col-xl-3">
                                 <div class="counter bg-white rounded p-5">
                                     <img src="{{ $brand->img ? asset('uploads/' . $brand->img) : '' }}" alt="Nhã hàng" />
                                     <h5>{{ $brand->name }}</h5>
