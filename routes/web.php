@@ -53,7 +53,7 @@ Route::get('/news', [NewsController::class, 'showAll'])->name('all-news');
 
 Route::get('product/{category_id}', [ClientProductController::class, 'index'])->name('client.products.index');
 Route::get('product-detail/{id}', [ClientProductController::class, 'show'])->name('client.products.show');
-
+Route::get('/product/filter/{category_id}', [ClientProductController::class, 'filter'])->name('products.filter');
 //Register
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.index');
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');

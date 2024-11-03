@@ -54,6 +54,6 @@ class Product extends Model
 
     public function getBy($data, $categoryId)
     {
-        return $this->whereHas('categories', fn($q) => $q->where('category_id', $categoryId))->paginate(12);
+        return $this->whereHas('categories', fn($q) => $q->where('category_id', $categoryId))->orderBy('created_at', 'desc')->paginate(12);
     }
 }

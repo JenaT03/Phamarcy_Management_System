@@ -21,7 +21,7 @@
 
                                             <div class="">
                                                 <div class="fruite-img">
-                                                    <img src="{{ $product->img ? asset('upload/products/' . $product->img) : asset('upload/products/default.png') }}"
+                                                    <img src="{{ $product->img ? asset('uploads/' . $product->img) : '' }}"
                                                         class="img-fluid w-100 rounded-top" alt="" />
                                                 </div>
                                                 <div class="p-4">

@@ -9,16 +9,20 @@
                         <div class="col-xl-3"></div>
                         <div class="col-6"></div>
                         <div class="col-xl-3">
-                            <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4"
+                            <form action="{{ route('products.filter', $categoryId) }}" method="GET" id="filterForm"
+                                class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4"
                                 style="box-shadow: 4px 4px 10px">
                                 <label for="fruits">Sắp xếp theo:</label>
-                                <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3"
-                                    form="fruitform">
-                                    <option value="volvo">Mặc định</option>
-                                    <option value="saab">Giá giảm dần</option>
-                                    <option value="opel">Giá tăng dần</option>
+                                <select id="option" name="option" class="border-0 form-select-sm bg-light me-3"
+                                    onchange="document.getElementById('filterForm').submit();">
+                                    <option value="latest" {{ request('option') == 'latest' ? 'selected' : '' }}>Mới nhất
+                                    </option>
+                                    <option value="price_asc" {{ request('option') == 'price_asc' ? 'selected' : '' }}>Giá
+                                        từ thấp đến cao</option>
+                                    <option value="price_desc" {{ request('option') == 'price_desc' ? 'selected' : '' }}>Giá
+                                        từ cao đến thấp</option>
                                 </select>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <div class="row g-4">
@@ -70,7 +74,8 @@
                                         {{-- Pagination Links --}}
                                         @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
                                             @if ($page == $products->currentPage())
-                                                <a href="{{ $url }}" class="active rounded">{{ $page }}</a>
+                                                <a href="{{ $url }}"
+                                                    class="active rounded">{{ $page }}</a>
                                             @else
                                                 <a href="{{ $url }}" class="rounded">{{ $page }}</a>
                                             @endif
