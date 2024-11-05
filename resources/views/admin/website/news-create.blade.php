@@ -17,6 +17,10 @@
 
         <div class="container py-5">
             <div class="bg-white mt-2 rounded py-3">
+                <a href="{{ url()->previous() }}" class="btn btn-primary py-2 px-3 ms-5 text-white fs-5">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay lại
+                </a>
                 <h3 class="text-center my-5"> Thêm tin tức mới</h3>
                 <form action="{{ route('website.news.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf

@@ -3,6 +3,10 @@
 @section('content')
 
     <div class=" container">
+        <a href="{{ url()->previous() }}" class="btn btn-primary py-2 px-3 mt-5 text-white fs-5">
+            <i class="fa-solid fa-arrow-left"></i>
+            Quay lại
+        </a>
         <h3 class="text-center my-5"> Chỉnh sửa vai trò</h3>
         <form action="{{ route('roles.update', $role->id) }}" method="POST">
             @csrf

@@ -124,16 +124,22 @@ class CustomerController extends Controller
     public function releaseList(StatisticRequest $request)
     {
         $data = $request->all();
-        $staff = Staff::find(Auth::user()->userable_id);
+
         $customer = $this->customer->findOrFail($data['customerId']);
+
+        $staff = Staff::find(Auth::user()->userable_id);
         $releases = $customer->releases()
-            ->whereBetween('datetime', [$data['date-start'], $data['date-end']])
+            ->whereDate('datetime', '>=', $data['date-start'])
+            ->whereDate('datetime', '<=', $data['date-end'])
             ->with('staff')
             ->get();
         $dateStart =  $data['date-start'];
         $dateEnd =  $data['date-end'];
-
-        return view('admin.customers.show', compact('customer', 'releases', 'dateStart', 'dateEnd', 'staff'));
+        if (Auth::user()->userable_type === Customer::class) {
+            return view('client.profile.show-own-release', compact('customer', 'releases', 'dateStart', 'dateEnd'));
+        } else if (Auth::user()->userable_type === Staff::class) {
+            return view('admin.customers.show', compact('customer', 'releases', 'dateStart', 'dateEnd', 'staff'));
+        }
     }
 
 

@@ -17,6 +17,10 @@
 
         <div class="container py-5">
             <div class="bg-white mt-2 rounded pb-3">
+                <a href="{{ url()->previous() }}" class="btn btn-primary py-2 px-3 ms-5 mt-3 text-white fs-5">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay lại
+                </a>
                 <div class="row g-4 px-5">
                     <h1 class="col-sm-12 col-md-8 d-flex align-items-center">{{ $news->title }}
                     </h1>

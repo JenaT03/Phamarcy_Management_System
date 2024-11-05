@@ -38,68 +38,45 @@
 
 
             </form>
-
-            <table class="table hid-border-style">
-                <thead>
-                    <tr class="text-center">
-                        <th scope="col">Mã hóa đơn</th>
-                        <th scope="col">Nhân viên</th>
-                        <th scope="col">Ngày mua</th>
-                        <th scope="col">Tổng tiền</th>
-                        <th scope="col"></th>
-
-                    </tr>
-                </thead>
-                <tbody class="border-bottom">
-                    @foreach ($releases as $release)
-                        <tr class="text-center border-top">
-                            <td class="py-5">{{ $release->id }}</td>
-                            <td class="py-5">{{ $release->staff->code . ' - ' . $release->staff->name }}</td>
-                            <td class="py-5">{{ $release->datetime }}</td>
-                            <td class="py-5">{{ $release->total }}</td>
-                            <td class="py-5 d-flex justify-content-around">
-                                @can('show-customer')
-                                    <a href="{{ route('customers.show-detail', ['customer' => $customer->id, 'release' => $release->id]) }}"
-                                        class="btn"><i class="fa-solid fa-eye text-secondary "
-                                            style="font-size: 1.25rem;"></i></a>
-                                @endcan
-                            </td>
+            @if ($releases->isEmpty())
+                <p class="text-center my-4"> Không có hóa đơn nào trong khoảng thời gian này </p>
+            @else
+                <table class="table hid-border-style">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col">Mã hóa đơn</th>
+                            <th scope="col">Nhân viên</th>
+                            <th scope="col">Ngày mua</th>
+                            <th scope="col">Tổng tiền</th>
+                            <th scope="col"></th>
 
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody class="border-bottom">
+                        @foreach ($releases as $release)
+                            <tr class="text-center border-top">
+                                <td class="py-5">{{ $release->id }}</td>
+                                <td class="py-5">{{ $release->staff->code . ' - ' . $release->staff->name }}</td>
+                                <td class="py-5">{{ $release->datetime }}</td>
+                                <td class="py-5">{{ $release->total }}</td>
+                                <td class="py-5 d-flex justify-content-around">
+                                    @can('show-customer')
+                                        <a href="{{ route('customers.show-detail', ['customer' => $customer->id, 'release' => $release->id]) }}"
+                                            class="btn"><i class="fa-solid fa-eye text-secondary "
+                                                style="font-size: 1.25rem;"></i></a>
+                                    @endcan
+                                </td>
+
+                            </tr>
+                        @endforeach
 
 
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            @endif
+
+
         </div>
-
-        <div class="col-12">
-            <div class="pagination d-flex justify-content-center mt-5">
-                {{-- Previous Page Link --}}
-                @if ($releases->onFirstPage())
-                    <a href="#" class="rounded disabled">&laquo;</a>
-                @else
-                    <a href="{{ $releases->previousPageUrl() }}" class="rounded">&laquo;</a>
-                @endif
-
-                {{-- Pagination Links --}}
-                @foreach ($releases->getUrlRange(1, $releases->lastPage()) as $page => $url)
-                    @if ($page == $releases->currentPage())
-                        <a href="{{ $url }}" class="active rounded">{{ $page }}</a>
-                    @else
-                        <a href="{{ $url }}" class="rounded">{{ $page }}</a>
-                    @endif
-                @endforeach
-
-                {{-- Next Page Link --}}
-                @if ($releases->hasMorePages())
-                    <a href="{{ $releases->nextPageUrl() }}" class="rounded">&raquo;</a>
-                @else
-                    <a href="#" class="rounded disabled">&raquo;</a>
-                @endif
-            </div>
-        </div>
-    </div>
-@endsection
+    @endsection

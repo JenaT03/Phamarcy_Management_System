@@ -132,7 +132,7 @@
                             lại</a>
                     @endif
                 @endcan
-                <form action="#" method="POST">
+                <form action="{{ route('releases.finish', $releaseId) }} method="POST">
                     @csrf
                     <input type="number" name="total" value="{{ $total }}" hidden>
                     <button type="submit" name="" class="btn btn-primary text-white text-center"

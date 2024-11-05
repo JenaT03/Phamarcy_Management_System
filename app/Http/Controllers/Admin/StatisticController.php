@@ -63,7 +63,8 @@ class StatisticController extends Controller
     {
         $data = $request->all();
         $staff = Staff::find(Auth::user()->userable_id);
-        $releases = Release::whereBetween('datetime', [$data['date-start'], $data['date-end']])
+        $releases = Release::whereDate('datetime', '>=', $data['date-start'])
+            ->whereDate('datetime', '<=', $data['date-end'])
             ->with('staff', 'customer')->get();
 
         $totalReleases = 0;

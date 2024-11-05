@@ -2,6 +2,10 @@
 @section('title', 'nhân viên')
 @section('content')
     <div class=" container">
+        <a href="{{ url()->previous() }}" class="btn btn-primary py-2 px-3 mt-5 text-white fs-5">
+            <i class="fa-solid fa-arrow-left"></i>
+            Quay lại
+        </a>
         <h3 class="text-center my-5"> Chỉnh sửa thông tin nhân viên</h3>
         <form action="{{ route('staffs.update', $staffEdited->id) }}" method="POST">
             @csrf
@@ -70,10 +74,7 @@
                 @enderror
             </div>
 
-            <div class="my-3 mt-5 d-flex justify-content-between">
-
-                <a href="{{ route('staffs.index') }}" class="btn btn-primary text-white text-center"
-                    style="padding: 15px 30px; font-size: 1.25rem;">Quay lại</a>
+            <div class="my-3 mt-5 d-flex justify-content-end">
 
                 <button type="submit" name="submit" class="btn btn-primary text-white text-center"
                     style="padding: 15px 45px; font-size: 1.25rem;">Tiếp</button>

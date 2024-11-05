@@ -3,6 +3,10 @@
 @section('content')
 
     <div class=" container">
+        <a href="{{ url()->previous() }}" class="btn btn-primary py-2 px-3 mt-5 text-white fs-5">
+            <i class="fa-solid fa-arrow-left"></i>
+            Quay lại
+        </a>
         <h3 class="text-center my-5">Chi tiết sản phẩm</h3>
 
         <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
@@ -61,9 +65,8 @@
 
         </div>
 
-        <div class="col-md-6 offset-md-3 pb-3 my-3 d-flex justify-content-between">
-            <a href="{{ route('products.index') }}" class="btn btn-primary text-white text-center"
-                style="padding: 15px 30px; font-size: 1.25rem;">Quay lại</a>
+        <div class="col-md-6 offset-md-3 pb-3 my-3 d-flex justify-content-end">
+
             @can('edit-product')
                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary text-white text-center"
                     style="padding: 15px 30px; font-size: 1.25rem;">Chỉnh sửa</a>
