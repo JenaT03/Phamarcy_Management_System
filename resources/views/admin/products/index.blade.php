@@ -42,10 +42,17 @@
                                 </td>
                                 <td class="py-5">{{ $product->code }}</td>
                                 <td class="py-5">{{ $product->name }}</td>
-                                <td class="py-5">{{ $product->productdetails()->latest('id')->first()->price ?? '0' }}đ
+                                <td class="py-5">
+                                    {{ $product->productdetails()->latest('id')->first()->price ?? '0' }}
                                 </td>
                                 <td class="py-5">
-                                    {{ $product->productdetails->first()->quantity ?? '0' }}{{ $product->unit ? '/' . $product->unit : '' }}
+                                    @php
+                                        $quantity = 0;
+                                        foreach ($product->productdetails as $productdetail) {
+                                            $quantity += $productdetail->quantity;
+                                        }
+                                    @endphp
+                                    {{ $quantity }}{{ $product->unit ? '/' . $product->unit : '' }}
                                 </td>
                                 <td class="py-5">{{ $product->brand ? $product->brand->name : '' }}</td>
                                 <td class="py-5 d-flex justify-content-around">

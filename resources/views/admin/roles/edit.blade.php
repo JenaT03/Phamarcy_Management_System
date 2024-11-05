@@ -13,7 +13,7 @@
                 <input name="name" type="text" value="{{ old('name') ?? $role->name }}" class="form-control">
 
                 @error('name')
-                    <span class="text-danger">{{ $messages }}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -24,7 +24,7 @@
 
 
                 @error('display_name')
-                    <span class="text-danger">{{ $messages }}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -36,14 +36,14 @@
                 </select>
 
                 @error('group')
-                    <span class="text-danger">{{ $messages }}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-item offset-md-2 pb-3 my-3 ">
                 <label class="form-label">Quyền hạn</label>
                 @error('permission_ids')
-                    <span class="text-danger">{{ $messages }}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
                 <div class="row">
                     @foreach ($permissions as $groupName => $permission)

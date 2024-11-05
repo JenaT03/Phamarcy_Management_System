@@ -79,7 +79,10 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'receipts-statistic', 'display_name' => 'Thống kê phiếu nhập', 'group' => 'Thống kê'],
             ['name' => 'releases-statistic', 'display_name' => 'Thống kê hóa đơn', 'group' => 'Thống kê'],
 
-            ['name' => 'website', 'display_name' => 'Quản lý nội dung website', 'group' => 'Trang chủ'],
+            ['name' => 'banner_website', 'display_name' => 'Quản lý banner', 'group' => 'Website'],
+            ['name' => 'news_website', 'display_name' => 'Quản lý tin tức', 'group' => 'Trang chủ'],
+            ['name' => 'introduce_website', 'display_name' => 'Quản lý phần giới thiệu', 'group' => 'Trang chủ'],
+
 
 
         ];

@@ -36,6 +36,9 @@
                                 <td class="py-5">{{ $role->display_name }}</td>
                                 <td class="py-5 d-flex justify-content-around">
                                     @if ($role->name != 'super-admin')
+                                        <a href="{{ route('roles.show', $role->id) }}" class="btn"><i
+                                                class="fa-solid fa-eye text-secondary" style="font-size: 1.25rem;"></i></a>
+
                                         <a href="{{ route('roles.edit', $role->id) }}" class="btn"><i
                                                 class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>
                                         <form action="{{ route('roles.destroy', $role->id) }}" method="POST">

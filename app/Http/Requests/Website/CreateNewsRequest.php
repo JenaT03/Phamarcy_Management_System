@@ -28,7 +28,7 @@ class CreateNewsRequest extends FormRequest
             'title' => ['required', 'max:255'],
             'abstract' => 'required',
             'content' => 'required',
-            'author' => 'required'
+            'author' => ['required', 'max:255']
         ];
     }
 
@@ -44,6 +44,8 @@ class CreateNewsRequest extends FormRequest
             'abstract.required' => 'Mở đầu không được để trống',
             'content.required' => 'Nội dung không được để trống',
             'author.required' => 'Tên tác giả không được để trống',
+            'author.max' => 'Tên tác giả phải ít hơn 255 ký tự',
+
         ];
     }
 }

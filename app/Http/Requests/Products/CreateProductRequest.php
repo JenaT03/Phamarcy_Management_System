@@ -27,7 +27,7 @@ class CreateProductRequest extends FormRequest
             'name' => ['required', 'unique:products,name', 'max:255'],
             'description' => 'required',
             'ingredient' => 'required',
-            'img' => ['required', 'image', 'mimes:png,jpg,PNG,jpeg', 'max:2048'],
+            'img' => ['image', 'mimes:png,jpg,PNG,jpeg', 'max:2048'],
             'brand_id' => 'required|exists:brands,id',
             'category_ids' => 'required'
         ];

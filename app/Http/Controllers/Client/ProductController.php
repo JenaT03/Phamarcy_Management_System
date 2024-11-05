@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -22,6 +24,11 @@ class ProductController extends Controller
     public function index(Request $request, $categoryId)
     {
         $products = $this->product->getBy($request->all(), $categoryId);
+
+        if (Auth::check() && Auth::user()->userable_type === Customer::class) {
+            $customer = Customer::find(Auth::user()->userable_id);
+            return view('client.products.index', compact('products', 'categoryId', 'customer'));
+        }
         return view('client.products.index', compact('products', 'categoryId'));
     }
 
@@ -67,6 +74,10 @@ class ProductController extends Controller
 
         $products = $products->paginate(12);
 
+        if (Auth::check() && Auth::user()->userable_type === Customer::class) {
+            $customer = Customer::find(Auth::user()->userable_id);
+            return view('client.products.index', compact('products', 'categoryId', 'customer'));
+        }
         return view('client.products.index', compact('products', 'categoryId'));
     }
 

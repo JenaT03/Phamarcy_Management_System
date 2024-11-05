@@ -30,5 +30,11 @@ class AuthServiceProvider extends ServiceProvider
                 $user->can('receipts-statistic') &&
                 $user->can('releases-statistic');
         });
+
+        Gate::define('access-website-management', function ($user) {
+            return $user->can('banner_website') &&
+                $user->can('news_website') &&
+                $user->can('introduce_website');
+        });
     }
 }

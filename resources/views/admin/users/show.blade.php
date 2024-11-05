@@ -28,6 +28,15 @@
                         <td class="text-center">Giới tính</td>
                         <td class="text-center user-info">{{ $staffShow->gender }}</td>
                     </tr>
+
+                    <tr>
+                        <td class="text-center">Chức vụ</td>
+                        <td class="text-center user-info">
+                            @foreach ($roles as $role)
+                                <p>{{ $role->display_name }}</p>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
 
             </table>

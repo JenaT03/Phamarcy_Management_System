@@ -8,7 +8,7 @@
         <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
             <h6 class="mb-3">Hình ảnh</h6>
             <div class="">
-                <img src="{{ $product->img ? asset('uploads' . $product->img) : 'uploads/default.png' }}" width="300px">
+                <img src="{{ $product->img ? asset('uploads/' . $product->img) : '' }}" width="300px">
             </div>
         </div>
 
@@ -71,5 +71,7 @@
 
 
         </div>
+    </div>
 
-    @endsection
+
+@endsection

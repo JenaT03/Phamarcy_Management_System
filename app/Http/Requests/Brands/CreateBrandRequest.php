@@ -26,7 +26,7 @@ class CreateBrandRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'country' => 'required',
+            'country' =>  ['required', 'max:255'],
             'img' => ['required', 'image', 'mimes:png,jpg,PNG,jpeg', 'max:2048'],
         ];
     }
@@ -36,6 +36,7 @@ class CreateBrandRequest extends FormRequest
         return [
             'name.required' => 'Tên không được để trống',
             'name.max' => 'Tên không được vượt quá 255 ký tự',
+            'country.max' => 'Tên quốc gia không được vượt quá 255 ký tự',
             'country.required' => 'Tên quốc gia không được để trống',
             'img.image' => 'Hình ảnh không hợp lệ',
             'img.mimes' => 'Hình ảnh phải thuộc một trong các định dạng png, jpg, PNG hoặc jpeg',

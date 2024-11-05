@@ -8,6 +8,7 @@ use App\Http\Requests\Staffs\UpdateStaffRequest;
 use Illuminate\Support\Str;
 use App\Models\Role;
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -85,7 +86,11 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        //
+        $staffDetail = Staff::where('id', $id)->firstOrFail();
+        $user = $staffDetail->users;
+        $roles = $user->roles()->get();
+        $staff = Staff::find(Auth::user()->userable_id);
+        return view('admin.staffs.show', compact('staff', 'staffDetail', 'roles'));
     }
 
     /**

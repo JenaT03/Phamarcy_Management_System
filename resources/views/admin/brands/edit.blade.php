@@ -9,6 +9,17 @@
             @method('PUT')
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label">Logo</label>
+                <input type="file" accept="image/*" id="image-input" class="form-control bg-white" name = "img">
+                <div class="mt-2">
+                    <img src="{{ $brand->img ? asset('uploads/' . $brand->img) : '' }}" id="show-image" width="300px">
+                </div>
+                @error('img')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Tên nhãn hàng</label>
                 <input type="text" class="form-control" name = "name" value="{{ old('name') ?? $brand->name }}">
                 @error('name')
@@ -24,6 +35,12 @@
                 @enderror
             </div>
 
+            <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
+                <label class="form-label" for="hightlight">Nổi bật</label>
+                <input type="checkbox" class="form-check-input border-1" id="hightlight" name= "hightlight" value="true">
+
+            </div>
+
             <div class="my-3 mt-5 d-flex justify-content-between">
 
                 <a href="{{ route('brands.index') }}" class="btn btn-primary text-white text-center"
@@ -37,5 +54,31 @@
         </form>
 
     </div>
+
+@endsection
+
+@section('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+    <script>
+        $(() => {
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#show-image').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#image-input").change(function() {
+                readURL(this);
+            });
+
+
+
+        });
+    </script>
 
 @endsection

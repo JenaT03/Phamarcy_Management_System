@@ -92,7 +92,7 @@
                     </div>
                 @endcan
 
-                @can('website')
+                @can('access-website-management')
                     <div class="col-md-6 col-xl-4 mb-4 text-center ">
                         <a href="{{ route('website.banners.index') }}"
                             class="btn btn-primary pandx-10 py-3 background-grad-right border-0">

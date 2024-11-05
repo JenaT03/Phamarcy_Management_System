@@ -2,7 +2,7 @@
 @section('content')
     <!-- Single Page Header start -->
     <div class="container-fluid page-header" style="padding: 7rem 0 3rem 0;">
-        <h1 class="text-center text-white display-6">Tin tức</h1>
+        <h1 class="text-center text-white display-6">Tin tức sức khỏe</h1>
     </div>
     <!-- Single Page Header End -->
     <div class="container py-5">

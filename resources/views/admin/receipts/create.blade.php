@@ -16,7 +16,9 @@
             @csrf
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Mã nhân viên</label>
-                <input type="text" name="staff_id" class="form-control" value="{{ $staff->id }}" readonly>
+                <input type="text" name="staff_code" class="form-control" value="{{ $staff->code }}" readonly>
+                <input type="text" name="staff_id" class="form-control" value="{{ $staff->id }}" hidden>
+
             </div>
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">

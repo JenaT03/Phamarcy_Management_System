@@ -26,7 +26,6 @@ class UpdateReleaseDetailRequest extends FormRequest
         return [
             'product_code' => 'required|exists:products,code',
             'quantity' => 'min:1|numeric',
-            'price' => 'min:0|numeric',
         ];
     }
 
@@ -37,8 +36,7 @@ class UpdateReleaseDetailRequest extends FormRequest
             'product_code.exists' => 'Mã số sản phẩm không tồn tại',
             'quantity.min' => 'Số lượng không được nhỏ hơn 1',
             'quantity.numeric' => 'Số lượng phải là số',
-            'price.min' => 'Giá tiền không hợp lệ',
-            'price.numeric' => 'Giá tiền phải là số',
+
         ];
     }
 }

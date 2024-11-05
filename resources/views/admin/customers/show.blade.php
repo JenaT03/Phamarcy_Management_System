@@ -39,7 +39,6 @@
 
             </form>
 
-
             <table class="table hid-border-style">
                 <thead>
                     <tr class="text-center">
@@ -74,6 +73,33 @@
                 </tbody>
 
             </table>
+        </div>
+
+        <div class="col-12">
+            <div class="pagination d-flex justify-content-center mt-5">
+                {{-- Previous Page Link --}}
+                @if ($releases->onFirstPage())
+                    <a href="#" class="rounded disabled">&laquo;</a>
+                @else
+                    <a href="{{ $releases->previousPageUrl() }}" class="rounded">&laquo;</a>
+                @endif
+
+                {{-- Pagination Links --}}
+                @foreach ($releases->getUrlRange(1, $releases->lastPage()) as $page => $url)
+                    @if ($page == $releases->currentPage())
+                        <a href="{{ $url }}" class="active rounded">{{ $page }}</a>
+                    @else
+                        <a href="{{ $url }}" class="rounded">{{ $page }}</a>
+                    @endif
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($releases->hasMorePages())
+                    <a href="{{ $releases->nextPageUrl() }}" class="rounded">&raquo;</a>
+                @else
+                    <a href="#" class="rounded disabled">&raquo;</a>
+                @endif
+            </div>
         </div>
     </div>
 @endsection

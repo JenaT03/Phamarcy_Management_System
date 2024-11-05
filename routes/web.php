@@ -200,7 +200,7 @@ Route::middleware('auth')->group(
         Route::prefix('receiptdetails')->controller(ReceiptDetailController::class)->name('receiptdetails.')->group(
             function () {
                 Route::get('/', 'index')->name('index')->middleware('permission:show-receipt');
-                Route::get('/create', 'create')->name('create')->middleware('permission:create-receipt');
+                Route::get('/create/{id}', 'create')->name('create')->middleware('permission:create-receipt');
                 Route::post('/', 'store')->name('store')->middleware('permission:create-receipt');
                 Route::get('/{id}', 'show')->name('show')->middleware('permission:show-receipt');
                 Route::get('/edit/{id}/{receiptId}',  'edit')->name('edit')->middleware('permission:edit-receipt');
@@ -212,6 +212,7 @@ Route::middleware('auth')->group(
         //Route Release
         Route::prefix('releases')->controller(ReleaseController::class)->name('releases.')->group(
             function () {
+                Route::get('/index', 'index')->name('index')->middleware('permission:show-release');
                 Route::get('/search', 'search')->name('search')->middleware('permission:show-release');
                 Route::get('/create/{id}', 'create')->name('create')->middleware('permission:create-release');
                 Route::post('/', 'store')->name('store')->middleware('permission:create-release');
@@ -221,7 +222,6 @@ Route::middleware('auth')->group(
                 Route::delete('/{id}', 'destroy')->name('destroy')->middleware('permission:delete-release');
                 Route::post('/finish/{id}', 'finish')->name('finish')->middleware('permission:create-release');
                 Route::get('/generate/{id}', 'generateInvoice')->name('generate')->middleware('permission:print-release');
-                Route::get('/index', 'index')->name('index')->middleware('permission:show-release');
             }
         );
 
@@ -246,7 +246,7 @@ Route::middleware('auth')->group(
                 Route::get('/receipts', 'showStatisticReceipt')->name('showreceiptlist')->middleware('permission:receipts-statistic');
                 Route::post('/receipts', 'statisticReceipt')->name('receiptlist')->middleware('permission:receipts-statistic');
                 Route::get('/releases', 'showStatisticRelease')->name('showreleaselist')->middleware('permission:releases-statistic');
-                Route::post('/releases', 'statisticRelease')->name('releaselist')->middleware('permission:release-statistic');
+                Route::post('/releases', 'statisticRelease')->name('releaselist')->middleware('permission:releases-statistic');
                 Route::post('/receipts/print', 'printReceiptsList')->name('printReceiptsList')->middleware('permission:receipts-statistic');
                 Route::post('/releases/print', 'printReleasesList')->name('printReleasesList')->middleware('permission:releases-statistic');
             }
@@ -254,22 +254,22 @@ Route::middleware('auth')->group(
 
         Route::prefix('website-management')->controller(WebsiteController::class)->name('website.')->group(
             function () {
-                Route::get('/banners', 'indexBanner')->name('banners.index')->middleware('permission:website');
-                Route::get('/banners/create', 'createBanner')->name('banners.create')->middleware('permission:website');
-                Route::post('/banners/store', 'storeBanner')->name('banners.store')->middleware('permission:website');
-                Route::delete('/banners/delete/{banner}', 'destroyBanner')->name('banners.destroy')->middleware('permission:website');
+                Route::get('/banners', 'indexBanner')->name('banners.index')->middleware('permission:banner_website');
+                Route::get('/banners/create', 'createBanner')->name('banners.create')->middleware('permission:banner_website');
+                Route::post('/banners/store', 'storeBanner')->name('banners.store')->middleware('permission:banner_website');
+                Route::delete('/banners/delete/{banner}', 'destroyBanner')->name('banners.destroy')->middleware('permission:banner_website');
 
-                Route::get('/introduce', 'showIntroduce')->name('introduce.index')->middleware('permission:website');
-                Route::get('/introduce/edit', 'editIntroduce')->name('introduce.edit')->middleware('permission:website');
-                Route::put('/introduce/update', 'updateIntroduce')->name('introduce.update')->middleware('permission:website');
+                Route::get('/introduce', 'showIntroduce')->name('introduce.index')->middleware('permission:introduce_website');
+                Route::get('/introduce/edit', 'editIntroduce')->name('introduce.edit')->middleware('permission:introduce_website');
+                Route::put('/introduce/update', 'updateIntroduce')->name('introduce.update')->middleware('permission:introduce_website');
 
-                Route::get('/news', 'indexNews')->name('news.index')->middleware('permission:website');
-                Route::get('/news/{news}', 'showNews')->name('news.show')->middleware('permission:website');
-                Route::get('/news/health/create', 'createNews')->name('news.create')->middleware('permission:website');
-                Route::post('/news/store', 'storeNews')->name('news.store')->middleware('permission:website');
-                Route::get('/news/edit/{news}', 'editNews')->name('news.edit')->middleware('permission:website');
-                Route::put('/news/update/{news}', 'updateNews')->name('news.update')->middleware('permission:website');
-                Route::delete('/news/delete/{news}', 'destroyNews')->name('news.destroy')->middleware('permission:website');
+                Route::get('/news', 'indexNews')->name('news.index')->middleware('permission:news_website');
+                Route::get('/news/{news}', 'showNews')->name('news.show')->middleware('permission:news_website');
+                Route::get('/news/health/create', 'createNews')->name('news.create')->middleware('permission:news_website');
+                Route::post('/news/store', 'storeNews')->name('news.store')->middleware('permission:news_website');
+                Route::get('/news/edit/{news}', 'editNews')->name('news.edit')->middleware('permission:news_website');
+                Route::put('/news/update/{news}', 'updateNews')->name('news.update')->middleware('permission:news_website');
+                Route::delete('/news/delete/{news}', 'destroyNews')->name('news.destroy')->middleware('permission:news_website');
             }
         );
     }

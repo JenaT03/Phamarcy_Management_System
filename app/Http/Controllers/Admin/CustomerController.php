@@ -86,7 +86,7 @@ class CustomerController extends Controller
     {
         if (Auth::check()) {
             $customer = $this->customer->findOrFail($id);
-            $releases = $customer->releases()->with('staff')->get();
+            $releases = $customer->releases()->with('staff')->paginate(10);
             if (Auth::user()->userable_type === Customer::class) {
                 return view('client.profile.show-own-release', compact('customer', 'releases'));
             }

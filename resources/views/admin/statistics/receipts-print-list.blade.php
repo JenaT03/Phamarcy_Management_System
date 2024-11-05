@@ -120,16 +120,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach ($receipts as $receipt)
+            @foreach ($receipts as $receipt)
+                <tr>
+
                     <td>{{ $receipt->id }}</td>
                     <td>{{ $receipt->staff->code . ' - ' . $receipt->staff->name }}</td>
                     <td>{{ $receipt->supplier->name }}</td>
                     <td>{{ $receipt->datetime }}</td>
                     <td>{{ $receipt->total }}</td>
-                @endforeach
 
-            </tr>
+                </tr>
+            @endforeach
+
 
         </tbody>
     </table>

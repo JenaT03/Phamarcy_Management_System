@@ -2,9 +2,15 @@
 @section('title', 'Quản lý website')
 @section('content')
     <div class="row g-0 pt-3 bg-white">
-        <a href="{{ route('website.banners.index') }}" class="col-4 text-center py-2 ">BANNER</a>
-        <a href="{{ route('website.news.index') }}" class="col-4 text-center py-2 border-cus fw-bold">TIN TỨC</a>
-        <a href="{{ route('website.introduce.index') }}" class="col-4 text-center py-2">GIỚI THIỆU</a>
+        @can('banner_website')
+            <a href="{{ route('website.banners.index') }}" class="col-4 text-center py-2 ">BANNER</a>
+        @endcan
+        @can('news_website')
+            <a href="{{ route('website.news.index') }}" class="col-4 text-center py-2 border-cus fw-bold">TIN TỨC</a>
+        @endcan
+        @can('introduce_website')
+            <a href="{{ route('website.introduce.index') }}" class="col-4 text-center py-2 ">GIỚI THIỆU</a>
+        @endcan
 
     </div>
     <div class="container-fluid fruite ">
@@ -35,7 +41,7 @@
                     </div>
 
                     <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
-                        <label class="form-label">Mở đầu</label>
+                        <label class="form-label">Phần giới thiệu</label>
                         <textarea name="abstract" class="form-control editor" cols="30" rows="40" spellcheck="false">{{ old('abstract') }}</textarea>
                         @error('abstract')
                             <span class="text-danger">{{ $message }}</span>

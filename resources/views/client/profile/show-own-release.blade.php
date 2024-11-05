@@ -9,9 +9,10 @@
         <div class="container py-5">
             <h2 class="text-center mb-5">Hóa đơn của bạn</h2>
 
-            <form action="{{route('customers.release-list',  $customer->id)}}" class="d-flex justify-content-end mb-5" method="POST">
+            <form action="{{ route('customers.release-list', $customer->id) }}" class="d-flex justify-content-end mb-5"
+                method="POST">
                 @csrf
-                <input type="text" name="customerId" value="{{$customer->id}}" hidden>
+                <input type="text" name="customerId" value="{{ $customer->id }}" hidden>
                 <p class="mb-0 mx-2" style="align-content: center;">TỪ</p>
 
                 <div class="form-item  mx-2">
@@ -59,7 +60,8 @@
                             <td class="py-5">{{ $release->datetime }}</td>
                             <td class="py-5">{{ $release->total }}</td>
                             <td class="py-5 d-flex justify-content-around">
-                                <a href="{{route('customers.show-detail', ['customer' => $customer->id, 'release' => $release->id])}}" class="btn"><i class="fa-solid fa-eye text-secondary "
+                                <a href="{{ route('customers.show-detail', ['customer' => $customer->id, 'release' => $release->id]) }}"
+                                    class="btn"><i class="fa-solid fa-eye text-secondary "
                                         style="font-size: 1.25rem;"></i></a>
                             </td>
 
@@ -71,6 +73,33 @@
                 </tbody>
 
             </table>
+        </div>
+
+        <div class="col-12">
+            <div class="pagination d-flex justify-content-center mt-5">
+                {{-- Previous Page Link --}}
+                @if ($releases->onFirstPage())
+                    <a href="#" class="rounded disabled">&laquo;</a>
+                @else
+                    <a href="{{ $releases->previousPageUrl() }}" class="rounded">&laquo;</a>
+                @endif
+
+                {{-- Pagination Links --}}
+                @foreach ($releases->getUrlRange(1, $releases->lastPage()) as $page => $url)
+                    @if ($page == $releases->currentPage())
+                        <a href="{{ $url }}" class="active rounded">{{ $page }}</a>
+                    @else
+                        <a href="{{ $url }}" class="rounded">{{ $page }}</a>
+                    @endif
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($releases->hasMorePages())
+                    <a href="{{ $releases->nextPageUrl() }}" class="rounded">&raquo;</a>
+                @else
+                    <a href="#" class="rounded disabled">&raquo;</a>
+                @endif
+            </div>
         </div>
     </div>
 @endsection

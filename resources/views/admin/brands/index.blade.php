@@ -40,7 +40,7 @@
                                 </td>
                                 <td class="py-5">{{ $brand->name }}</td>
                                 <td class="py-5">{{ $brand->country }}</td>
-                                <td class="py-5">{{ $brand->hightlight == true ? 'Nổi bật' : '' }}</td>
+                                <td class="py-5">{!! $brand->highlight == true ? '<i class="fa-solid fa-star text-warning"></i>' : '' !!}</td>
                                 <td class="py-5 d-flex justify-content-around">
                                     @can('edit-brand')
                                         <a href="{{ route('brands.edit', $brand->id) }}" class="btn"><i

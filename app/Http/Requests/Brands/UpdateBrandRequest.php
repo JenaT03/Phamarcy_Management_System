@@ -25,7 +25,7 @@ class UpdateBrandRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'country' => 'required',
+            'country' => ['required', 'max:255'],
             'img' => ['image', 'mimes:png,jpg,PNG,jpeg', 'max:2048'],
         ];
     }
@@ -33,8 +33,10 @@ class UpdateBrandRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.required' => 'Tên không được để trống',
             'name.max' => 'Tên không được vượt quá 255 ký tự',
             'country.required' => 'Tên quốc gia không được để trống',
+            'country.max' => 'Tên quốc gia không được vượt quá 255 ký tự',
             'img.image' => 'Hình ảnh không hợp lệ',
             'img.mimes' => 'Hình ảnh phải thuộc một trong các định dạng png, jpg, PNG hoặc jpeg',
             'img.max' => 'Hình ảnh phải nhỏ hơn 2MB',
