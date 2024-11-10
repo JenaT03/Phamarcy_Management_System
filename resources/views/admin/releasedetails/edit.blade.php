@@ -6,11 +6,13 @@
     <div class="container-fluid py-5">
         <div class="row g-5">
             <div class="col-md-12 col-lg-4 col-xl-5">
+                @include('admin.layouts.search-product')
                 <form action="{{ route('releasedetails.update', $releaseDetail->id) }}" method="POST">
                     @csrf
                     @method('PUT');
                     <input type="hidden" name ="release_id" value="{{ $releaseId }} ">
                     <div class="form-item col-md-8 offset-md-2 pb-3 my-3">
+
                         <label class="form-label">Mã số sản phẩm</label>
                         <input type="text" class="form-control" name ="product_code"
                             value="{{ old('product_code') ?? $releaseDetail->product_code }}">
@@ -132,8 +134,9 @@
                             lại</a>
                     @endif
                 @endcan
-                <form action="{{ route('releases.finish', $releaseId) }} method="POST">
+                <form action="{{ route('releases.finish', $releaseId) }}" method="POST">
                     @csrf
+
                     <input type="number" name="total" value="{{ $total }}" hidden>
                     <button type="submit" name="" class="btn btn-primary text-white text-center"
                         style="padding: 15px 45px; font-size: 1.25rem;">Hoàn thành</button>

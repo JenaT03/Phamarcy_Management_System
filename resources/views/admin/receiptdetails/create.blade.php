@@ -6,6 +6,7 @@
     <div class="container-fluid py-5">
         <div class="row g-5">
             <div class="col-md-12 col-lg-4 col-xl-5">
+                @include('admin.layouts.search-product')
                 <form action="{{ route('receiptdetails.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name ="receipt_id" value="{{ $receiptId }} ">

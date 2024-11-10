@@ -176,6 +176,7 @@ Route::middleware('auth')->group(
                 Route::get('/{product}/edit',  'edit')->name('edit')->middleware('permission:edit-product');
                 Route::put('/{product}', 'update')->name('update')->middleware('permission:edit-product');
                 Route::delete('/{product}', 'destroy')->name('destroy')->middleware('permission:delete-product');
+                Route::post('/search-product', 'searchProduct')->name('searchProduct')->middleware('permission:show-product');
             }
         );
 
@@ -249,6 +250,8 @@ Route::middleware('auth')->group(
                 Route::post('/releases', 'statisticRelease')->name('releaselist')->middleware('permission:releases-statistic');
                 Route::post('/receipts/print', 'printReceiptsList')->name('printReceiptsList')->middleware('permission:receipts-statistic');
                 Route::post('/releases/print', 'printReleasesList')->name('printReleasesList')->middleware('permission:releases-statistic');
+                Route::get('/best-selling', 'showBestSelling')->name('show-best-selling')->middleware('permission:products-statistic');
+                Route::post('/best-selling', 'computeBestSelling')->name('best-selling')->middleware('permission:products-statistic');
             }
         );
 

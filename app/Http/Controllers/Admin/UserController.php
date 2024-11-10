@@ -117,12 +117,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $staffShow = Staff::where('id', $id)->firstOrFail();
 
-        $user = User::where('id', Auth::user()->userable_id)->first();
-        $roles = $user->roles()->get();
         $staff = Staff::find(Auth::user()->userable_id);
-        return view('admin.users.show', compact('staff', 'staffShow', 'roles'));
+        $user = $staff->users;
+        $roles = $user->roles()->get();
+        return view('admin.users.show', compact('staff', 'roles'));
     }
 
 

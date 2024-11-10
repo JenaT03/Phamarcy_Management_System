@@ -8,6 +8,7 @@
 
         <div class="row g-5">
             <div class="col-md-12 col-lg-4 col-xl-5">
+                @include('admin.layouts.search-product')
                 <form action="{{ route('receiptdetails.update', $receiptDetail->id) }}" method="POST">
                     @csrf
                     @method('PUT')

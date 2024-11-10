@@ -7,26 +7,26 @@
                 <tbody>
                     <tr>
                         <td class="text-center">Mã số</td>
-                        <td class="text-center user-info">{{ $staffShow->code }}</td>
+                        <td class="text-center user-info">{{ $staff->code }}</td>
                     </tr>
                     <tr>
                         <td class="text-center">Họ và tên</td>
-                        <td class="text-center user-info">{{ $staffShow->name }}</td>
+                        <td class="text-center user-info">{{ $staff->name }}</td>
                     </tr>
 
                     <tr>
                         <td class="text-center">Số điện thoại</td>
-                        <td class="text-center user-info">{{ $staffShow->phone }}</td>
+                        <td class="text-center user-info">{{ $staff->phone }}</td>
                     </tr>
 
                     <tr>
                         <td class="text-center">Năm sinh</td>
-                        <td class="text-center user-info">{{ $staffShow->birth }}</td>
+                        <td class="text-center user-info">{{ $staff->birth }}</td>
                     </tr>
 
                     <tr>
                         <td class="text-center">Giới tính</td>
-                        <td class="text-center user-info">{{ $staffShow->gender }}</td>
+                        <td class="text-center user-info">{{ $staff->gender }}</td>
                     </tr>
 
                     <tr>

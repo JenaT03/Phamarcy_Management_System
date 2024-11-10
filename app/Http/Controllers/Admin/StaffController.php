@@ -142,7 +142,7 @@ class StaffController extends Controller
         $staff->delete();
         if ($user) {
             $user->delete();
-            return to_route('staffs.index')->with(['message' => 'Xóa khách hàng thành công']);
+            return to_route('staffs.index')->with(['message' => 'Xóa nhân viên thành công']);
         }
         return back()->withErrors(['error' => 'Không tìm thấy người dùng liên quan tới khách hàng này.']);
     }

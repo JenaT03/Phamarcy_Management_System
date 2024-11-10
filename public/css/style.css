@@ -700,3 +700,42 @@
     margin-right: 8px;
     vertical-align: top;
 }
+
+.search-results {
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    border-radius: 0 0 8px 8px;
+    padding: 10px;
+}
+
+.search-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.search-results li:hover {
+    background-color: #f1f1f1;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 18px;
+    float: right;
+    cursor: pointer;
+}
+
+.d-none {
+    display: none;
+}
