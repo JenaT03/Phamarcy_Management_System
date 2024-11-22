@@ -11,10 +11,11 @@
          @can('products-statistic')
              <a href="{{ route('statistics.productlist') }}" class="col-3 text-center py-2 ">SẢN
                  PHẨM HẾT HẠN</a>
+             <a href="{{ route('statistics.show-best-selling') }}" class="col-3 text-center py-2 ">SẢN PHẨM
+                 BÁN CHẠY</a>
          @endcan
 
-         <a href="{{ route('statistics.productlist') }}" class="col-3 text-center py-2 ">SẢN PHẨM
-             BÁN CHẠY</a>
+
 
 
      </div>

@@ -3,14 +3,16 @@
  @section('content')
      <div class="row g-0 pt-3 bg-white">
          @can('releases-statistic')
-             <a href="{{ route('statistics.showreleaselist') }}" class="col-4 text-center py-2 ">BÁN HÀNG</a>
+             <a href="{{ route('statistics.showreleaselist') }}" class="col-3 text-center py-2 ">BÁN HÀNG</a>
          @endcan
          @can('receipts-statistic')
-             <a href="{{ route('statistics.showreceiptlist') }}" class="col-4 text-center py-2 border-cus fw-bold">NHẬP HÀNG</a>
+             <a href="{{ route('statistics.showreceiptlist') }}" class="col-3 text-center py-2 border-cus fw-bold">NHẬP HÀNG</a>
          @endcan
          @can('products-statistic')
-             <a href="{{ route('statistics.productlist') }}" class="col-4 text-center py-2 ">SẢN
+             <a href="{{ route('statistics.productlist') }}" class="col-3 text-center py-2 ">SẢN
                  PHẨM</a>
+             <a href="{{ route('statistics.show-best-selling') }}" class="col-3 text-center py-2 ">SẢN PHẨM
+                 BÁN CHẠY</a>
          @endcan
 
 
