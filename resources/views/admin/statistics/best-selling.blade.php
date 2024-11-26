@@ -1,7 +1,7 @@
 @extends('admin.layouts.app-page')
 @section('title', 'thống kê')
 @section('content')
-    <div class="row g-0 pt-3 bg-white">
+    <div class="row g-0 py-2 bg-white border-bot-lr">
         @can('releases-statistic')
             <a href="{{ route('statistics.showreleaselist') }}" class="col-3 text-center py-2  ">BÁN HÀNG</a>
         @endcan
@@ -12,7 +12,7 @@
             <a href="{{ route('statistics.productlist') }}" class="col-3 text-center py-2 ">SẢN
                 PHẨM HẾT HẠN</a>
 
-            <a href="{{ route('statistics.show-best-selling') }}" class="col-3 text-center py-2 border-cus fw-bold ">SẢN PHẨM
+            <a href="{{ route('statistics.show-best-selling') }}" class="col-3 text-center py-2 border-cus  ">SẢN PHẨM
                 BÁN CHẠY</a>
         @endcan
 
@@ -38,7 +38,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <p class="mb-0 ms-3" style="align-content: center;">PHIẾU XUẤT TỪ</p>
+                        <p class="mb-0 ms-3" style="align-content: center;">THỜI GIAN TỪ</p>
 
                         <div class="form-item ">
                             <input type="date" name="date-start" class="form-control  px-5"

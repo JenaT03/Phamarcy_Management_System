@@ -4,7 +4,7 @@
 
 
     <div class="container-fluid py-5">
-        <div class="row g-5">
+        <div class="row g-5 me-0">
             <div class="col-md-12 col-lg-4 col-xl-5">
                 @include('admin.layouts.search-product')
                 <form action="{{ route('releasedetails.store') }}" method="POST">
@@ -68,7 +68,7 @@
                                         $itemTotal = $item->quantity * $item->price;
                                         $total += $itemTotal;
                                     @endphp
-                                    <td class="py-5"><img
+                                    <td class="py-5"><img class="img-border"
                                             src="{{ $item->product->img ? asset('uploads/' . $item->product->img) : '' }}"
                                             alt="" width="70px"></td>
                                     <td class="py-5">{{ $item->product->name }}</td>

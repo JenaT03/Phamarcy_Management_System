@@ -15,7 +15,7 @@
                 <label class="form-label">Hình ảnh </label>
                 <input type="file" accept="image/*" id="image-input" class="form-control bg-white" name = "img">
                 <div class="mt-2">
-                    <img src="" id="show-image" width="300px">
+                    <img class="img-border" src="" id="show-image" width="300px">
                 </div>
                 @error('img')
                     <span class="text-danger">{{ $message }}</span>

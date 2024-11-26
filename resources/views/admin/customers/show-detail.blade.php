@@ -44,7 +44,7 @@
                     <tbody class="border-bottom">
                         @foreach ($releaseDetails as $item)
                             <tr class="border-top">
-                                <td class="py-5"><img
+                                <td class="py-5"><img class="img-border"
                                         src="{{ $item->product->img ? asset('uploads/' . $item->product->img) : '' }}"
                                         alt="" width="70px"></td>
                                 <td class="py-5">{{ $item->product->name }}</td>

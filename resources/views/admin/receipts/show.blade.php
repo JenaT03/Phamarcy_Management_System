@@ -48,7 +48,7 @@
                                     $itemTotal = $item->quantity * $item->original_price;
                                     $total += $itemTotal;
                                 @endphp
-                                <td class="py-5"><img
+                                <td class="py-5"><img class="img-border"
                                         src="{{ $item->product->img ? asset('uploads/' . $item->product->img) : 'uploads/default.png' }}"
                                         alt="" width="70px"></td>
                                 <td class="py-5">{{ $item->product->name }}</td>

@@ -56,32 +56,7 @@
 
                 </table>
             </div>
-            <div class="col-12">
-                <div class="pagination d-flex justify-content-center mt-5">
-                    {{-- Previous Page Link --}}
-                    @if ($categories->onFirstPage())
-                        <a href="#" class="rounded disabled">&laquo;</a>
-                    @else
-                        <a href="{{ $categories->previousPageUrl() }}" class="rounded">&laquo;</a>
-                    @endif
 
-                    {{-- Pagination Links --}}
-                    @foreach ($categories->getUrlRange(1, $categories->lastPage()) as $page => $url)
-                        @if ($page == $categories->currentPage())
-                            <a href="{{ $url }}" class="active rounded">{{ $page }}</a>
-                        @else
-                            <a href="{{ $url }}" class="rounded">{{ $page }}</a>
-                        @endif
-                    @endforeach
-
-                    {{-- Next Page Link --}}
-                    @if ($categories->hasMorePages())
-                        <a href="{{ $categories->nextPageUrl() }}" class="rounded">&raquo;</a>
-                    @else
-                        <a href="#" class="rounded disabled">&raquo;</a>
-                    @endif
-                </div>
-            </div>
         </div>
 
     </div>

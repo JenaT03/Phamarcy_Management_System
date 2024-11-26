@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="{{asset('img/logo_hoada.png')}}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo_hoada.png') }}">
     <title>@yield('tilte', 'Nhà thuốc Hoa Đà')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -23,21 +23,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{asset('lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
-    <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
-<body>
-   
+<body class="finisher-header">
 
-     <div class="container-fluid page-header-login-register" style="padding: 1rem 0 1rem 0;">
+
+    <div class="container-fluid page-header-login-register" style="padding: 1rem 0 1rem 0;">
 
         <h1 class="text-center text-white display-5 text-uppercase">@yield('title')</h1>
     </div>
@@ -45,31 +45,69 @@
     @if (session('message'))
         <div class="row">
             <div class="col-md-6 offset-md-3 text-center ">
-                <h5 class="animate__animated animate__fadeInLeft text-primary mt-4">{{session('message')}}</h5>
+                <h5 class="animate__animated animate__fadeInLeft text-primary mt-4">{{ session('message') }}</h5>
             </div>
         </div>
     @endif
 
-    @if($errors->has('error'))
-    <div class="row">
+    @if ($errors->has('error'))
+        <div class="row">
             <div class="col-md-6 offset-md-3 text-center ">
                 <h5 class="animate__animated animate__fadeInLeft text-primary mt-4">{{ $errors->first('error') }}</h5>
             </div>
-    </div>
-    
+        </div>
     @endif
-    
+
     @yield('content')
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('lib/easing/easing.min.js')}}"></script>
-    <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>
-    <script src="{{asset('lib/lightbox/js/lightbox.min.js')}}"></script>
-    <script src="{{asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
-
+    <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ asset('lib/lightbox/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('lib/finisher-header.es5.min.js') }}" type="text/javascript"></script>
     <!-- Template Javascript -->
-    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+
+    <script type="text/javascript">
+        new FinisherHeader({
+            "count": 6,
+            "size": {
+                "min": 1300,
+                "max": 1500,
+                "pulse": 0.5
+            },
+            "speed": {
+                "x": {
+                    "min": 0.6,
+                    "max": 3
+                },
+                "y": {
+                    "min": 0.6,
+                    "max": 3
+                }
+            },
+            "colors": {
+                "background": "#e9cafa",
+                "particles": [
+                    "#c0ddf8",
+                    "#fabfd6",
+                    "#fbb3fb",
+                    "#d0c4ff"
+                ]
+            },
+            "blending": "lighten",
+            "opacity": {
+                "center": 0.6,
+                "edge": 0
+            },
+            "skew": 0,
+            "shapes": [
+                "c"
+            ]
+        });
+    </script>
 </body>
 
 </html>

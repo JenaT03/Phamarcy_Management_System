@@ -2,12 +2,12 @@
 @section('title', 'Quản lý website')
 @section('content')
 
-    <div class="row g-0 pt-3 bg-white">
+    <div class="row g-0 py-2 bg-white border-bot-lr">
         @can('banner_website')
             <a href="{{ route('website.banners.index') }}" class="col-4 text-center py-2 ">BANNER</a>
         @endcan
         @can('news_website')
-            <a href="{{ route('website.news.index') }}" class="col-4 text-center py-2 border-cus fw-bold">TIN TỨC</a>
+            <a href="{{ route('website.news.index') }}" class="col-4 text-center py-2 border-cus">TIN TỨC</a>
         @endcan
         @can('introduce_website')
             <a href="{{ route('website.introduce.index') }}" class="col-4 text-center py-2 ">GIỚI THIỆU</a>

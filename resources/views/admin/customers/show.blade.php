@@ -2,6 +2,7 @@
 @section('title', 'khách hàng')
 @section('content')
     <div class="container-fluid py-5">
+
         <div class="container py-5">
             <h2 class="text-center mb-5">Hóa đơn khách hàng</h2>
 

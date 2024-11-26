@@ -650,12 +650,14 @@
 }
 
 .border-cus {
-    border: 1px solid;
-    border-bottom: 0;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background-color: #F0F5FF;
+    font-weight: 900;
+    text-decoration: underline;
 
+}
+
+.border-bot-lr {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 
@@ -738,4 +740,8 @@
 
 .d-none {
     display: none;
+}
+
+.img-border {
+    border-radius: 7px;
 }

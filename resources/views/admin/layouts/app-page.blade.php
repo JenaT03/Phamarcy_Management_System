@@ -37,7 +37,7 @@
 </head>
 
 <body
-    class="{{ str_contains(request()->route()->getName(), 'website') || str_contains(request()->route()->getName(), 'statistics') ? 'bg-light-blue' : '' }}">
+    class="finisher-header {{ str_contains(request()->route()->getName(), 'website') || str_contains(request()->route()->getName(), 'statistics') ? 'bg-light-blue' : '' }}">
     @include('admin.layouts.sidebar-page')
     @yield('content')
 
@@ -48,6 +48,7 @@
     <script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('lib/finisher-header.es5.min.js') }}" type="text/javascript"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
     @yield('script')
@@ -66,6 +67,44 @@
         });
     </script>
 
+    <script type="text/javascript">
+        new FinisherHeader({
+            "count": 6,
+            "size": {
+                "min": 1300,
+                "max": 1500,
+                "pulse": 0.5
+            },
+            "speed": {
+                "x": {
+                    "min": 0.6,
+                    "max": 3
+                },
+                "y": {
+                    "min": 0.6,
+                    "max": 3
+                }
+            },
+            "colors": {
+                "background": "#e9cafa",
+                "particles": [
+                    "#c0ddf8",
+                    "#fabfd6",
+                    "#fbb3fb",
+                    "#d0c4ff"
+                ]
+            },
+            "blending": "lighten",
+            "opacity": {
+                "center": 0.6,
+                "edge": 0
+            },
+            "skew": 0,
+            "shapes": [
+                "c"
+            ]
+        });
+    </script>
 </body>
 
 </html>

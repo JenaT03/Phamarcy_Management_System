@@ -1,7 +1,7 @@
 @extends('admin.layouts.app-page')
 @section('title', 'Bán hàng')
 @section('content')
-    <div class="container-fluid py-3 bg-light-blue">
+    <div class="container-fluid py-3">
         <div class="container py-2 col-md-8 offset-md-2 text-center bg-white rounded"
             style="font-family: 'DejaVu Sans', sans-serif;">
             <div class="img-fluid"><img src="{{ asset('img/logo-name.png') }}" alt="" style="width: 200px;"></div>

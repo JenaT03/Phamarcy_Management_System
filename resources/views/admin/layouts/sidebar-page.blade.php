@@ -27,7 +27,7 @@
 @if (session('message'))
     <div class="row">
         <div class="col-md-6 offset-md-3 text-center ">
-            <h5 class="animate__animated animate__fadeInLeft text-primary mt-4">{{ session('message') }}</h5>
+            <h5 class="animate__animated animate__fadeInLeft text-white mt-4">{{ session('message') }}</h5>
         </div>
     </div>
 @endif
@@ -35,7 +35,7 @@
 @if ($errors->has('error'))
     <div class="row">
         <div class="col-md-6 offset-md-3 text-center ">
-            <h5 class="animate__animated animate__fadeInLeft text-primary mt-4">{{ $errors->first('error') }}</h5>
+            <h5 class="animate__animated animate__fadeInLeft text-white mt-4">{{ $errors->first('error') }}</h5>
         </div>
     </div>
 @endif
