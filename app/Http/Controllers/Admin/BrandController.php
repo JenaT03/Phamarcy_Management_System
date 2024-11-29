@@ -55,7 +55,13 @@ class BrandController extends Controller
     public function store(CreateBrandRequest $request)
     {
         $dataCreate = $request->all();
+        if (request()->has('highlight')) {
+            $dataCreate['highlight'] = 1;
+        } else {
+            $dataCreate['highlight'] = 0;
+        }
         $dataCreate['img'] = $this->brand->saveImage($request);
+
         $brand = $this->brand->create($dataCreate);
         return to_route('brands.index')->with(['message' => 'Thêm nhãn hàng mới thành công']);
     }
@@ -94,6 +100,11 @@ class BrandController extends Controller
     public function update(UpdateBrandRequest $request, $id)
     {
         $dataUpdate = $request->all();
+        if (request()->has('highlight')) {
+            $dataUpdate['highlight'] = 1;
+        } else {
+            $dataUpdate['highlight'] = 0;
+        }
         $brand = $this->brand->findOrFail($id);
         $currentImange = $brand->img ? $brand->img : '';
         $dataUpdate['img'] = $this->brand->updateImage($request, $currentImange);

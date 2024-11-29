@@ -50,7 +50,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function generateStaffNumber()
+    public function generateProductNumber()
     {
         do {
             // Random số từ 0 đến 9999 và chuyển thành chuỗi 4 chữ số
@@ -63,7 +63,7 @@ class ProductController extends Controller
     }
     public function create()
     {
-        $productCode = $this->generateStaffNumber();
+        $productCode = $this->generateProductNumber();
         $categories = $this->category->get(['id', 'name']);
         $brands = $this->brand->get(['id', 'name']);
         $staff = Staff::find(Auth::user()->userable_id);

@@ -115,7 +115,12 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->product->with('productdetails', 'categories', 'brand')->findOrFail($id);
-        return view('client.products.detail', compact('product'));
+        if (Auth::check() && Auth::user()->userable_type === Customer::class) {
+            $customer = Customer::find(Auth::user()->userable_id);
+            return view('client.products.detail', compact('product', 'customer'));
+        } else {
+            return view('client.products.detail', compact('product'));
+        }
     }
 
     /**

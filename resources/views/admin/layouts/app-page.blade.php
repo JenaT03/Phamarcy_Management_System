@@ -49,23 +49,6 @@
     <script src="{{ asset('lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('lib/finisher-header.es5.min.js') }}" type="text/javascript"></script>
-    <!-- Template Javascript -->
-    <script src="{{ asset('js/main.js') }}"></script>
-    @yield('script')
-    <script>
-        $(document).ready(function() {
-            $('button[name="delete"]').on('click', function(e) {
-                e.preventDefault();
-                const form = $(this).closest('form');
-                $('.modal-body').html(
-                    `Bạn có chắc muốn thực hiện xóa không?`
-                );
-                $('#delete-confirm').on('click', '#delete', function() {
-                    form.trigger('submit');
-                });
-            });
-        });
-    </script>
 
     <script type="text/javascript">
         new FinisherHeader({
@@ -105,6 +88,25 @@
             ]
         });
     </script>
+    <!-- Template Javascript -->
+    <script src="{{ asset('js/main.js') }}"></script>
+    @yield('script')
+    <script>
+        $(document).ready(function() {
+            $('button[name="delete"]').on('click', function(e) {
+                e.preventDefault();
+                const form = $(this).closest('form');
+                $('.modal-body').html(
+                    `Bạn có chắc muốn thực hiện xóa không?`
+                );
+                $('#delete-confirm').on('click', '#delete', function() {
+                    form.trigger('submit');
+                });
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>

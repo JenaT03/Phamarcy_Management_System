@@ -11,12 +11,13 @@
         <div class="d-flex justify-content-between">
             <div class="top-info ps-2">
                 <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-white"></i>
-                    <a href="#" class="text-white">Đường 3/2, P. Xuân Khách, Q. Ninh Kiều, TP. Cần Thơ</a></small>
-                <small class="me-3"><i class="fas fa-envelope me-2 text-white"></i><a href="#"
+                    <a href="{{ route('contact') }}" class="text-white">Đường 3/2, P. Xuân Khách, Q. Ninh Kiều, TP. Cần
+                        Thơ</a></small>
+                <small class="me-3"><i class="fas fa-envelope me-2 text-white"></i><a href="{{ route('contact') }}"
                         class="text-white">nhib2111857@student.ctu.edu.vn</a></small>
             </div>
             <div class="top-link pe-2">
-                <small class="me-3"><i class="fa-solid fa-phone me-2 text-white"></i><a href="#"
+                <small class="me-3"><i class="fa-solid fa-phone me-2 text-white"></i><a href="{{ route('contact') }}"
                         class="text-white">Tư vấn ngay: 0359999999</a></small>
             </div>
         </div>

@@ -23,7 +23,7 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'edit-receipt', 'display_name' => 'Sửa phiếu nhập/Chi tiết phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
             ['name' => 'delete-receipt', 'display_name' => 'Xóa phiếu nhập/Chi tiết phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
             ['name' => 'show-receipt', 'display_name' => 'Xem danh sách phiếu nhập/Chi tiết phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
-            ['name' => 'print-receipt', 'display_name' => 'In phiếu xuất', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
+            ['name' => 'print-receipt', 'display_name' => 'In phiếu nhập', 'group' => 'Phiếu nhập/Chi tiết phiếu nhập'],
 
             ['name' => 'create-release', 'display_name' => 'Thêm hóa đơn/Chi tiết hóa đơn', 'group' => 'Hóa đơn/Chi tiết hóa đơn'],
             ['name' => 'edit-release', 'display_name' => 'Sửa hóa đơn/Chi tiết hóa đơn', 'group' => 'Hóa đơn/Chi tiết hóa đơn'],
@@ -80,8 +80,8 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'releases-statistic', 'display_name' => 'Thống kê hóa đơn', 'group' => 'Thống kê'],
 
             ['name' => 'banner_website', 'display_name' => 'Quản lý banner', 'group' => 'Website'],
-            ['name' => 'news_website', 'display_name' => 'Quản lý tin tức', 'group' => 'Trang chủ'],
-            ['name' => 'introduce_website', 'display_name' => 'Quản lý phần giới thiệu', 'group' => 'Trang chủ'],
+            ['name' => 'news_website', 'display_name' => 'Quản lý tin tức', 'group' => 'Website'],
+            ['name' => 'introduce_website', 'display_name' => 'Quản lý phần giới thiệu', 'group' => 'Website'],
 
 
 
@@ -95,7 +95,7 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'super-admin', 'display_name' => 'Quản trị viên', 'group' => 'system'],
             ['name' => 'manager', 'display_name' => 'Quản lý', 'group' => 'system'],
             ['name' => 'staff', 'display_name' => 'Nhân viên', 'group' => 'system'],
-            ['name' => 'user', 'display_name' => 'Người dùng', 'group' => 'user'],
+            ['name' => 'customer', 'display_name' => 'Khách hàng', 'group' => 'user'],
         ];
 
         foreach ($roles as $role) {
@@ -134,8 +134,8 @@ class RoleDatabaseSeeder extends Seeder
         ])->get();
         $staffRole->permissions()->sync($staffPermissions->pluck('id')->toArray());
 
-        $userRole = Role::where('name', 'user')->first();
-        $userPermissions = Permission::whereIn('name', ['show-customer', 'show-release', 'create-customer', 'edit-customer', 'show-customer', 'website'])->get();
+        $userRole = Role::where('name', 'customer')->first();
+        $userPermissions = Permission::whereIn('name', ['show-release', 'create-customer', 'edit-customer'])->get();
         $userRole->permissions()->sync($userPermissions->pluck('id')->toArray());
     }
 }

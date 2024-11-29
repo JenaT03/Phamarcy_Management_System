@@ -51,5 +51,6 @@
             </div>
         </div>
     </div>
+    <div style="min-height: 5vh"></div>
 
 @endsection

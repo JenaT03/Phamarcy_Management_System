@@ -7,7 +7,7 @@
             <div class="img-fluid"><img src="{{ asset('img/logo-name.png') }}" alt="" style="width: 200px;"></div>
             <p>Đường 3/2, P. Xuân Khách, Q. Ninh Kiều, TP. Cần Thơ</p>
             <p>Hotline: 0359999999</p>
-            <h2>BIÊN LAI</h2>
+            <h2>PHIẾU NHẬP</h2>
             <div class="d-flex">
                 <p>NGÀY: </p>
                 <p>{{ $receipt->datetime }}</p>
@@ -70,7 +70,7 @@
                 @if (!$receipt->receipt_details->isEmpty())
                     <a href="{{ route('receipts.generate', $receipt->id) }}"
                         class="btn btn-primary text-white text-center mx-4" style="padding: 15px 45px; font-size: 1.25rem;">Xuất
-                        biên lai</a>
+                        phiếu nhập</a>
                 @endif
             @endcan
             @can('show-receipt')

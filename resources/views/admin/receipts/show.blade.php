@@ -43,20 +43,20 @@
                     <tbody class="border-bottom">
                         @foreach ($receiptDetails as $item)
                             @php $total = 0; @endphp
-                            <tr class="border-top">
+                            <tr class="border-top text-center">
                                 @php
                                     $itemTotal = $item->quantity * $item->original_price;
                                     $total += $itemTotal;
                                 @endphp
-                                <td class="py-5"><img class="img-border"
+                                <td class="py-5" width="15%"><img class="img-border"
                                         src="{{ $item->product->img ? asset('uploads/' . $item->product->img) : 'uploads/default.png' }}"
-                                        alt="" width="70px"></td>
-                                <td class="py-5">{{ $item->product->name }}</td>
-                                <td class="py-5">{{ $item->quantity . ' ' . $item->product->unit }}</td>
-                                <td class="py-5">{{ $item->original_price }}đ</td>
-                                <td class="py-5">{{ $item->selling_price }}đ</td>
-                                <td class="py-5">{{ $item->expiry }}</td>
-                                <td class="py-5">{{ $itemTotal }}đ</td>
+                                        alt="" width="110px"></td>
+                                <td class="py-5" width="30%">{{ $item->product->name }}</td>
+                                <td class="py-5" width="5%">{{ $item->quantity . ' ' . $item->product->unit }}</td>
+                                <td class="py-5" width="10%">{{ $item->original_price }}đ</td>
+                                <td class="py-5" width="10%">{{ $item->selling_price }}đ</td>
+                                <td class="py-5" width="10%">{{ $item->expiry }}</td>
+                                <td class="py-5" width="20%">{{ $itemTotal }}đ</td>
                             </tr>
                         @endforeach
 

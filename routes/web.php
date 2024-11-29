@@ -86,9 +86,9 @@ Route::middleware('auth')->group(
                 Route::get('/{customer}/edit', 'edit')->name('edit')->middleware('permission:edit-customer');
                 Route::put('/{customer}', 'update')->name('update')->middleware('permission:edit-customer');
                 Route::delete('/{customer}', 'destroy')->name('destroy')->middleware('permission:delete-customer');
-                Route::get('/{customer}', 'show')->name('show')->middleware('permission:show-customer');
-                Route::post('/{customer}', 'releaseList')->name('release-list')->middleware('permission:show-customer');
-                Route::get('/{customer}/{release}/release', 'showDetailRelease')->name('show-detail')->middleware('permission:show-customer');
+                Route::get('/{customer}', 'show')->name('show')->middleware('permission:show-release');
+                Route::post('/{customer}', 'releaseList')->name('release-list')->middleware('permission:show-release');
+                Route::get('/{customer}/{release}/release', 'showDetailRelease')->name('show-detail')->middleware('permission:show-release');
             }
         );
 

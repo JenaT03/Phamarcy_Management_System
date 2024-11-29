@@ -118,4 +118,5 @@
             </div>
         </div>
     </div>
+    <div style="min-height: 30vh"></div>
 @endsection

@@ -80,23 +80,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (empty($bestSellingProducts))
-                                <p class="text-center"> Không có sản phẩm thuộc loại bạn cần tìm bán trong thời gian này</p>
-                            @else
-                                @foreach ($bestSellingProducts as $item)
-                                    <tr class="text-center border-top">
-                                        <td class="py-5">{{ $item->code }}</td>
-                                        <td class="py-5"><img
-                                                src="{{ $item->img ? asset('uploads/' . $item->img) : '' }}"
-                                                style="width: 140px; height: 90px;" alt="Hình ảnh"></td>
+                            @if ($bestSellingProducts != 'none')
+                                @if (empty($bestSellingProducts))
+                                    <p class="text-center"> Không có sản phẩm thuộc loại bạn cần tìm bán trong thời gian này
+                                    </p>
+                                @else
+                                    @foreach ($bestSellingProducts as $item)
+                                        <tr class="text-center border-top">
+                                            <td class="py-5">{{ $item->code }}</td>
+                                            <td class="py-5"><img
+                                                    src="{{ $item->img ? asset('uploads/' . $item->img) : '' }}"
+                                                    style="width: 140px; height: 90px;" alt="Hình ảnh"></td>
 
-                                        <td class="py-5">{{ $item->name }}</td>
-                                        <td class="py-5">
-                                            {{ $item->total_quantity }}{{ $item->unit ? '/' . $item->unit : '' }}</td>
+                                            <td class="py-5">{{ $item->name }}</td>
+                                            <td class="py-5">
+                                                {{ $item->total_quantity }}{{ $item->unit ? '/' . $item->unit : '' }}</td>
 
 
-                                    </tr>
-                                @endforeach
+                                        </tr>
+                                    @endforeach
+                                @endif
                             @endif
 
 

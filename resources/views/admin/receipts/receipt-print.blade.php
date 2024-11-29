@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>{{ 'Hóa đơn-' . $receipt->id }}</title>
+    <title>{{ 'Phiếu nhập-' . $receipt->id }}</title>
 
     <style>
         html,
@@ -112,7 +112,7 @@
                     <h1>Nhà thuốc HOA ĐÀ</h1>
                     <p>Đường 3/2, P. Xuân Khách, Q. Ninh Kiều, TP. Cần Thơ</p>
                     <p>Hotline: 0359999999</p>
-                    <h2>BIÊN LAI</h2>
+                    <h2>PHIẾU XUẤT</h2>
                 </th>
             </tr>
 

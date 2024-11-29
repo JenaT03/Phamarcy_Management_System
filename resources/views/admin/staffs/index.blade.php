@@ -20,7 +20,7 @@
                 <p class="text-center">Không tìm thấy nhân viên nào có mã số "{{ $search }}".</p>
             @endif
             <div>
-                <table class="table hid-border-style">
+                <table class="table hid-border-style me-0">
                     <thead>
                         <tr class="text-center">
                             <th scope="col">Mã số</th>
@@ -36,13 +36,13 @@
                     <tbody class="border-bottom">
                         @foreach ($staffs as $staff)
                             <tr class="text-center border-top">
-                                <td class="py-5">{{ $staff->code }}</td>
-                                <td class="py-5">{{ $staff->name }}</td>
-                                <td class="py-5">{{ $staff->phone }}</td>
-                                <td class="py-5">{{ $staff->birth }}</td>
-                                <td class="py-5">{{ $staff->gender }}</td>
-                                <td class="py-5">{{ $staff->address }}</td>
-                                <td class="py-5 d-flex justify-content-around">
+                                <td class="py-5" width="5%">{{ $staff->code }}</td>
+                                <td class="py-5" width="20%">{{ $staff->name }}</td>
+                                <td class="py-5" width="10%">{{ $staff->phone }}</td>
+                                <td class="py-5" width="10%">{{ $staff->birth }}</td>
+                                <td class="py-5" width="10%">{{ $staff->gender }}</td>
+                                <td class="py-5" width="30%">{{ $staff->address }}</td>
+                                <td class="py-5 d-flex justify-content-around" width="15%">
                                     @can('edit-staff')
                                         <a href="{{ route('staffs.edit', $staff->id) }}" class="btn"><i
                                                 class="fa-solid fa-pen text-primary" style="font-size: 1.25rem;"></i></a>

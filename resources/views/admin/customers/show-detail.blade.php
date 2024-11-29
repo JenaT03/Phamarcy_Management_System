@@ -44,14 +44,14 @@
                     <tbody class="border-bottom">
                         @foreach ($releaseDetails as $item)
                             <tr class="border-top">
-                                <td class="py-5"><img class="img-border"
+                                <td class="py-5" with="10%"><img class="img-border"
                                         src="{{ $item->product->img ? asset('uploads/' . $item->product->img) : '' }}"
                                         alt="" width="70px"></td>
-                                <td class="py-5">{{ $item->product->name }}</td>
-                                <td class="py-5">{{ $item->quantity . ' ' . $item->product->unit }}</td>
-                                <td class="py-5">{{ $item->price }}đ</td>
-                                <td class="py-5">{{ $item->price * $item->quantity }}đ</td>
-                                <td class="py-5">{{ $item->note }}</td>
+                                <td class="py-5" with="30%">{{ $item->product->name }}</td>
+                                <td class="py-5" with="5%">{{ $item->quantity . ' ' . $item->product->unit }}</td>
+                                <td class="py-5" with="15%">{{ $item->price }}đ</td>
+                                <td class="py-5" with="15%">{{ $item->price * $item->quantity }}đ</td>
+                                <td class="py-5" with="20%">{{ $item->note }}</td>
 
                             </tr>
                         @endforeach

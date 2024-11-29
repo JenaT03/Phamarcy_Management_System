@@ -34,9 +34,9 @@
                     <tbody class="border-bottom">
                         @foreach ($suppliers as $supplier)
                             <tr class="text-center border-top">
-                                <td class="py-5">{{ $supplier->name }}</td>
-                                <td class="py-5">{{ $supplier->phone }}</td>
-                                <td class="py-5">{{ $supplier->address }}</td>
+                                <td class="py-5" width="30%">{{ $supplier->name }}</td>
+                                <td class="py-5" width="15%">{{ $supplier->phone }}</td>
+                                <td class="py-5" width="40%">{{ $supplier->address }}</td>
                                 <td class="py-5 d-flex justify-content-around">
                                     @can('edit-supplier')
                                         <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn"><i

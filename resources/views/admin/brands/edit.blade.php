@@ -41,7 +41,8 @@
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label" for="hightlight">Nổi bật</label>
-                <input type="checkbox" class="form-check-input border-1" id="hightlight" name= "hightlight" value="true">
+                <input type="checkbox" class="form-check-input border-1" name= "highlight"
+                    {{ $brand->highlight == 1 ? 'checked' : '' }}>
 
             </div>
 

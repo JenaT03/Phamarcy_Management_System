@@ -163,6 +163,6 @@ class ReceiptController extends Controller
         $data = ['receipt' => $receipt, 'receiptDetails' => $receiptDetails];
         $pdf = Pdf::loadView('admin.receipts.receipt-print', $data);
         $todayDate = Carbon::now()->format('d-m-Y');
-        return $pdf->download('bien_lai-' . $receipt->id . '-' . $todayDate . '.pdf');
+        return $pdf->download('phieu_nhap-' . $receipt->id . '-' . $todayDate . '.pdf');
     }
 }

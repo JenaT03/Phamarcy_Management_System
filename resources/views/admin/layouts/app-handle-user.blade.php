@@ -67,8 +67,6 @@
     <script src="{{ asset('lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('lib/finisher-header.es5.min.js') }}" type="text/javascript"></script>
-    <!-- Template Javascript -->
-    <script src="{{ asset('js/main.js') }}"></script>
 
     <script type="text/javascript">
         new FinisherHeader({
@@ -108,6 +106,10 @@
             ]
         });
     </script>
+    <!-- Template Javascript -->
+    <script src="{{ asset('js/main.js') }}"></script>
+
+
 </body>
 
 </html>

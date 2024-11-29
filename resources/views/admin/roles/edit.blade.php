@@ -34,9 +34,9 @@
 
             <div class="form-item col-md-6 offset-md-3 pb-3 my-3">
                 <label class="form-label">Nhóm</label>
-                <select name="group" id="" class="form-control bg-white" value={{ $role->group }}>
-                    <option value="user">Người dùng</option>
-                    <option value="system">Hệ thống</option>
+                <select name="group" id="" class="form-control bg-white">
+                    <option value="user" {{ $role->group == 'user' ? 'selected' : '' }}>Người dùng</option>
+                    <option value="system" {{ $role->group == 'system' ? 'selected' : '' }}>Hệ thống</option>
                 </select>
 
                 @error('group')

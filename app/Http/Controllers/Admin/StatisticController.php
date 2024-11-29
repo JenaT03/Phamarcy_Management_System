@@ -107,7 +107,7 @@ class StatisticController extends Controller
     public function showBestSelling()
     {
         $staff = Staff::find(Auth::user()->userable_id);
-        return view('admin.statistics.best-selling', ['bestSellingProducts' => [], 'staff' => $staff, 'category' => 0]);
+        return view('admin.statistics.best-selling', ['bestSellingProducts' => 'none', 'staff' => $staff, 'category' => 0]);
     }
 
     public function computeBestSelling(StatisticRequest $request)

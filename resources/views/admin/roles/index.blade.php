@@ -32,8 +32,8 @@
                     <tbody class="border-bottom">
                         @foreach ($roles as $role)
                             <tr class="text-center border-top">
-                                <td class="py-5">{{ $role->name }}</td>
-                                <td class="py-5">{{ $role->display_name }}</td>
+                                <td class="py-5 " width="30%">{{ $role->name }}</td>
+                                <td class="py-5" width="40%">{{ $role->display_name }}</td>
                                 <td class="py-5 d-flex justify-content-around">
                                     @if ($role->name != 'super-admin')
                                         <a href="{{ route('roles.show', $role->id) }}" class="btn"><i

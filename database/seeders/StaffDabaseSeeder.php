@@ -16,7 +16,7 @@ class StaffDabaseSeeder extends Seeder
     public function run()
     {
         $items = [
-            ['code' => '0978', 'name' => 'Trần Yến Nhi', 'phone' => '0934567897', 'birth' => '2003', 'gender' => 'Nữ', 'address' => 'Trà Vinh'],
+            ['code' => '0978', 'name' => 'Trần Yến Nhi', 'phone' => '0934567897', 'birth' => '2003', 'gender' => 'Nữ', 'address' => '123, xã Tân An, huyện Càng Long, Trà Vinh'],
 
         ];
 

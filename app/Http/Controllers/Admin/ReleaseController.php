@@ -36,14 +36,18 @@ class ReleaseController extends Controller
     public function index(Request $request)
     {
         if (Auth::check()) {
-            $staff = $this->staff->find(Auth::user()->userable_id);
-            $query = $this->release->with('customer', 'staff', 'release_details')->latest('id');
-            $search = $request->search ?? '';
-            if (!empty($search)) {
-                $query->where('id', 'like', '%' . $request->search . '%');
+            if (Auth::user()->userable_type === Customer::class) {
+                return to_route('home');
+            } else {
+                $staff = $this->staff->find(Auth::user()->userable_id);
+                $query = $this->release->with('customer', 'staff', 'release_details')->latest('id');
+                $search = $request->search ?? '';
+                if (!empty($search)) {
+                    $query->where('id', 'like', '%' . $request->search . '%');
+                }
+                $releases = $query->paginate(10);
+                return view('admin.releases.index', compact('staff', 'releases', 'search'));
             }
-            $releases = $query->paginate(10);
-            return view('admin.releases.index', compact('staff', 'releases', 'search'));
         } else return to_route('home');
     }
 
@@ -85,18 +89,22 @@ class ReleaseController extends Controller
     public function show(Request $request, $id)
     {
         if (Auth::check()) {
-            $staff = Staff::find(Auth::user()->userable_id);
-            $release = $this->release->find($id);
-            $query = ReleaseDetail::with('product')->where('release_id', $id)->latest('id');
-            $search = $request->search ?? '';
-            if (!empty($search)) {
-                $query->whereHas('product', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                });
-            }
+            if (Auth::user()->userable_type === Customer::class) {
+                return to_route('home');
+            } else {
+                $staff = Staff::find(Auth::user()->userable_id);
+                $release = $this->release->find($id);
+                $query = ReleaseDetail::with('product')->where('release_id', $id)->latest('id');
+                $search = $request->search ?? '';
+                if (!empty($search)) {
+                    $query->whereHas('product', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    });
+                }
 
-            $releaseDetails = $query->paginate(10);
-            return view('admin.releases.show', compact('staff', 'releaseDetails', 'release', 'search'));
+                $releaseDetails = $query->paginate(10);
+                return view('admin.releases.show', compact('staff', 'releaseDetails', 'release', 'search'));
+            }
         } else return to_route('home');
     }
 
@@ -151,14 +159,20 @@ class ReleaseController extends Controller
 
     public function search(Request $request)
     {
-        $query = $this->customer->latest('id');
-        if ($request->has('search') && !empty($request->search)) {
-            $query->where('phone', 'like', '%' . $request->search . '%');
-        }
+        if (Auth::check()) {
+            if (Auth::user()->userable_type === Customer::class) {
+                return to_route('home');
+            } else {
+                $query = $this->customer->latest('id');
+                if ($request->has('search') && !empty($request->search)) {
+                    $query->where('phone', 'like', '%' . $request->search . '%');
+                }
 
-        $customers = $query->paginate(10);
-        $staff = Staff::find(Auth::user()->userable_id);
-        return view('admin.releases.search_customer', compact('customers', 'staff'))->with('search', $request->search);
+                $customers = $query->paginate(10);
+                $staff = Staff::find(Auth::user()->userable_id);
+                return view('admin.releases.search_customer', compact('customers', 'staff'))->with('search', $request->search);
+            }
+        }
     }
 
 
